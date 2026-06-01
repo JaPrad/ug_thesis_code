@@ -8,7 +8,7 @@ editor: visual
 ---
 
 ::: {.callout-note}
--   **Dataset:** [CMIE Consumer Pyramids<sub>dx</sub>](https://consumerpyramidsdx.cmie.com/) - People of India<sub>dx</sub>
+-   **Dataset:** [CMIE Consumer Pyramids<sub>dx</sub>](https://consumerpyramidsdx.cmie.com/) - People of India<sub>dx</sub>.
 
 -   Sample is restricted to males with response status "Accepted" and a non-zero sample weight.
 

@@ -11,7 +11,7 @@ execute:
 ---
 
 ::: {.callout-note}
--   **Dataset:** [CMIE Consumer Pyramids<sub>dx</sub>](https://consumerpyramidsdx.cmie.com/) - People of India<sub>dx</sub> - Wave 36 (Sep-Dec 2025)
+-   **Dataset:** [CMIE Consumer Pyramids<sub>dx</sub>](https://consumerpyramidsdx.cmie.com/) - People of India<sub>dx</sub> - Wave 36 (Sep-Dec 2025).
 
 -   Sample is restricted to males with response status "Accepted" and a non-zero sample weight.
 

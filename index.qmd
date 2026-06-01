@@ -7,6 +7,6 @@ format: html
 
 1.  [Variable & Category List](code/eda/2026-06-01_mentor_meeting/variable_list.html)
 
-2.  [Variable & Category count](code/eda/2026-06-01_mentor_meeting/variable_count.html)
+2.  [Variable & Category Count](code/eda/2026-06-01_mentor_meeting/variable_count.html)
 
 3.  [Panel Continuity Matrix](code/eda/2026-06-01_mentor_meeting/panel_continuity_matrix.html)
