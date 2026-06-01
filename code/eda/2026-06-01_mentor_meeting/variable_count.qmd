@@ -1,0 +1,121 @@
+---
+title: "Variable & Category Count"
+author: "Jyotiraditya Pradhan"
+toc: true
+format: html
+execute: 
+  echo: false
+---
+
+::: {.callout-note}
+-   **Dataset:** [CMIE Consumer Pyramids<sub>dx</sub>](https://consumerpyramidsdx.cmie.com/) - People of India<sub>dx</sub>
+
+-   Sample is restricted to males with response status "Accepted" and a non-zero sample weight.
+
+-   Counts and proportions are non-weighted
+:::
+
+```{r}
+#| output: false
+library(tidyverse)
+library(gt)
+library(DT)
+```
+
+```{r display_func}
+gt_display <- function(variable){
+  readRDS(paste0("data/eda/2026-06-01_mentor_meeting/", variable, ".Rda")) %>% 
+    
+    mutate(across(where(is.character), trimws)) %>% # trim characters
+    gt() %>% 
+    
+    fmt_markdown(columns = everything()) %>% 
+    tab_style(
+    style = cell_text(weight = "bold"),
+    locations = cells_column_labels()
+    ) %>% 
+    tab_style(
+    style = cell_text(weight = "bold"),
+    locations = cells_body(columns = c("Wave", "Date"))
+    ) %>% 
+    
+    return()
+}
+
+dt_display <- function(variable){
+  readRDS(paste0("data/eda/2026-06-01_mentor_meeting/", variable, ".Rda")) %>% 
+    
+    mutate(across(where(is.character), trimws)) %>% # trim characters
+    datatable(
+      escape = F,
+      rownames = FALSE,
+      extensions = c("FixedHeader", "FixedColumns"),
+      options = list(
+      pageLength = 15,
+      scrollX = TRUE,
+      fixedHeader = TRUE,
+      fixedColumns = list(leftColumns = 2)
+  )
+    ) %>% 
+    formatStyle(
+    columns = c(1, 2),
+    fontWeight = "bold"
+  ) %>% 
+    return()
+}
+```
+
+## Sample Size
+
+```{r}
+dt_display("sample_size")
+```
+
+## Caste
+
+```{r}
+dt_display("CASTE_CATEGORY")
+```
+
+## Religion
+
+```{r}
+dt_display("RELIGION")
+```
+
+## Rural/Urban
+
+```{r}
+dt_display("REGION_TYPE")
+```
+
+## Education
+
+```{r}
+dt_display("EDU")
+```
+
+
+## Employment Status
+
+```{r}
+dt_display("EMPLOYMENT_STATUS")
+```
+
+## Employment Arrangement
+
+```{r}
+dt_display("EMPLOYMENT_ARRANGEMENT")
+```
+
+## Nature of Occupation
+
+```{r}
+dt_display("NATURE_OF_OCCUPATION")
+```
+
+## Industry of Occupation
+
+```{r}
+dt_display("INDUSTRY_OF_OCCUPATION")
+```

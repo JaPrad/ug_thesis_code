@@ -1,0 +1,131 @@
+---
+title: "Variable & Category List"
+author: "Jyotiraditya Pradhan"
+toc: true
+format: html
+editor: visual
+execute: 
+  echo: false
+  warning: false
+  message: false 
+---
+
+::: {.callout-note}
+-   **Dataset:** [CMIE Consumer Pyramids<sub>dx</sub>](https://consumerpyramidsdx.cmie.com/) - People of India<sub>dx</sub> - Wave 36 (Sep-Dec 2025)
+
+-   Sample is restricted to males with response status "Accepted" and a non-zero sample weight.
+
+-   This is a list of selected variables.
+
+- The full list of variables can be found [here](https://consumerpyramidsdx.cmie.com/kommon/bin/sr.php?kall=wlist).
+:::
+
+```{r}
+#| output: false
+library(tidyverse)
+library(DT)
+```
+
+```{r}
+#| output: false
+df <- read_csv("data/cmie/cmie_people_raw/people_of_india_20250901_20251231_R.csv")
+
+df %>% 
+      filter(GENDER == "M") %>% 
+      filter(R_MEM_WGT_W != 0) %>% 
+      filter(RESPONSE_STATUS == "Accepted") -> df
+```
+
+```{r}
+
+display_list <- function(variable){
+  
+  df %>% 
+    count(.data[[variable]]) %>% 
+    arrange(desc(n)) %>% 
+    select(.data[[variable]]) %>% 
+    datatable(colnames = NULL)
+}
+```
+
+
+## Social Categories 
+
+### Caste Category
+
+```{r}
+display_list("CASTE_CATEGORY")
+```
+
+### Caste 
+
+```{r}
+display_list("CASTE")
+```
+
+### Religion
+
+```{r}
+display_list("RELIGION")
+```
+
+## Education
+
+### Education Level
+
+```{r}
+display_list("EDU")
+```
+
+
+### Discipline
+
+For those who have studied over 10th standard.
+```{r}
+display_list("DISCIPLINE")
+```
+
+## Employment
+
+### Employment Status
+
+```{r}
+display_list("EMPLOYMENT_STATUS")
+```
+
+### Employment Type
+
+```{r}
+display_list("TYPE_OF_EMPLOYMENT")
+```
+
+### Employment Arrangement
+
+```{r}
+display_list("EMPLOYMENT_ARRANGEMENT")
+```
+
+### Occupation
+
+```{r}
+display_list("OCCUPATION")
+```
+
+### Nature of Occupation
+
+```{r}
+display_list("NATURE_OF_OCCUPATION")
+```
+
+### Industry of Occupation
+
+```{r}
+display_list("INDUSTRY_OF_OCCUPATION")
+```
+
+
+### Place of Work
+
+```{r}
+display_list("PLACE_OF_WORK")
+```
