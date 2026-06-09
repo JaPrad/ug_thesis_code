@@ -1,6 +1,9 @@
 ---
-title: "Modelling Labour Market Transitions in India (UG Thesis)"
-format: html
+title: "Modelling Labour Market Transitions in India <br>(UG Thesis)"
+format: 
+    html:
+        embed-resources: true
+toc: true
 ---
 
 ## EDA
@@ -10,3 +13,7 @@ format: html
 2.  [Variable & Category Count](code/eda/2026-06-01_mentor_meeting/variable_count.html)
 
 3.  [Panel Continuity Matrix](code/eda/2026-06-01_mentor_meeting/panel_continuity_matrix.html)
+
+## Transition Matrices
+
+1. [EUO Transition Matrices (Basic)](code/eda/2026-06-08_mentor_meeting_02/euo_transitions_basic.html) 

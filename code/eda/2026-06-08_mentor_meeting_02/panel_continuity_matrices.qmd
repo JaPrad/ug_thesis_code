@@ -1,0 +1,159 @@
+---
+title: "Panel Continuity Matrices"
+author: "Jyotiraditya Pradhan"
+format: html
+toc: true
+execute: 
+  echo: false
+editor: visual
+---
+
+::: callout-note
+- **Dataset:** [CMIE Consumer Pyramids<sub>dx</sub>](https://consumerpyramidsdx.cmie.com/) - People of India<sub>dx</sub>.
+
+- Sample is restricted to males with response status "Accepted" and a non-zero sample weight.
+
+- Counts are non-weighted.
+:::
+
+```{r import_lib}
+#| output: false
+library(tidyverse)
+library(DT)
+library(scales)
+```
+
+```{r diplay_func}
+
+display_matrix <- function(output_table){
+
+  num_cols <- names(output_table)[-1]  # exclude first column
+
+  # All numeric values flattened
+  all_vals <- unlist(output_table[num_cols])
+
+  # Percentile-based palette (domain is 0-1)
+  pal <- col_numeric(
+    c("#e08276", "#fddbc7", "#d1e5f0", "#67a9cf"),
+    domain = c(0, 1)
+  )
+
+  # Compute percentile rank for every value
+  pct_vals <- rank(all_vals, na.last = "keep") /
+    sum(!is.na(all_vals))
+
+  # Reshape back into the original table dimensions
+  pct_mat <- matrix(
+    pct_vals,
+    nrow = nrow(output_table),
+    ncol = length(num_cols),
+    byrow = FALSE,
+    dimnames = list(NULL, num_cols)
+  )
+
+  # Create hidden color columns
+  for (col in num_cols) {
+    output_table[[paste0(col, "_color")]] <- pal(pct_mat[, col])
+  }
+
+
+
+  output_table %>% 
+    mutate(across(where(is.numeric), comma)) %>% 
+    datatable( 
+      rownames = F,
+      extensions = c("FixedHeader", "FixedColumns"),
+      options = list(
+        pageLength = 40,
+        scrollX = TRUE,
+        autoWidth = TRUE,
+        fixedHeader = TRUE,
+        fixedColumns = list(leftColumns = 1),
+        columnDefs = lapply(
+          seq_along(num_cols),
+          function(i) {
+            list(
+              visible = FALSE,
+              targets = ncol(output_table) - length(num_cols) + i - 1
+            )
+          }
+        )
+    ),
+    callback = JS("
+  table.on('mouseenter', 'td', function() {
+
+    var idx = table.cell(this).index();
+
+    // Remove previous highlighting
+    $(table.cells().nodes()).removeClass('active-cell');
+    $(table.columns().header()).removeClass('highlight');
+    $(table.rows().nodes()).find('td:first-child').removeClass('highlight');
+    
+    // Hovered cell
+    $(this).addClass('active-cell');
+
+    // Highlight column header
+    $(table.column(idx.column).header()).addClass('highlight');
+
+    // Highlight first-column cell for this row
+    $(table.row(idx.row).nodes())
+      .find('td:first-child')
+      .addClass('highlight');
+  });
+
+  table.on('mouseleave', 'tbody', function() {
+
+    $(table.cells().nodes()).removeClass('highlight');
+    $(table.columns().header()).removeClass('highlight');
+    $(table.rows().nodes()).find('td:first-child').removeClass('highlight');
+  });
+  ")
+    ) %>% 
+    formatStyle(
+      columns = c(1),
+      fontWeight = "bold"
+    ) %>% 
+    formatStyle(
+      columns = num_cols,
+      valueColumns = paste0(num_cols, "_color"),
+      backgroundColor = JS("value")
+    ) 
+}
+```
+
+```{css}
+.highlight {
+  background-color: #ffe082 !important;
+}
+
+.active-cell {
+  font-weight: bold !important;
+}
+```
+
+## Full Continuity Matrix
+
+This matrix shows the number of observations present in all the waves between the corresponding waves.
+
+```{r full_continuity_matrix}
+readRDS("data/eda/2026-06-01_mentor_meeting/panel_continuity_matrix.Rda") |> 
+  display_matrix()
+```
+
+## Full Continuity Matrix (Excluding COVID Time)
+
+This matrix shows the number of observations present in all the waves between the corresponding waves. However, data from 2020 and 2021 has not been considered here to exclude COVID related attrition.
+
+```{r full_continuity_matrix_non_covid}
+readRDS("data/eda/2026-06-08_mentor_meeting_02/panel_continuity_matrix_non_covid.Rda") |> 
+  display_matrix()
+```
+
+## P2P Continuity Matrix
+
+This matrix shows the number of observations present in both corresponding waves.
+
+```{r p2p_continuity_matrix}
+readRDS("data/eda/2026-06-08_mentor_meeting_02/panel_continuity_matrix_p2p.Rda") |> 
+  display_matrix()
+```

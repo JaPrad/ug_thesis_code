@@ -3,7 +3,7 @@ library(tidyverse)
 
 # Wave 36 -----------------------------------------------------------------
 
-df <- read_csv("data/cmie_people_raw/people_of_india_20250901_20251231_R.csv")
+df <- read_csv("data/cmie/cmie_people_raw/people_of_india_20250901_20251231_R.csv")
 
 glimpse(df)
 
@@ -71,17 +71,36 @@ df_wt %>%
   mutate(prop = (n/sum(n))*100)
 
 
+
+## Place of Work -----------------------------------------------------------
+
+df_wt %>% 
+  count(PLACE_OF_WORK)
+
+
+## Education ---------------------------------------------------------------
+
+df_wt %>% 
+  distinct(EDU)
+
+df_wt %>% 
+  count(DISCIPLINE) %>% View() 
+
+df_wt %>% 
+  filter(DISCIPLINE == "Not Applicable") %>% 
+  count(EDU)
+
 # Wave 1 ------------------------------------------------------------------
 
 
-df <- read_csv("data/cmie_people_raw/people_of_india_20140101_20140430_R.csv")
+df <- read_csv("data/cmie/cmie_people_raw/people_of_india_20140101_20140430_R.csv")
 
 glimpse(df)
 
 
 ## Employment status -------------------------------------------------------
 
-df_wt %>% 
+df %>% 
   distinct(EMPLOYMENT_STATUS)
 
 df_wt %>% 

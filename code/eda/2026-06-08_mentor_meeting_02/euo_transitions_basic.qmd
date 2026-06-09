@@ -1,0 +1,127 @@
+---
+title: "EUO Transitions (Basic)"
+author: "Jyotiraditya Pradhan"
+format: html
+toc: true
+execute: 
+  echo: false
+  warning: false
+  message: false 
+editor: visual
+---
+
+::: {.callout-note}
+- **Dataset:** [CMIE Consumer Pyramids<sub>Dx</sub>](https://consumerpyramidsdx.cmie.com/) - People of India<sub>dx</sub>.
+
+- Sample is restricted to males with response status "Accepted" and a non-zero sample weight.
+
+- Observations are weighted at national level
+:::
+
+```{r import_lib}
+#| output: false
+library(tidyverse)
+library(here)
+library(gt)
+library(gtExtras)
+library(glue)
+library(plotly)
+source("code/utilities.R")
+```
+
+## Transition Matrices
+
+```{r read_matrix}
+transition_matrix <- read_rds(file = here("data", "eda", "2026-06-08_mentor_meeting_02", "euo_transition.Rda"))
+
+```
+
+```{r define_function}
+
+display_transition_matrix <- function(wave_num){
+
+    transition_matrix |> 
+    filter (wave == wave_num) -> cur_matrix
+
+    n <- unique(cur_matrix$n)
+
+    cur_matrix |> 
+        select(-wave, -n) |> 
+        mutate(p = round(p*100, 2)) |> 
+
+        pivot_wider(names_from = state_2, values_from = p) |> 
+        rename(State = state_1) |> 
+        gt() |> 
+
+        tab_header(
+            title = md(glue("**Wave {wave_num} to {wave_num+1}**")),
+            subtitle = md(glue("{cmie_wave_duration(wave_num)} to {cmie_wave_duration(wave_num+1)}"))
+        ) |> 
+
+        tab_footnote(footnote = glue("n = {format(n, big.mark = ',')}")) |> 
+
+        opt_align_table_header(align = "left") |> 
+        
+        tab_style(
+            style = cell_text(weight = "bold"),
+            locations = cells_column_labels(columns = everything())
+        ) |> 
+        tab_style(
+            style = cell_text(weight = "bold"),
+            locations = cells_body(columns = 1)
+        ) |> 
+
+        gt_add_divider(columns = everything(), color = "#D3D3D3") %>%
+
+        return()
+}
+```
+
+```{r matrix_loop}
+#| results: asis
+
+for(wave_num in 7:35){
+    display_transition_matrix(wave_num) |> 
+        print()
+}
+```
+
+## Time Series
+
+Click on a particular transition type to see it.
+
+```{r plot}
+
+transition_matrix |> 
+    mutate(transition = paste0(state_1, state_2)) |>
+    mutate(p = round(p*100, 2)) |> 
+    rowwise() |> 
+    mutate(wave_date = cmie_wave_duration(wave)) |> 
+    mutate(wave_date_start = cmie_wave_duration(wave, start_date = T)) |> 
+    ungroup() |> 
+    plot_ly(
+        x = ~wave_date_start,
+        y = ~p,
+        text = ~paste0(
+            "<b>Wave:</b>", wave, "<br>", wave_date
+        ),
+        color = ~transition,
+        type = "scatter",
+        mode = "lines+markers",
+        visible = "legendonly",
+
+        hovertemplate = paste('<b>p</b>: %{y:.2f}%',
+                        '<br>%{text}'
+                        )
+    ) |> 
+    layout(
+    xaxis = list(
+        title = "Wave (Start Date)",
+        type = 'date',
+        tickformat = "%b %Y"
+    ),
+    yaxis = list(title = "Transition Probability (%)"),
+    legend = list(title = list(text =" Transition Type"))
+  )
+
+```
