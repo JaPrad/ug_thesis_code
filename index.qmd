@@ -12,7 +12,7 @@ toc: true
 
 2.  [Variable & Category Count](code/eda/2026-06-01_mentor_meeting/variable_count.html)
 
-3.  [Panel Continuity Matrix](code/eda/2026-06-01_mentor_meeting/panel_continuity_matrix.html)
+3.  [Panel Continuity Matrices](code\eda\2026-06-08_mentor_meeting_02\panel_continuity_matrices.html)
 
 ## Transition Matrices
 
