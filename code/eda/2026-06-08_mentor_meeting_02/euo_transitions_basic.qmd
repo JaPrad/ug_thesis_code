@@ -10,7 +10,7 @@ execute:
 editor: visual
 ---
 
-::: {.callout-note}
+::: callout-note
 - **Dataset:** [CMIE Consumer Pyramids<sub>Dx</sub>](https://consumerpyramidsdx.cmie.com/) - People of India<sub>dx</sub>.
 
 - Sample is restricted to males with response status "Accepted" and a non-zero sample weight.
@@ -121,7 +121,7 @@ transition_matrix |>
         tickformat = "%b %Y"
     ),
     yaxis = list(title = "Transition Probability (%)"),
-    legend = list(title = list(text =" Transition Type"))
+    legend = list(title = list(text = "Transition Type"))
   )
 
 ```

@@ -89,7 +89,7 @@ target <- "data/eda/2026-06-01_mentor_meeting"
 output_target <- "data/eda/2026-06-08_mentor_meeting_02"
 id_list <- readRDS(paste0(target, "/id_list.Rda"))
 
-pick_common_num_P2P <- function(num_1, num_2){
+pick_common_num_p2p <- function(num_1, num_2){
 
   cat("Working on:", num_1, " - ", num_2, "\n")
 
@@ -106,7 +106,7 @@ cross_join(
   tibble(num_2 = as.numeric(names(id_list)))
 ) %>% 
   rowwise() %>% 
-  mutate(common_num = pick_common_num(num_1, num_2)) -> p2p_continuity_table
+  mutate(common_num = pick_common_num_p2p(num_1, num_2)) -> p2p_continuity_table
 
 p2p_continuity_table %>% 
   arrange(desc(num_1), desc(num_2)) %>% 
