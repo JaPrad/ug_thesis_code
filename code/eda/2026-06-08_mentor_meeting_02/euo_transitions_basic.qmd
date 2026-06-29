@@ -123,5 +123,5 @@ transition_matrix |>
     yaxis = list(title = "Transition Probability (%)"),
     legend = list(title = list(text = "Transition Type"))
   )
-
+  
 ```

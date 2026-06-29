@@ -12,8 +12,16 @@ toc: true
 
 2.  [Variable & Category Count](code/eda/2026-06-01_mentor_meeting/variable_count.html)
 
-3.  [Panel Continuity Matrices](code\eda\2026-06-08_mentor_meeting_02\panel_continuity_matrices.html)
+3.  [Panel Continuity Matrices](code/eda/2026-06-08_mentor_meeting_02/panel_continuity_matrices.html)
 
 ## Transition Matrices
 
-1. [EUO Transition Matrices (Basic)](code/eda/2026-06-08_mentor_meeting_02/euo_transitions_basic.html) 
+1. [EUO Transition Matrices (Basic)](code/eda/2026-06-08_mentor_meeting_02/euo_transitions_basic.html)
+
+## Slides/Docs
+
+1. [CMIE CPHS: Survey Design & Weighting](slides/2026-06-12_cmie_cphs/)
+
+2. [Survival Analysis](slides/2026-06-20_survival_analysis/)
+
+3. [Regressions for Transition Probabilities](docs/2026-06-23_transition_regression/)
