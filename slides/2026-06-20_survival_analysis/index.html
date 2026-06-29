@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="index_files/libs/clipboard/clipboard.min.js"></script>
+<script src="index_files/libs/quarto-html/tabby.min.js"></script>
+<script src="index_files/libs/quarto-html/popper.min.js"></script>
+<script src="index_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="index_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="index_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="index_files/libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.9.38">
+
+  <meta name="author" content="Jyotiraditya Pradhan">
+  <title>Survival Analysis</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="index_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="index_files/libs/revealjs/dist/reveal.css">
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto-2740581606dc327e82f18f789b69d8a0.css">
+  <link href="index_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="index_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="index_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="index_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" class="quarto-title-block center">
+  <h1 class="title">Survival Analysis</h1>
+
+<div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Jyotiraditya Pradhan 
+</div>
+</div>
+</div>
+
+</section>
+<section id="intro" class="slide level2">
+<h2>Intro</h2>
+<ul>
+<li class="fragment"><p>In survival analysis, we study the data where the outcome variable is the time until an event occurs.</p></li>
+<li class="fragment"><p>Eg: death of a cancer patient, re-employment of an unemployed worker, machine becoming unserviceable, etc.</p></li>
+<li class="fragment"><p>The time taken for for the event to occur (from beginning of/entry into the study) is called the <em>survival time</em>. The event occurring is referred to as <em>failure</em>.</p></li>
+<li class="fragment"><p>Hereafter, we will assume that failure can only occur once.</p></li>
+<li class="fragment"><p>Survival time by the random variable <span class="math inline">\(T \geq 0\)</span>.</p></li>
+</ul>
+</section>
+<section id="censoring" class="slide level2">
+<h2>Censoring</h2>
+<ul>
+<li class="fragment"><p>Censoring occurs when at some point of time, we lack information about the subject and hence cannot determine the survival time exactly.</p></li>
+<li class="fragment"><p>Happens due to i) attrition or ii) the study ending.</p></li>
+<li class="fragment"><p>Data can be i) <em>right-censored</em> ii) <em>left censored</em> or iii) <em>mid (interval) censored</em></p></li>
+<li class="fragment"><p>Hereafter, we will assume data to be right censored.</p></li>
+</ul>
+</section>
+<section id="censoring-contd." class="slide level2">
+<h2>Censoring (Contd.)</h2>
+<ul>
+<li class="fragment">Censoring is denoted by the random variable <span class="math inline">\(\delta\)</span>.</li>
+</ul>
+<div class="fragment">
+<p><span class="math display">\[
+\delta = \begin{cases}
+    1 &amp; \text{if failure} \\
+    0 &amp; \text{if censored} \\
+\end{cases}
+\]</span></p>
+</div>
+</section>
+<section id="survivor-function" class="slide level2">
+<h2>Survivor Function</h2>
+<ul>
+<li class="fragment">Denoted by <span class="math inline">\(S(t)\)</span>.</li>
+</ul>
+<div class="fragment">
+<p><span class="math display">\[
+S(t) = \mathbb{P}(T &gt; t)
+\]</span></p>
+<ul>
+<li class="fragment"><p>Gives the probability that a person survives longer than some specified time <span class="math inline">\(t\)</span>.</p></li>
+<li class="fragment"><p><span class="math inline">\(S(0) = 1\)</span> and <span class="math inline">\(S(\infty) = 0\)</span>.</p></li>
+</ul>
+</div>
+</section>
+<section id="hazard-function" class="slide level2">
+<h2>Hazard Function</h2>
+<ul>
+<li class="fragment">Denoted by <span class="math inline">\(h(t)\)</span></li>
+</ul>
+<div class="fragment">
+<p><span class="math display">\[
+h(t) = \lim_{\Delta t \to 0 } \frac{\mathbb{P}(t &lt; T \leq t + \Delta T | T \geq t)}{\Delta t}
+\]</span></p>
+<ul>
+<li class="fragment"><p>Gives the instantaneous potential per unit time for the event to occur, given that the individual has survived up to time t.</p></li>
+<li class="fragment"><p>Also known as the <em>conditional failure rate</em></p></li>
+<li class="fragment"><p><span class="math inline">\(h(t) \geq 0\)</span>. Has no upper bound.</p></li>
+</ul>
+</div>
+</section>
+<section id="relationship-between-survivor-hazard-functions" class="slide level2">
+<h2>Relationship between Survivor &amp; Hazard Functions</h2>
+<ul>
+<li class="fragment"><p><span class="math inline">\(S(t) = \exp{\left[- \int_{0}^{t} h(u) du\right]}\)</span></p></li>
+<li class="fragment"><p><span class="math inline">\(h(t) = - \left[\frac{\frac{d S(t)}{dt}}{S(t)} \right]\)</span></p></li>
+</ul>
+</section>
+<section id="hazard-function-from-survivor-function-derivation" class="slide level2 scrollable smaller">
+<h2>Hazard Function from Survivor Function (Derivation)</h2>
+<div class="fragment">
+<p><span class="math display">\[
+\begin{aligned}
+&amp;&amp; S(t) &amp;= \mathbb{P}(T &gt; t)\\
+&amp; \Rightarrow
+&amp; \frac{dS(t)}{dt}
+&amp;= \lim_{\Delta t \to 0 } \frac{\mathbb{P}(T &gt; t + \Delta t) - \mathbb{P}(T &gt; t)}{\Delta t}\\
+&amp; \Rightarrow
+&amp; -\frac{dS(t)}{dt}
+&amp;= \lim_{\Delta t \to 0 } \frac{\mathbb{P}(T &gt; t) - \mathbb{P}(T &gt; t + \Delta t)}{\Delta t}\\
+&amp;&amp;&amp; = \lim_{\Delta t \to 0 } \frac{\mathbb{P}(t &lt; T \leq t + \Delta t)}{\Delta t}\\
+&amp;&amp;&amp; = \lim_{\Delta t \to 0 } \frac{\mathbb{P}(t &lt; T \leq t + \Delta t) \cap \mathbb{P}(T &gt; t)}{\Delta t}\\
+&amp; \Rightarrow
+&amp; - \left[\frac{\frac{d S(t)}{dt}}{S(t)} \right]
+&amp;= \lim_{\Delta t \to 0 } \frac{1}{\Delta t} \frac{\mathbb{P}(t &lt; T \leq t + \Delta t) \cap \mathbb{P}(T &gt; t)}{\mathbb{P}(T &gt; t)}\\
+&amp;&amp;&amp; = \lim_{\Delta t \to 0 } \frac{\mathbb{P}(t &lt; T \leq t + \Delta t | T &gt; t)}{\Delta t} \\
+&amp; \Rightarrow
+&amp; - \left[\frac{\frac{d S(t)}{dt}}{S(t)} \right]
+&amp;= h(t)
+\end{aligned}
+\]</span></p>
+</div>
+</section>
+<section id="kaplan-meier-estimator" class="slide level2">
+<h2>Kaplan Meier Estimator</h2>
+<ul>
+<li class="fragment"><p>Descriptive statistics about about survival time such as average survival time are not very helpful as they do not account for censoring.</p></li>
+<li class="fragment"><p>The <em>Kaplan Meier Estimator</em> is a non-parametric model used to estimate survival time.</p></li>
+<li class="fragment"><p>It is denoted by <span class="math inline">\(\widehat{S}(t)\)</span></p></li>
+<li class="fragment"><p>It deals the problem of censoring by using a recursive formula to account for it.</p></li>
+</ul>
+</section>
+<section id="kaplan-meier-estimator-contd." class="slide level2 scrollable">
+<h2>Kaplan Meier Estimator (Contd.)</h2>
+<p><span class="math display">\[
+\begin{aligned}
+\widehat{S}(t_j)
+&amp;= \prod_{i = 1}^{j} \widehat{\mathbb{P}}(T &gt; t_j | T &gt; t_{j-1})\\
+&amp;= \prod_{i = 1}^{j} \left(\frac{r_j - q_j}{r_j}\right)
+\end{aligned}
+\]</span></p>
+<div class="fragment">
+<p>where <span class="math inline">\(r_j\)</span> is the number of individuals alive just before <span class="math inline">\(t_j\)</span>, and <span class="math inline">\(q_j\)</span> is the number of individuals who fail at <span class="math inline">\(t_j\)</span>.</p>
+<ul>
+<li class="fragment"><p><span class="math inline">\(r_j\)</span> is also called the cardinality of the <em>risk set</em>. it is essentially the difference of the number of individuals failing or getting censored at <span class="math inline">\(t_{j-1}\)</span> from the number of individuals surviving in <span class="math inline">\(t_{j-1}\)</span>.</p></li>
+<li class="fragment"><p>The above formula is also known as the <em>product limit formula</em>.</p></li>
+</ul>
+</div>
+</section>
+<section id="kaplan-meier-estimator-derivation" class="slide level2 scrollable smaller">
+<h2>Kaplan Meier Estimator (Derivation)</h2>
+<div class="fragment">
+<p><span class="math display">\[
+\begin{aligned}
+\widehat{S}(t_j)
+&amp;= \widehat{\mathbb{P}}(T &gt; t_j)\\
+&amp;= \widehat{\mathbb{P}}(T &gt; t_j | T &gt; t_{j-1})\widehat{\mathbb{P}}(T &gt; t_{j-1}) \\
+&amp; \quad + \widehat{\mathbb{P}}(T &gt; t_j | T \leq t_{j-1})\widehat{\mathbb{P}}(T \leq t_{j-1})
+&amp; \{\text{Law of Total Probability}\}\\
+&amp;= \widehat{\mathbb{P}}(T &gt; t_j | T &gt; t_{j-1})\widehat{\mathbb{P}}(T &gt; t_{j-1}) + 0\\
+&amp;= \prod_{i = 1}^{j} \widehat{\mathbb{P}}(T &gt; t_i | T &gt; t_{i-1})\\
+&amp;= \prod_{i = 1}^{j} \frac{\widehat{\mathbb{P}}(T &gt; t_i) \cap \widehat{\mathbb{P}}(T &gt; t_{i-1})}{\widehat{\mathbb{P}}(T &gt; t_{i-1})}\\
+&amp;= \prod_{i = 1}^{j} \frac{\widehat{\mathbb{P}}(T &gt; t_i)}{\widehat{\mathbb{P}}(T &gt; t_{i-1})}\\
+&amp;= \prod_{i = 1}^{j} \left(\frac{r_i - q_i}{r_i}\right)
+\end{aligned}
+\]</span></p>
+</div>
+</section>
+<section id="the-cox-proportional-hazard-ph-model" class="slide level2">
+<h2>The Cox Proportional Hazard (PH) Model</h2>
+<ul>
+<li class="fragment"><p>If we intend to obtain the survivor or hazard function while controlling for a set of covariates, we use the Cox PH Model,</p></li>
+<li class="fragment"><p>It is a semi-parametric model, which assumes the hazard function to take a following form:</p></li>
+</ul>
+<div class="fragment">
+<p><span class="math display">\[
+h(t|\mathbf{X_i}) = h_0(t) \exp (\boldsymbol{\beta}^T \mathbf{X_i})
+\]</span></p>
+</div>
+<div class="fragment">
+<p>where <span class="math inline">\(h_0 \geq 0\)</span> is an unspecified baseling hazard function, and <span class="math inline">\(\mathbf{X_i}\)</span> is vector of covariates for observation <span class="math inline">\(i\)</span>.</p>
+</div>
+</section>
+<section id="why-is-cox-ph-semi-parametric" class="slide level2">
+<h2>Why is Cox PH Semi-Parametric?</h2>
+<ul>
+<li class="fragment"><p><strong>The PH Assumption:</strong> The model makes some assumptions about the functional form for the hazard function.</p></li>
+<li class="fragment"><p><strong>Unspecified Baseline:</strong> However, the baseline function (<span class="math inline">\(h_0\)</span>) is unspecified.</p></li>
+<li class="fragment"><p>These makes the model flexible. If the data does have an underlying parametric distribution, the Cox PH model will approximate it.</p></li>
+<li class="fragment"><p>However, these also affect when we can apply the model, and how we interpret it.</p></li>
+</ul>
+</section>
+<section id="hazard-ratio" class="slide level2">
+<h2>Hazard Ratio</h2>
+<ul>
+<li class="fragment"><p>Take two vectors <span class="math inline">\(\mathbf{X_i}\)</span> and <span class="math inline">\(\mathbf{X_j}\)</span> of same dimension.</p></li>
+<li class="fragment"><p>The Hazard Ratio is given by: <span class="math display">\[
+\begin{align}
+\widehat{HR} &amp;= \frac{\widehat{h}(t, \mathbf{X_i})}{\widehat{h}(t, \mathbf{X_j})}\\
+&amp;= \frac{h_0(t) \exp (\boldsymbol{\beta}^T \mathbf{X_i})}{h_0(t) \exp (\boldsymbol{\beta}^T \mathbf{X_j})} \\
+&amp;= \exp (\boldsymbol{\beta}^T(\mathbf{X_i} - \mathbf{X_j}))
+\end{align}
+\]</span></p></li>
+<li class="fragment"><p>A result of the PH assumption is that the HR stays constant over time.</p></li>
+</ul>
+</section>
+<section id="cox-likelihood" class="slide level2">
+<h2>Cox Likelihood</h2>
+<ul>
+<li class="fragment"><p>Given we are leaving <span class="math inline">\(h_0\)</span> unspecified, we maximize only the partial likelihood of Cox PH.</p></li>
+<li class="fragment"><p>Assume there are no ties in in time of failure.</p></li>
+<li class="fragment"><p>The partial likelihood is given by: <span class="math display">\[
+PL(\boldsymbol{\beta}) = \prod_{i:\delta_i = 1} \frac{\exp(\boldsymbol{\beta}^T \mathbf{X}_i)}{\sum_{i^\prime: T_{i^\prime} \geq T_i} \exp(\boldsymbol{\beta}^T \mathbf{X}_{i^\prime})}
+\]</span></p></li>
+</ul>
+</section>
+<section id="cox-likelihoodcontd." class="slide level2 smaller">
+<h2>Cox Likelihood(contd.)</h2>
+<ul>
+<li class="fragment"><p>If we relax the “no ties” assumption there are two estimators we can use.</p></li>
+<li class="fragment"><p><strong>Breslow Estimator:</strong> <span class="math display">\[
+\begin{align}
+PL(\boldsymbol{\beta})
+&amp;=
+\prod_{l=1}^r \frac{\exp(\boldsymbol{\beta}^T \mathbf{X}^*_l)}{ \left[ \sum_{l^\prime: T_{l^\prime j} \geq T_{lj}} \exp(\boldsymbol{\beta}^T \mathbf{X}^*_{l^\prime j}) \right] ^{d_l}}
+\end{align}
+\]</span></p></li>
+<li class="fragment"><p><strong>Efron Correction:</strong> <span class="math display">\[
+\begin{align}
+PL(\boldsymbol{\beta})
+&amp;=
+\prod_{l=1}^r{\frac{\exp(\boldsymbol{\beta}^T \mathbf{X}^*_l)}{\prod_{j=1}^{d_l} \left[ \sum_{l^\prime: T_{l^\prime j} \geq T_{lj}} \exp(\boldsymbol{\beta}^T \mathbf{X}^*_{l^\prime j}) - (j -1) \frac{1}{d_l} \sum_{k=1}^{d_l}  \exp(\boldsymbol{\beta}^T \mathbf{X}_{lk}) \right]} }
+\end{align}
+\]</span></p></li>
+<li class="fragment"><p>The <em>Berslow Estimator</em> is computationally simpler but more biased to underestimation compared to the <em>Effron Correction</em>.</p></li>
+</ul>
+</section>
+<section id="cox-likelihood-without-ties-derivation" class="slide level2 scrollable">
+<h2>Cox Likelihood without Ties (Derivation)</h2>
+<ul>
+<li class="fragment"><p>Take an uncensored observation <span class="math inline">\(i\)</span> with failure time <span class="math inline">\(T_i\)</span>.</p></li>
+<li class="fragment"><p>The hazard function for the <span class="math inline">\(i^\text{th}\)</span> observation at time <span class="math inline">\(T_i\)</span> is <span class="math inline">\(h(T_i|\mathbf{X}_i) =  h_0(T_i) \exp (\boldsymbol{\beta}^T \mathbf{X}_i)\)</span>.</p></li>
+<li class="fragment"><p>The total hazard for at time <span class="math inline">\(T_i\)</span> for the at risk population is <span class="math inline">\(\sum_{i^\prime: T_{i^\prime} \geq T_i} h_0(T_i) \exp(\boldsymbol{\beta}^T \mathbf{X}_{i^\prime})\)</span></p></li>
+<li class="fragment"><p>Thus, the probability that observation <span class="math inline">\(i\)</span> is the one to fail at observation <span class="math inline">\(T_i\)</span> is <span class="math inline">\(\frac{h_0(T_i) \exp(\boldsymbol{\beta}^T \mathbf{X}_i)}{h_0(T_i) \sum_{i^\prime: T_{i^\prime} \geq T_i} \exp(\boldsymbol{\beta}^T \mathbf{X}_{i^\prime})} = \frac{\exp(\boldsymbol{\beta}^T \mathbf{X}_i)}{\sum_{i^\prime: T_{i^\prime} \geq T_i} \exp(\boldsymbol{\beta}^T \mathbf{X}_{i^\prime})}\)</span></p></li>
+<li class="fragment"><p>We get the partial likelihood by taking a product of these probabilities over all uncensored observations. <span class="math display">\[
+PL(\boldsymbol{\beta}) = \prod_{i:\delta_i = 1} \frac{\exp(\boldsymbol{\beta}^T \mathbf{X}_i)}{\sum_{i^\prime: T_{i^\prime} \geq T_i} \exp(\boldsymbol{\beta}^T \mathbf{X}_{i^\prime})}
+\]</span></p></li>
+</ul>
+</section>
+<section id="cox-likelihood-with-ties-derivation" class="slide level2 smaller scrollable">
+<h2>Cox Likelihood with Ties (Derivation)</h2>
+<ul>
+<li class="fragment"><p>Assume we have <span class="math inline">\(r\)</span> distinct failure times with <span class="math inline">\(d_l\)</span> deaths at the <span class="math inline">\(l^\text{th}\)</span> distinct time. <span class="math inline">\(T^*_{11} = T^*_{12} = \cdots = T^*_{1d_1} &lt; T^*_{21} = T^*_{22} = \cdots = T^*_{2d_2} &lt; \cdots \\ \hspace{18em} &lt; T^*_{r1} = T^*_{r2} = \cdots = T^*_{rd_r}\)</span></p></li>
+<li class="fragment"><p>Let <span class="math inline">\(\mathbf{X}^*_{lj}\)</span> be the vector of covariates for the observation that fails at time <span class="math inline">\(T^*_{lj}\)</span>. Let <span class="math inline">\(\mathbf{X}^*_{l} = \sum_{j=1}^{d_l}{\mathbf{X}^*_{lj}}\)</span>.</p></li>
+<li class="fragment"><p>Suppose we knew <span class="math inline">\(T^*_{l1} &lt; T^*_{l2} &lt; \cdots &lt; T^*_{ld_l}\)</span>.</p></li>
+<li class="fragment"><p>In this case the Cox Likelihood would be: <span class="math display">\[
+\begin{align}
+PL(\boldsymbol{\beta})
+&amp;=
+\prod_{l=1}^r\prod_{j=1}^{d_l}\frac{\exp(\boldsymbol{\beta}^T \mathbf{X}^*_{lj})}{\sum_{l^\prime, j^\prime: T_{l^\prime j^\prime} \geq T_{lj}} \exp(\boldsymbol{\beta}^T \mathbf{X}^*_{l^\prime j^\prime})}
+\\&amp;=
+\prod_{l=1}^r\frac{\prod_{j=1}^{d_l}{\exp(\boldsymbol{\beta}^T \mathbf{X}^*_{lj})}}{\prod_{j=1}^{d_l} \left[ \sum_{l^\prime, j^\prime: T_{l^\prime j^\prime} \geq T_{lj}} \exp(\boldsymbol{\beta}^T \mathbf{X}^*_{l^\prime j^\prime})\right] }
+\\&amp;=
+\prod_{l=1}^r{\frac{\exp(\boldsymbol{\beta}^T \mathbf{X}^*_l)}{\prod_{j=1}^{d_l} \left[ \sum_{l^\prime: T_{l^\prime j} \geq T_{lj}} \exp(\boldsymbol{\beta}^T \mathbf{X}^*_{l^\prime j}) - \sum_{j^{\prime\prime}: T_{lj^{\prime\prime}} &lt; T_{lj}} \exp(\boldsymbol{\beta}^T \mathbf{X}^*_{lj^{\prime\prime}}) \right]} }
+\end{align}
+\]</span></p></li>
+<li class="fragment"><p>However, we don’t know <span class="math inline">\(T^*_{l1} &lt; T^*_{l2} &lt; \cdots &lt; T^*_{ld_l}\)</span> due to ties. Hence, we cannot estimate <span class="math inline">\(\sum_{j^{\prime\prime}: T_{lj^{\prime\prime}} &lt; T_{lj}} \exp(\boldsymbol{\beta}^T \mathbf{X}^*_{lj^{\prime\prime}})\)</span>.</p></li>
+<li class="fragment"><p>We shall consider two ways of approximating the likelihood.</p></li>
+<li class="fragment"><p><strong>Breslow Estimator:</strong> Ignore the sum. Hence, the Cox likelihood becomes: <span class="math display">\[
+\begin{align}
+PL(\boldsymbol{\beta})
+&amp;=
+\prod_{l=1}^r \frac{\exp(\boldsymbol{\beta}^T \mathbf{X}^*_l)}{ \left[ \sum_{l^\prime: T_{l^\prime j} \geq T_{lj}} \exp(\boldsymbol{\beta}^T \mathbf{X}^*_{l^\prime j}) \right]^{d_l}}
+\end{align}
+\]</span></p></li>
+<li class="fragment"><p><strong>Efron Correction:</strong> Replace the sum by <span class="math inline">\(j-1\)</span> times the average. <span class="math display">\[
+\sum_{j^{\prime\prime}: T_{lj^{\prime\prime}} &lt; T_{lj}} \exp(\boldsymbol{\beta}^T \mathbf{X}_{lj^{\prime\prime}}) \approx (j -1) \frac{1}{d_l} \sum_{k=1}^{d_l}  \exp(\boldsymbol{\beta}^T \mathbf{X}_{lk})
+\]</span> Hence, the Cox likelihood becomes: <span class="math display">\[
+\begin{align}
+PL(\boldsymbol{\beta})
+=
+\prod_{l=1}^r{\frac{\exp(\boldsymbol{\beta}^T \mathbf{X}^*_l)}{\prod_{j=1}^{d_l} \left[ \sum_{l^\prime: T_{l^\prime j} \geq T_{lj}} \exp(\boldsymbol{\beta}^T \mathbf{X}^*_{l^\prime j}) - (j -1) \frac{1}{d_l} \sum_{k=1}^{d_l}  \exp(\boldsymbol{\beta}^T \mathbf{X}_{lk}) \right]} }
+\end{align}
+\]</span></p></li>
+</ul>
+</section>
+<section id="weibull-model" class="slide level2">
+<h2>Weibull Model</h2>
+<ul>
+<li class="fragment"><p>This a parametric distribution</p></li>
+<li class="fragment"><p>The hazard function takes the following form: <span class="math inline">\(h(t, \mathbf{X}) = \lambda(t, \mathbf{X}) p t^{p-1}\)</span> where <span class="math inline">\(\lambda(t, \mathbf{X}) = \exp(\beta_0 + \boldsymbol{\beta}^T\mathbf{X}) &gt; 0\)</span> and <span class="math inline">\(p&gt;0\)</span></p></li>
+<li class="fragment"><p>Here, <span class="math inline">\(\lambda\)</span> is called the <em>scale parameter</em> and <span class="math inline">\(p\)</span> is called the shape parameter.</p></li>
+</ul>
+</section>
+<section id="shape-hazard-in-weibull-model" class="slide level2">
+<h2>Shape &amp; Hazard in Weibull Model</h2>
+<ul>
+<li class="fragment"><p><span class="math inline">\(p&gt;1 \implies\)</span> hazard increases over time.</p></li>
+<li class="fragment"><p><span class="math inline">\(p=1 \implies\)</span> constant hazard (equivalent to an exponential model where <span class="math inline">\(h(t) = \lambda(t)\)</span>).</p></li>
+<li class="fragment"><p><span class="math inline">\(p&lt;1 \implies\)</span> hazard decreases over time.</p></li>
+</ul>
+</section>
+<section id="hazard-ratio-in-a-weibull-model" class="slide level2">
+<h2>Hazard Ratio in a Weibull Model</h2>
+<ul>
+<li class="fragment"><p>Take two different observation <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span> with covariates <span class="math inline">\(\mathbf{X}_i\)</span> and <span class="math inline">\(\mathbf{X}_j\)</span> respectively.</p></li>
+<li class="fragment"><p>The <em>hazard ratio</em> is given by: <span class="math display">\[
+\begin{align}
+\widehat{HR} &amp;= \frac{\widehat{h}(t, \mathbf{X_i})}{\widehat{h}(t, \mathbf{X_j})}\\
+&amp;= \frac{\exp (\beta_0 + \boldsymbol{\beta}^T \mathbf{X_i}) p t^{p-1}} {\exp (\beta_0 + \boldsymbol{\beta}^T \mathbf{X_j}) p t^{p-1}} \\
+&amp;= \exp (\boldsymbol{\beta}^T(\mathbf{X_i} - \mathbf{X_j}))
+\end{align}
+\]</span></p></li>
+</ul>
+</section>
+<section id="the-accelerated-failure-time-aft-assumption" class="slide level2">
+<h2>The Accelerated Failure Time (AFT) Assumption</h2>
+<ul>
+<li class="fragment"><p>Take <span class="math inline">\(T_1\)</span> and <span class="math inline">\(T_2\)</span> to be the survival times associated with two groups, the AFT assumption says that <span class="math inline">\(T_1 = \gamma T_2\)</span> and <span class="math inline">\(S(t_1) = S(\gamma t_2), \forall t\)</span></p></li>
+<li class="fragment"><p>Just like the underlying assumption in <strong>PH models</strong> is that the <em>effect of covariates</em> is <em>multiplicative</em> with respect to the <strong><em>hazard</em></strong>, the underlying assumption in the <strong>AFT Models</strong> is that the <em>effect of covariates</em> is <em>multiplicative</em> with respect to <strong><em>survival time</em></strong>.</p></li>
+<li class="fragment"><p>The <span class="math inline">\(\lambda\)</span> here is known as the <strong>Acceleration Factor</strong>.</p></li>
+</ul>
+</section>
+<section id="aft-in-weibull-model" class="slide level2 scrollable">
+<h2>AFT in Weibull Model</h2>
+<ul>
+<li class="fragment"><p>We can estimate the Weibull survivor function from the hazard function: <span class="math display">\[
+\begin{align}
+&amp;&amp;
+h(t, \mathbf{X}) &amp;= \lambda(t, \mathbf{X}) p t^{p-1}\\
+&amp;
+\Rightarrow &amp; S(t, \mathbf{X}) &amp;= \exp(-\lambda(t, \mathbf{X}) t^p)
+\end{align}
+\]</span></p></li>
+<li class="fragment"><p>Take <span class="math inline">\(t\)</span> to the LHS: <span class="math display">\[
+\begin{align}
+t &amp;= [- \ln S(t, \mathbf{X})]^{\frac{1}{p}} \times \frac{1}{\lambda(t, \mathbf{X}) ^ {\frac{1}{p}}}
+\end{align}
+\]</span></p></li>
+<li class="fragment"><p>Reparametrize <span class="math inline">\(\frac{1}{\lambda(t, \mathbf{X}) ^ \frac{1}{p}} = \exp(\alpha_0 + \boldsymbol{\alpha}^T \mathbf{X})\)</span></p></li>
+<li class="fragment"><p>Now, <span class="math inline">\(t = [- \ln (S(t, \mathbf{X}))]^{\frac{1}{p}} \times \exp(\alpha_0 + \boldsymbol{\alpha}^T \mathbf{X})\)</span></p></li>
+<li class="fragment"><p>Let <span class="math inline">\(S(t, \mathbf{X_j}) = q\)</span> <br> By AFT, <span class="math inline">\(S(\lambda t, \mathbf{X_i}) = q\)</span></p></li>
+<li class="fragment"><p>Using the above definition of t, <span class="math display">\[
+\begin{align}
+&amp;&amp;
+\lambda &amp;= \frac{\lambda t}{t}\\
+&amp;&amp;&amp;=
+\frac{[- \ln (S(\lambda t, \mathbf{X_i}))]^{\frac{1}{p}} \times \exp(\alpha_0 + \boldsymbol{\alpha}^T \mathbf{X_j})} {[- \ln (S(\lambda t, \mathbf{X_j}))]^{\frac{1}{p}} \times \exp(\alpha_0 + \boldsymbol{\alpha}^T \mathbf{X_i})}\\
+&amp;&amp;&amp;=
+\frac{[- \ln (q)]^{\frac{1}{p}} \times \exp(\alpha_0 + \boldsymbol{\alpha}^T \mathbf{X_i})} {[- \ln (q)]^{\frac{1}{p}} \times \exp(\alpha_0 + \boldsymbol{\alpha}^T \mathbf{X_j})}\\
+&amp; \Rightarrow &amp;
+\lambda &amp;= \exp(\boldsymbol{\alpha}^T (\mathbf{X_i} - \mathbf{X_j}))
+\end{align}
+\]</span></p></li>
+</ul>
+</section>
+<section id="aft-ph-in-weibull" class="slide level2 scrollable">
+<h2>AFT &amp; PH in Weibull</h2>
+<ul>
+<li class="fragment"><p>In a Weibull model, if <span class="math inline">\(p\)</span> is fixed, AFT <span class="math inline">\(\iff\)</span> PH.</p></li>
+<li class="fragment"><p>We can also derive a relationship between the coefficients.</p></li>
+<li class="fragment"><p>Under AFT, <span class="math display">\[
+\begin{align}
+&amp;&amp;
+\frac{1}{\lambda ^ \frac{1}{p}} &amp;= \exp(\alpha_0 + \boldsymbol{\alpha}^T \mathbf{X}) \\
+&amp;\Rightarrow&amp;
+(1-p)\ln(\lambda)
+&amp;= - (\alpha_0 + \boldsymbol{\alpha}^T \mathbf{X}) \\
+&amp;\Rightarrow&amp;
+\ln(\lambda) &amp;= -p (\alpha_0 + \boldsymbol{\alpha}^T \mathbf{X})
+\end{align}
+\]</span></p></li>
+<li class="fragment"><p>Under PH <span class="math display">\[
+\begin{align}
+&amp;&amp;
+\lambda &amp;= \exp (\beta_0 + \boldsymbol{\beta}^T \mathbf{X})\\
+&amp; \Rightarrow &amp;
+\ln(\lambda) &amp;= \beta_0 + \boldsymbol{\beta}^T \mathbf{X}
+\end{align}
+\]</span></p></li>
+<li class="fragment"><p>Hence, <span class="math inline">\(\beta_0 = - \alpha_0\)</span> and <span class="math inline">\(\beta = - \alpha\)</span></p></li>
+</ul>
+</section>
+<section id="references" class="slide level2 smaller">
+<h2>References</h2>
+<ul>
+<li><p><em>Breslow vs Efron tie handling in Cox proportional hazards.</em> (2026). MetricGate. <a href="https://metricgate.com/blogs/breslow-vs-efron-tie-handling-cox/">https://metricgate.com/blogs/breslow-vs-efron-tie-handling-cox/</a></p></li>
+<li><p>James, G., Witten, D., Hastie, T., &amp; Tibshirani, R. (2021). <em>An introduction to statistical learning: With applications in R</em> (2nd ed). Springer. <a href="https://www.statlearning.com/">https://www.statlearning.com/</a></p></li>
+<li><p>Kleinbaum, D. G., &amp; Klein, M. (2005). <em>Survival analysis: A self-learning text</em> (2nd ed). Springer.</p></li>
+<li><p>Waagepetersen, R. (2024, Semptember 29). <em>Cox’s proportional hazards model and Cox’s partial likelihood.</em> Aalborg University. <a href="https://people.math.aau.dk/~rw/Undervisning/DurationAnalysis/Slides/lektion3.pdf">https://people.math.aau.dk/~rw/Undervisning/DurationAnalysis/Slides/lektion3.pdf</a></p></li>
+</ul>
+
+</section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<div class="footer footer-default">
+
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="index_files/libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="index_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="index_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="index_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="index_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="index_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="index_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="index_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="index_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="index_files/libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: false,
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1050,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    <script id="quarto-html-after-body" type="application/javascript">
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
+            }
+          }
+          return false;
+        }
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "Copied!");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "Copied!");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
+          }
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
+            }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
+        }
+        const getTextToCopy = function(trigger) {
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+        }
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp('/' + window.location.host + '/');
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
+            }
+          }
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
+          }
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
+          }
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
+        }
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
+          });
+        }
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
+    
+
+</body></html>

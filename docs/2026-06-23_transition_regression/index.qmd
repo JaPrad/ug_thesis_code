@@ -1,0 +1,43 @@
+---
+title: "Regressions for Transition Probablitiles"
+author: "Jyotiraditya Pradhan"
+format: html
+execute: 
+  echo: false
+---
+
+## Transition Probability
+
+Let $E$ be a set of all possible employment states. Let $S_{it}$ be the random variable representing the employment state of individual $i$ in time period $t$. 
+
+Take $e \in E$. Let $\mathbb{I}_e(S_{it})$ be an indicator function defined as
+
+$$
+\mathbb{I}_e(S_{it}) = 
+    \begin{cases} 
+      1 & \text{if } S_{it} = e\\
+      0 & \text{if } S_{it} \neq e
+   \end{cases}
+$$
+
+Take $e_1, e_2 \in E$. The transition probability of $e_1e_2$ is given by 
+
+$$
+\mathbb{P}(S_{t+1} = e_2 | S_t = e_1) = \frac{\sum_{i=1}^n [\mathbb{I}_{e_1}(S_{it}) \times \mathbb{I}_{e_2}(S_{it+1})]}{\sum_{i=1}^n \mathbb{I}_{e_1}(S_{it})}
+$$
+
+## Logistic Regression
+
+### Controlling for Covariates
+
+Say we want to control for a set of covariates $\mathbf{X}$. Then, the transition probability of $e_1e_2$ can be estimated using the following regression equation:
+
+$$
+\mathbb{P}(S_{t+1} = e_2 | S_t = e_1, \mathbf{X}_i) = \Lambda(\alpha + \mathbf{X}_i^T \beta)
+$$
+
+where $\Lambda(\cdot)$ is the standard logistic function. Note that the sample to estimate the above regression is restricted to individuals with $S_1 = e_1$.
+
+### Time fixed effects
+
+We can control for the differences between the pre and post COVID period using a dummy $Covid_t$, which takes the value $1$ for $t \geq 2022$. We could also use a vector of dummies $\boldsymbol{\delta}_t$ for each year. We can also find the intreaction of these dummies with different covariates.
