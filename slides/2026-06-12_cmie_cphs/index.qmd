@@ -7,7 +7,7 @@ format:
         incremental: true
 ---
 
-# Survey Design
+# Survey Design (Vyas, 2020c)
 
 ## Stratification
 
@@ -29,7 +29,7 @@ format:
 
 - 640 Districts $\rightarrow$ 110 HRs
 
-- For full list, check Table 1 (Page 5) of Survey Design and Sample in [CPHS Documentation](https://consumerpyramidsdx.cmie.com/kommon/bin/sr.php?kall=wkb).
+- For full list, check Table 1 (Page 5) of Vyas (2020c).
 
 ## Urban/Rural Sub-Starta
 
@@ -93,6 +93,8 @@ Not every HR has all 5 kinds of sub-strata
 
 ![](images/sample_dist_2019.png){fig-align="center"}
 
+# Changes in Sample (Vyas, 2020a)
+
 ## Changes in Sample
 
 - CPHS' design allows for convenient changing of sample, if required.
@@ -137,7 +139,7 @@ A restoration exercise was taken up in 2015 to bring sample size close to the de
 The only exception to this process is when expansion is intentionally done expand coverage of districts. Although this could cause bias, it is necessary to ensure representativeness.
 :::
 
-## Timings of Surveys
+## Timings of Surveys (Vyas, 2020b)
 
 - Each year is divided in 4 waves. A household is interviewed once in each wave.
 
@@ -147,7 +149,7 @@ The only exception to this process is when expansion is intentionally done expan
 
 - Weekly spillovers are allowed. Monthly spillovers are allowed but minimized. Spillovers over waves are not allowed.
 
-# Weighting
+# Weighting (Vyas, 2020d)
 
 ## Weighting
 
@@ -221,11 +223,93 @@ Note that this provides only total population, and no demographic breakdown beyo
 
 - In some notable exceptions, where the rural/urban ratio of the new district was very different from the old district, distributions from 2011 were used instead.
 
-## Rural vs Urban Projections
+## Urban Projections
 
-- The previously described exercise was used to obtain district level projectin for rural ares. For urban areas, we use town level projections instead.
+- For urban areas, town level projections are used instead.
 
-- The mapping exercise is broadly similar as the previous ones.
+- The mapping exercise is broadly similar as the previous one, with matching done using [Census A-4 Appendix 1: New towns added in 2001 and towns of 1991 declassified in 2001](https://censusindia.gov.in/nada/index.php/catalog/20048)
 
-## Mapping 
+- Out of 8,067 town identities (i.e. towns + outgrowths) in the 2011 census, 4,480 towns were present in 2001 census, 2,673 had 2001 population information available, and 438 could be mapped. The method for obtaining the estimates of 76 towns is not provided. The population of 25 towns could not be found, and the district's urban compounded rate of growth has been used for these towns.
+
+## Growth Rates 
+
+The daily compounded growth rates between 2001 and 2011 were obtained for the following three estimates: 
+
+1. Total Households
+
+2. Total Population
+
+3. Population of 15 years of age or more
+
+. . .
+
+Each of the above are estimated independently.
+
+## Some Adjustments  
+
+-  25,692 estimates were made. 15,232 of these were accepted without any change. The remaining was tweaked using the processes described below.
+
+1. **15-years-of-age-or-more estimates for towns:** The age-distribution of population in some towns was not available. The district level urban proportions were used for these towns.
+
+## Some Adjustments (contd.)
+
+2. **When sums don't add up:** In the instances of  3,227 towns that were mapped from 2011 to 2001 census, the sum of their population doesn't add up to the district's urban level population.
+
+. . .
+
+> In such cases, the town-level estimates were left unchanged but the difference at the district urban totals level was added to the rural population of the district.This has happened in 500 districts. The average difference was a 4.5 per cent reduction in rural population in these
+districts.
+
+## Some Adjustments (contd.)
+
+3. **Clustering of growth rates closer to mean:** There is a high variation in growth rates across towns. Towns which grew very fast/slow between 2001 & 2011 are unlikely to continue on the same trajectory in the upcoming years. 
+
+. . .
+
+::: {style="margin-left: 1em"}
+In each town sub-strata, the towns are divided into 5 quintiles. The growth rate of the towns in the middle 3 quintiles is accepted as is. For towns in the first and fifth quintiles, growth rates from the second and fourth quintile are used respectively. 
+:::
+
+## Estimating $N$
+
+- The compounded daily growth rate is used to obtain appropriate $N$.
+
+- The projections are aggregated as follows: town/district rural level $\rightarrow$ district level $\rightarrow$ state level $\rightarrow$ national level. 
+
+- Separate estimates are obtained for i) total households ii) total population iii) population of 15 years of age or more. 
+
+## Obtaining Weights 
+
+- As the estimates of $N$ are available, and $n$ households/individuals are sampled, each of them is given a $\frac{N}{n}$ weight.
+
+- Weights are obtained separately for i) total households ii) total population,and iii) population of 15 years of age or more. 
+
+- Moreover, each of the above weights are also obtained at three different frequencies: i) weekly, ii) monthly, and iii) wave-level. The last date of each reference period is used to obtain weights. For the latter two, the non response rates are also reported. 
+
+## Multiple Weights
+
+- As of 2020, out of the 412 strata, CMIE is able to conduct surveys in 379 strata. North-eastern states and various Union Territories are classified as inaccessible.
+
+- Each stratum which could not be surveyed is mapped to a stratum with similar characteristics.
+
+- Households in the mapped strata are assigned three kinds of weights.
+
+- The first weight is the household's own weight. The second weight is appropriate to obtain national level estimates. The third weight is appropriate to obtain state level estimates. 
+
+## References {.smaller}
+
+:::{.nonincremental}
+
+- Vyas, M. (2020a, March 12). *Consumer Pyramids Household Survey: Sample Survival & Response Rate*. Centre for Monitoring Indian Economy Pvt. Ltd.
+
+- Vyas, M. (2020b, March 17). *Consumer Pyramids Household Survey: Survey Execution*. Centre for Monitoring Indian Economy Pvt. Ltd.
+
+- Vyas, M. (2020c, March 12). *Consumer Pyramids Household Survey: Survey Design and Sample*. Centre for Monitoring Indian Economy Pvt. Ltd.
+
+- Vyas, M. (2020d, November 11). *Consumer Pyramids Household Survey: Weights*. Centre for Monitoring Indian Economy Pvt. Ltd.
+
+:::
+
+
+
 

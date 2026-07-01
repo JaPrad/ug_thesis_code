@@ -1,5 +1,5 @@
 ---
-title: "Regressions for Transition Probablitiles"
+title: "Regression for Transition Probabilities"
 author: "Jyotiraditya Pradhan"
 format: html
 execute: 
@@ -38,6 +38,6 @@ $$
 
 where $\Lambda(\cdot)$ is the standard logistic function. Note that the sample to estimate the above regression is restricted to individuals with $S_1 = e_1$.
 
-### Time fixed effects
+### Time Fixed Effects
 
-We can control for the differences between the pre and post COVID period using a dummy $Covid_t$, which takes the value $1$ for $t \geq 2022$. We could also use a vector of dummies $\boldsymbol{\delta}_t$ for each year. We can also find the intreaction of these dummies with different covariates.
+We can control for the differences between the pre and post COVID period using a dummy $Covid_t$, which takes the value $1$ for $t \geq 2022$. We could also use a vector of dummies $\boldsymbol{\delta}_t$ for each year. We can also find the interaction of these dummies with different covariates.

@@ -180,9 +180,7 @@ Jyotiraditya Pradhan
 <li class="fragment">Denoted by <span class="math inline">\(S(t)\)</span>.</li>
 </ul>
 <div class="fragment">
-<p><span class="math display">\[
-S(t) = \mathbb{P}(T &gt; t)
-\]</span></p>
+<p><span class="math display">\[S(t) = \mathbb{P}(T &gt; t)\]</span></p>
 <ul>
 <li class="fragment"><p>Gives the probability that a person survives longer than some specified time <span class="math inline">\(t\)</span>.</p></li>
 <li class="fragment"><p><span class="math inline">\(S(0) = 1\)</span> and <span class="math inline">\(S(\infty) = 0\)</span>.</p></li>
@@ -195,9 +193,7 @@ S(t) = \mathbb{P}(T &gt; t)
 <li class="fragment">Denoted by <span class="math inline">\(h(t)\)</span></li>
 </ul>
 <div class="fragment">
-<p><span class="math display">\[
-h(t) = \lim_{\Delta t \to 0 } \frac{\mathbb{P}(t &lt; T \leq t + \Delta T | T \geq t)}{\Delta t}
-\]</span></p>
+<p><span class="math display">\[h(t) = \lim_{\Delta t \to 0 } \frac{\mathbb{P}(t &lt; T \leq t + \Delta T | T \geq t)}{\Delta t}\]</span></p>
 <ul>
 <li class="fragment"><p>Gives the instantaneous potential per unit time for the event to occur, given that the individual has survived up to time t.</p></li>
 <li class="fragment"><p>Also known as the <em>conditional failure rate</em></p></li>
@@ -282,20 +278,18 @@ h(t) = \lim_{\Delta t \to 0 } \frac{\mathbb{P}(t &lt; T \leq t + \Delta T | T \g
 \]</span></p>
 </div>
 </section>
+<section id="kaplan-meier-curve" class="slide level2">
+<h2>Kaplan Meier Curve</h2>
+
+<img data-src="images/km_plot_james.png" class="r-stretch quarto-figure-center"><p class="caption">Illustration of KM Curve (James et. al., 2021, p.&nbsp;466)</p></section>
 <section id="the-cox-proportional-hazard-ph-model" class="slide level2">
 <h2>The Cox Proportional Hazard (PH) Model</h2>
 <ul>
 <li class="fragment"><p>If we intend to obtain the survivor or hazard function while controlling for a set of covariates, we use the Cox PH Model,</p></li>
-<li class="fragment"><p>It is a semi-parametric model, which assumes the hazard function to take a following form:</p></li>
-</ul>
-<div class="fragment">
-<p><span class="math display">\[
+<li class="fragment"><p>It is a semi-parametric model, which assumes the hazard function to take a following form: <span class="math display">\[
 h(t|\mathbf{X_i}) = h_0(t) \exp (\boldsymbol{\beta}^T \mathbf{X_i})
-\]</span></p>
-</div>
-<div class="fragment">
-<p>where <span class="math inline">\(h_0 \geq 0\)</span> is an unspecified baseling hazard function, and <span class="math inline">\(\mathbf{X_i}\)</span> is vector of covariates for observation <span class="math inline">\(i\)</span>.</p>
-</div>
+\]</span> where <span class="math inline">\(h_0 \geq 0\)</span> is an unspecified baseling hazard function, and <span class="math inline">\(\mathbf{X_i}\)</span> is vector of covariates for observation <span class="math inline">\(i\)</span>.</p></li>
+</ul>
 </section>
 <section id="why-is-cox-ph-semi-parametric" class="slide level2">
 <h2>Why is Cox PH Semi-Parametric?</h2>
@@ -404,8 +398,9 @@ PL(\boldsymbol{\beta})
 <h2>Weibull Model</h2>
 <ul>
 <li class="fragment"><p>This a parametric distribution</p></li>
-<li class="fragment"><p>The hazard function takes the following form: <span class="math inline">\(h(t, \mathbf{X}) = \lambda(t, \mathbf{X}) p t^{p-1}\)</span> where <span class="math inline">\(\lambda(t, \mathbf{X}) = \exp(\beta_0 + \boldsymbol{\beta}^T\mathbf{X}) &gt; 0\)</span> and <span class="math inline">\(p&gt;0\)</span></p></li>
+<li class="fragment"><p>The hazard function takes the following form: <span class="math inline">\(h(t, \mathbf{X}) = \lambda(t, \mathbf{X}) p t^{p-1}\)</span> <br> where <span class="math inline">\(\lambda(t, \mathbf{X}) = \exp(\beta_0 + \boldsymbol{\beta}^T\mathbf{X}) &gt; 0\)</span> and <span class="math inline">\(p&gt;0\)</span></p></li>
 <li class="fragment"><p>Here, <span class="math inline">\(\lambda\)</span> is called the <em>scale parameter</em> and <span class="math inline">\(p\)</span> is called the shape parameter.</p></li>
+<li class="fragment"><p><a href="https://sesen.ai/distribution-explorer/weibull">Simulation of Weibull Distribution</a></p></li>
 </ul>
 </section>
 <section id="shape-hazard-in-weibull-model" class="slide level2">
@@ -420,13 +415,11 @@ PL(\boldsymbol{\beta})
 <h2>Hazard Ratio in a Weibull Model</h2>
 <ul>
 <li class="fragment"><p>Take two different observation <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span> with covariates <span class="math inline">\(\mathbf{X}_i\)</span> and <span class="math inline">\(\mathbf{X}_j\)</span> respectively.</p></li>
-<li class="fragment"><p>The <em>hazard ratio</em> is given by: <span class="math display">\[
-\begin{align}
+<li class="fragment"><p>The <em>hazard ratio</em> is given by: <span class="math display">\[\begin{align}
 \widehat{HR} &amp;= \frac{\widehat{h}(t, \mathbf{X_i})}{\widehat{h}(t, \mathbf{X_j})}\\
 &amp;= \frac{\exp (\beta_0 + \boldsymbol{\beta}^T \mathbf{X_i}) p t^{p-1}} {\exp (\beta_0 + \boldsymbol{\beta}^T \mathbf{X_j}) p t^{p-1}} \\
 &amp;= \exp (\boldsymbol{\beta}^T(\mathbf{X_i} - \mathbf{X_j}))
-\end{align}
-\]</span></p></li>
+\end{align}\]</span></p></li>
 </ul>
 </section>
 <section id="the-accelerated-failure-time-aft-assumption" class="slide level2">
@@ -440,24 +433,19 @@ PL(\boldsymbol{\beta})
 <section id="aft-in-weibull-model" class="slide level2 scrollable">
 <h2>AFT in Weibull Model</h2>
 <ul>
-<li class="fragment"><p>We can estimate the Weibull survivor function from the hazard function: <span class="math display">\[
-\begin{align}
+<li class="fragment"><p>We can estimate the Weibull survivor function from the hazard function: <span class="math display">\[\begin{align}
 &amp;&amp;
 h(t, \mathbf{X}) &amp;= \lambda(t, \mathbf{X}) p t^{p-1}\\
 &amp;
 \Rightarrow &amp; S(t, \mathbf{X}) &amp;= \exp(-\lambda(t, \mathbf{X}) t^p)
-\end{align}
-\]</span></p></li>
-<li class="fragment"><p>Take <span class="math inline">\(t\)</span> to the LHS: <span class="math display">\[
-\begin{align}
+\end{align}\]</span></p></li>
+<li class="fragment"><p>Take <span class="math inline">\(t\)</span> to the LHS: <span class="math display">\[\begin{align}
 t &amp;= [- \ln S(t, \mathbf{X})]^{\frac{1}{p}} \times \frac{1}{\lambda(t, \mathbf{X}) ^ {\frac{1}{p}}}
-\end{align}
-\]</span></p></li>
+\end{align}\]</span></p></li>
 <li class="fragment"><p>Reparametrize <span class="math inline">\(\frac{1}{\lambda(t, \mathbf{X}) ^ \frac{1}{p}} = \exp(\alpha_0 + \boldsymbol{\alpha}^T \mathbf{X})\)</span></p></li>
 <li class="fragment"><p>Now, <span class="math inline">\(t = [- \ln (S(t, \mathbf{X}))]^{\frac{1}{p}} \times \exp(\alpha_0 + \boldsymbol{\alpha}^T \mathbf{X})\)</span></p></li>
 <li class="fragment"><p>Let <span class="math inline">\(S(t, \mathbf{X_j}) = q\)</span> <br> By AFT, <span class="math inline">\(S(\lambda t, \mathbf{X_i}) = q\)</span></p></li>
-<li class="fragment"><p>Using the above definition of t, <span class="math display">\[
-\begin{align}
+<li class="fragment"><p>Using the above definition of t, <span class="math display">\[\begin{align}
 &amp;&amp;
 \lambda &amp;= \frac{\lambda t}{t}\\
 &amp;&amp;&amp;=
@@ -466,8 +454,7 @@ t &amp;= [- \ln S(t, \mathbf{X})]^{\frac{1}{p}} \times \frac{1}{\lambda(t, \math
 \frac{[- \ln (q)]^{\frac{1}{p}} \times \exp(\alpha_0 + \boldsymbol{\alpha}^T \mathbf{X_i})} {[- \ln (q)]^{\frac{1}{p}} \times \exp(\alpha_0 + \boldsymbol{\alpha}^T \mathbf{X_j})}\\
 &amp; \Rightarrow &amp;
 \lambda &amp;= \exp(\boldsymbol{\alpha}^T (\mathbf{X_i} - \mathbf{X_j}))
-\end{align}
-\]</span></p></li>
+\end{align}\]</span></p></li>
 </ul>
 </section>
 <section id="aft-ph-in-weibull" class="slide level2 scrollable">
@@ -475,8 +462,7 @@ t &amp;= [- \ln S(t, \mathbf{X})]^{\frac{1}{p}} \times \frac{1}{\lambda(t, \math
 <ul>
 <li class="fragment"><p>In a Weibull model, if <span class="math inline">\(p\)</span> is fixed, AFT <span class="math inline">\(\iff\)</span> PH.</p></li>
 <li class="fragment"><p>We can also derive a relationship between the coefficients.</p></li>
-<li class="fragment"><p>Under AFT, <span class="math display">\[
-\begin{align}
+<li class="fragment"><p>Under AFT, <span class="math display">\[\begin{align}
 &amp;&amp;
 \frac{1}{\lambda ^ \frac{1}{p}} &amp;= \exp(\alpha_0 + \boldsymbol{\alpha}^T \mathbf{X}) \\
 &amp;\Rightarrow&amp;
@@ -484,26 +470,23 @@ t &amp;= [- \ln S(t, \mathbf{X})]^{\frac{1}{p}} \times \frac{1}{\lambda(t, \math
 &amp;= - (\alpha_0 + \boldsymbol{\alpha}^T \mathbf{X}) \\
 &amp;\Rightarrow&amp;
 \ln(\lambda) &amp;= -p (\alpha_0 + \boldsymbol{\alpha}^T \mathbf{X})
-\end{align}
-\]</span></p></li>
-<li class="fragment"><p>Under PH <span class="math display">\[
-\begin{align}
+\end{align}\]</span></p></li>
+<li class="fragment"><p>Under PH <span class="math display">\[\begin{align}
 &amp;&amp;
 \lambda &amp;= \exp (\beta_0 + \boldsymbol{\beta}^T \mathbf{X})\\
 &amp; \Rightarrow &amp;
 \ln(\lambda) &amp;= \beta_0 + \boldsymbol{\beta}^T \mathbf{X}
-\end{align}
-\]</span></p></li>
+\end{align}\]</span></p></li>
 <li class="fragment"><p>Hence, <span class="math inline">\(\beta_0 = - \alpha_0\)</span> and <span class="math inline">\(\beta = - \alpha\)</span></p></li>
 </ul>
 </section>
 <section id="references" class="slide level2 smaller">
 <h2>References</h2>
 <ul>
-<li><p><em>Breslow vs Efron tie handling in Cox proportional hazards.</em> (2026). MetricGate. <a href="https://metricgate.com/blogs/breslow-vs-efron-tie-handling-cox/">https://metricgate.com/blogs/breslow-vs-efron-tie-handling-cox/</a></p></li>
-<li><p>James, G., Witten, D., Hastie, T., &amp; Tibshirani, R. (2021). <em>An introduction to statistical learning: With applications in R</em> (2nd ed). Springer. <a href="https://www.statlearning.com/">https://www.statlearning.com/</a></p></li>
+<li><p><em>Breslow vs Efron tie handling in Cox proportional hazards.</em> (2026). MetricGate. <a href="https://metricgate.com/blogs/breslow-vs-efron-tie-handling-cox/" class="uri">https://metricgate.com/blogs/breslow-vs-efron-tie-handling-cox/</a></p></li>
+<li><p>James, G., Witten, D., Hastie, T., &amp; Tibshirani, R. (2021). <em>An introduction to statistical learning: With applications in R</em> (2nd ed). Springer. <a href="https://www.statlearning.com/" class="uri">https://www.statlearning.com/</a></p></li>
 <li><p>Kleinbaum, D. G., &amp; Klein, M. (2005). <em>Survival analysis: A self-learning text</em> (2nd ed). Springer.</p></li>
-<li><p>Waagepetersen, R. (2024, Semptember 29). <em>Cox’s proportional hazards model and Cox’s partial likelihood.</em> Aalborg University. <a href="https://people.math.aau.dk/~rw/Undervisning/DurationAnalysis/Slides/lektion3.pdf">https://people.math.aau.dk/~rw/Undervisning/DurationAnalysis/Slides/lektion3.pdf</a></p></li>
+<li><p>Waagepetersen, R. (2024, Semptember 29). <em>Cox’s proportional hazards model and Cox’s partial likelihood.</em> Aalborg University. <a href="https://people.math.aau.dk/~rw/Undervisning/DurationAnalysis/Slides/lektion3.pdf" class="uri">https://people.math.aau.dk/~rw/Undervisning/DurationAnalysis/Slides/lektion3.pdf</a></p></li>
 </ul>
 
 </section>
