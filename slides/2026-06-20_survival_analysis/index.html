@@ -142,26 +142,51 @@ Jyotiraditya Pradhan
 
 </section>
 <section id="intro" class="slide level2">
-<h2>Intro</h2>
+<h2>1. Intro</h2>
+<div class="hidden">
+
+</div>
 <ul>
 <li class="fragment"><p>In survival analysis, we study the data where the outcome variable is the time until an event occurs.</p></li>
 <li class="fragment"><p>Eg: death of a cancer patient, re-employment of an unemployed worker, machine becoming unserviceable, etc.</p></li>
-<li class="fragment"><p>The time taken for for the event to occur (from beginning of/entry into the study) is called the <em>survival time</em>. The event occurring is referred to as <em>failure</em>.</p></li>
-<li class="fragment"><p>Hereafter, we will assume that failure can only occur once.</p></li>
+<li class="fragment"><p>Survival analysis is powerful because it provides methods to deal with incomplete observation of time</p></li>
+</ul>
+</section>
+<section id="survival-time" class="slide level2">
+<h2>2. Survival Time</h2>
+<ul>
+<li class="fragment"><p>The time taken for for the event of interest to occur is called the <em>survival time</em>. The event occurring is referred to as <em>failure</em>.</p></li>
+<li class="fragment"><p>Hereafter, we will assume that failure can only occur once; unless specified.</p></li>
 <li class="fragment"><p>Survival time by the random variable <span class="math inline">\(T \geq 0\)</span>.</p></li>
 </ul>
 </section>
-<section id="censoring" class="slide level2">
-<h2>Censoring</h2>
+<section>
+<section id="incomplete-observation-of-time" class="title-slide slide level1 center">
+<h1>3. Incomplete Observation of Time</h1>
+
+</section>
+<section id="incomplete-observation-of-time-1" class="slide level2">
+<h2>3. Incomplete Observation of Time</h2>
 <ul>
-<li class="fragment"><p>Censoring occurs when at some point of time, we lack information about the subject and hence cannot determine the survival time exactly.</p></li>
-<li class="fragment"><p>Happens due to i) attrition or ii) the study ending.</p></li>
-<li class="fragment"><p>Data can be i) <em>right-censored</em> ii) <em>left censored</em> or iii) <em>mid (interval) censored</em></p></li>
-<li class="fragment"><p>Hereafter, we will assume data to be right censored.</p></li>
+<li class="fragment"><p>Incomplete observation of time can happen due to two reasons: i) <em>censoring</em> or ii) <em>truncation</em>.</p></li>
+<li class="fragment"><p>A <em>censored</em> observation is incomplete due to random factors.</p></li>
+<li class="fragment"><p>A <em>truncated</em> observation is incomplete due to a selection process inherent in the study design.</p></li>
+</ul>
+</section>
+<section id="censoring" class="slide level2">
+<h2>3.1. Censoring</h2>
+<ul>
+<li class="fragment"><p>Data can be i) <em>right censored</em> ii) <em>left censored</em> or iii) <em>mid (interval) censored</em></p></li>
+<li class="fragment"><p>The most common one is <em>right censoring</em>. It happens due to i) attrition or ii) the study ending before failure.</p></li>
+<li class="fragment"><p><em>Left censoring</em> happens when the subject is observed after failure has occurred.</p></li>
+</ul>
+<!--- *Mid censoring* occurs when we don't have continuous data on the subject. Discrete data is mid censored. -->
+<ul>
+<li class="fragment">Hereafter, assume <em>censoring</em> to imply <em>right censoring</em>, unless specified otherwise.</li>
 </ul>
 </section>
 <section id="censoring-contd." class="slide level2">
-<h2>Censoring (Contd.)</h2>
+<h2>3.1. Censoring (Contd.)</h2>
 <ul>
 <li class="fragment">Censoring is denoted by the random variable <span class="math inline">\(\delta\)</span>.</li>
 </ul>
@@ -174,8 +199,29 @@ Jyotiraditya Pradhan
 \]</span></p>
 </div>
 </section>
-<section id="survivor-function" class="slide level2">
-<h2>Survivor Function</h2>
+<section id="truncation" class="slide level2">
+<h2>3.2. Truncation</h2>
+<ul>
+<li class="fragment"><p>Truncation are of two kinds: i) <em>left truncation</em> and ii) <em>right truncation</em>.</p></li>
+<li class="fragment"><p><em>Left truncation</em>, also know as <em>delayed entry</em>, occurs when the subject enters the study after the time at which they were exposed to the possibility of failure.</p></li>
+<li class="fragment"><p>Eg: Analysing survival time of individuals who had a cardiac arrest, but including them in the study only after they are discharged from the hospital post the arrest. We will miss out on the patients who died during hospitalization.</p></li>
+</ul>
+</section>
+<section id="truncation-contd." class="slide level2">
+<h2>3.2. Truncation (contd.)</h2>
+<ul>
+<li class="fragment"><p><em>Right truncation</em> happens only the subjects who face failure within the period of analysis are included. This method of sampling is known as <em>length biased sampling</em></p></li>
+<li class="fragment"><p>Eg: Analysing data from a death registry. Here, we only have individuals who died within the specified time.</p></li>
+<li class="fragment"><p>Truncation leads to selection bias in the study.</p></li>
+</ul>
+</section></section>
+<section>
+<section id="some-key-functions-of-survival-time" class="title-slide slide level1 center">
+<h1>4. Some Key Functions of Survival Time</h1>
+
+</section>
+<section id="survival-function" class="slide level2">
+<h2>4.1. Survival Function</h2>
 <ul>
 <li class="fragment">Denoted by <span class="math inline">\(S(t)\)</span>.</li>
 </ul>
@@ -188,7 +234,7 @@ Jyotiraditya Pradhan
 </div>
 </section>
 <section id="hazard-function" class="slide level2">
-<h2>Hazard Function</h2>
+<h2>4.2. Hazard Function</h2>
 <ul>
 <li class="fragment">Denoted by <span class="math inline">\(h(t)\)</span></li>
 </ul>
@@ -201,15 +247,37 @@ Jyotiraditya Pradhan
 </ul>
 </div>
 </section>
-<section id="relationship-between-survivor-hazard-functions" class="slide level2">
-<h2>Relationship between Survivor &amp; Hazard Functions</h2>
+<section id="cumulative-hazard-rate" class="slide level2">
+<h2>4.3 Cumulative Hazard Rate</h2>
 <ul>
-<li class="fragment"><p><span class="math inline">\(S(t) = \exp{\left[- \int_{0}^{t} h(u) du\right]}\)</span></p></li>
-<li class="fragment"><p><span class="math inline">\(h(t) = - \left[\frac{\frac{d S(t)}{dt}}{S(t)} \right]\)</span></p></li>
+<li class="fragment">Denoted by <span class="math inline">\(H(t)\)</span>.</li>
+</ul>
+<div class="fragment">
+<p><span class="math display">\[H(t) = \int_{0}^{t} h(u) \mathrm{d}u\]</span></p>
+<ul>
+<li class="fragment">Gives the sum total of the hazard up to time <span class="math inline">\(t\)</span>.</li>
+</ul>
+</div>
+</section>
+<section id="relationship-between-survival-hazard-functions" class="slide level2 smaller">
+<h2>4.3. Relationship between Survival &amp; Hazard Functions</h2>
+<ul>
+<li class="fragment"><p><span class="math display">\[
+\begin{align}
+S(t) &amp;= \exp{\left(- \int_{0}^{t} h(u) du\right)}\\
+&amp;= \exp(- H(t))
+\end{align}
+\]</span></p></li>
+<li class="fragment"><p><span class="math display">\[
+\begin{align}
+h(t) &amp;= - \left[\frac{\frac{d S(t)}{dt}}{S(t)} \right]\\
+&amp;= \frac{f(t)}{S(t)}
+\end{align}
+\]</span> where <span class="math inline">\(f(t)\)</span> is the probability density function of survival time.</p></li>
 </ul>
 </section>
-<section id="hazard-function-from-survivor-function-derivation" class="slide level2 scrollable smaller">
-<h2>Hazard Function from Survivor Function (Derivation)</h2>
+<section id="derivation-of-hazard-function-from-survival-function" class="slide level2 scrollable smaller">
+<h2>4.3.1. Derivation of Hazard Function from Survival Function</h2>
 <div class="fragment">
 <p><span class="math display">\[
 \begin{aligned}
@@ -221,78 +289,250 @@ Jyotiraditya Pradhan
 &amp; -\frac{dS(t)}{dt}
 &amp;= \lim_{\Delta t \to 0 } \frac{\mathbb{P}(T &gt; t) - \mathbb{P}(T &gt; t + \Delta t)}{\Delta t}\\
 &amp;&amp;&amp; = \lim_{\Delta t \to 0 } \frac{\mathbb{P}(t &lt; T \leq t + \Delta t)}{\Delta t}\\
-&amp;&amp;&amp; = \lim_{\Delta t \to 0 } \frac{\mathbb{P}(t &lt; T \leq t + \Delta t) \cap \mathbb{P}(T &gt; t)}{\Delta t}\\
+&amp;&amp;&amp; = \lim_{\Delta t \to 0 } \frac{\mathbb{P}(t &lt; T \leq t + \Delta t, T &gt; t)}{\Delta t}\\
 &amp; \Rightarrow
 &amp; - \left[\frac{\frac{d S(t)}{dt}}{S(t)} \right]
-&amp;= \lim_{\Delta t \to 0 } \frac{1}{\Delta t} \frac{\mathbb{P}(t &lt; T \leq t + \Delta t) \cap \mathbb{P}(T &gt; t)}{\mathbb{P}(T &gt; t)}\\
+&amp;= \lim_{\Delta t \to 0 } \frac{1}{\Delta t} \frac{\mathbb{P}(t &lt; T \leq t + \Delta t, T &gt; t)}{\mathbb{P}(T &gt; t)}\\
 &amp;&amp;&amp; = \lim_{\Delta t \to 0 } \frac{\mathbb{P}(t &lt; T \leq t + \Delta t | T &gt; t)}{\Delta t} \\
 &amp; \Rightarrow
 &amp; - \left[\frac{\frac{d S(t)}{dt}}{S(t)} \right]
 &amp;= h(t)
 \end{aligned}
 \]</span></p>
-</div>
-</section>
-<section id="kaplan-meier-estimator" class="slide level2">
-<h2>Kaplan Meier Estimator</h2>
 <ul>
-<li class="fragment"><p>Descriptive statistics about about survival time such as average survival time are not very helpful as they do not account for censoring.</p></li>
-<li class="fragment"><p>The <em>Kaplan Meier Estimator</em> is a non-parametric model used to estimate survival time.</p></li>
-<li class="fragment"><p>It is denoted by <span class="math inline">\(\widehat{S}(t)\)</span></p></li>
-<li class="fragment"><p>It deals the problem of censoring by using a recursive formula to account for it.</p></li>
-</ul>
-</section>
-<section id="kaplan-meier-estimator-contd." class="slide level2 scrollable">
-<h2>Kaplan Meier Estimator (Contd.)</h2>
-<p><span class="math display">\[
+<li class="fragment"><p>Moreover, <span class="math display">\[
 \begin{aligned}
-\widehat{S}(t_j)
-&amp;= \prod_{i = 1}^{j} \widehat{\mathbb{P}}(T &gt; t_j | T &gt; t_{j-1})\\
-&amp;= \prod_{i = 1}^{j} \left(\frac{r_j - q_j}{r_j}\right)
+f(t) &amp;= \lim_{\Delta t \to 0 } \frac{\mathbb{P}(T &gt; t) - \mathbb{P}(T &gt; t + \Delta t)}{\Delta t}\\
+&amp;= -\frac{dS(t)}{dt}
 \end{aligned}
-\]</span></p>
-<div class="fragment">
-<p>where <span class="math inline">\(r_j\)</span> is the number of individuals alive just before <span class="math inline">\(t_j\)</span>, and <span class="math inline">\(q_j\)</span> is the number of individuals who fail at <span class="math inline">\(t_j\)</span>.</p>
-<ul>
-<li class="fragment"><p><span class="math inline">\(r_j\)</span> is also called the cardinality of the <em>risk set</em>. it is essentially the difference of the number of individuals failing or getting censored at <span class="math inline">\(t_{j-1}\)</span> from the number of individuals surviving in <span class="math inline">\(t_{j-1}\)</span>.</p></li>
-<li class="fragment"><p>The above formula is also known as the <em>product limit formula</em>.</p></li>
+\]</span></p></li>
+<li class="fragment"><p>Hence, <span class="math display">\[
+h(t) = \frac{f(t)}{S(t)}
+\]</span></p></li>
 </ul>
 </div>
 </section>
-<section id="kaplan-meier-estimator-derivation" class="slide level2 scrollable smaller">
-<h2>Kaplan Meier Estimator (Derivation)</h2>
+<section id="derivation-of-survival-function-from-hazard-function" class="slide level2 scrollable smaller">
+<h2>4.3.2. Derivation of Survival Function from Hazard Function</h2>
 <div class="fragment">
 <p><span class="math display">\[
 \begin{aligned}
-\widehat{S}(t_j)
-&amp;= \widehat{\mathbb{P}}(T &gt; t_j)\\
-&amp;= \widehat{\mathbb{P}}(T &gt; t_j | T &gt; t_{j-1})\widehat{\mathbb{P}}(T &gt; t_{j-1}) \\
-&amp; \quad + \widehat{\mathbb{P}}(T &gt; t_j | T \leq t_{j-1})\widehat{\mathbb{P}}(T \leq t_{j-1})
-&amp; \{\text{Law of Total Probability}\}\\
-&amp;= \widehat{\mathbb{P}}(T &gt; t_j | T &gt; t_{j-1})\widehat{\mathbb{P}}(T &gt; t_{j-1}) + 0\\
-&amp;= \prod_{i = 1}^{j} \widehat{\mathbb{P}}(T &gt; t_i | T &gt; t_{i-1})\\
-&amp;= \prod_{i = 1}^{j} \frac{\widehat{\mathbb{P}}(T &gt; t_i) \cap \widehat{\mathbb{P}}(T &gt; t_{i-1})}{\widehat{\mathbb{P}}(T &gt; t_{i-1})}\\
-&amp;= \prod_{i = 1}^{j} \frac{\widehat{\mathbb{P}}(T &gt; t_i)}{\widehat{\mathbb{P}}(T &gt; t_{i-1})}\\
-&amp;= \prod_{i = 1}^{j} \left(\frac{r_i - q_i}{r_i}\right)
+&amp;&amp; \frac{\mathrm{d}}{\mathrm{d}t}\ln{S(t)} &amp;= \frac{1}{S(t)} \frac{\mathrm{d}}{\mathrm{d}t}S(t) \\
+&amp; \Rightarrow
+&amp; -\frac{\mathrm{d}}{\mathrm{d}t}\ln{S(t)} &amp;= - \frac{1}{S(t)} \frac{\mathrm{d}}{\mathrm{d}t}S(t) \\
+&amp;&amp;&amp;= h(t)
 \end{aligned}
 \]</span></p>
 </div>
+<div class="fragment">
+<p>Integrate both sides wrt. a dummy variable <span class="math inline">\(u\)</span>, from <span class="math inline">\(0\)</span> to <span class="math inline">\(t\)</span>.</p>
+</div>
+<div class="fragment">
+<p><span class="math display">\[
+\begin{aligned}
+&amp;&amp; -\int_{0}^{t} \frac{\mathrm{d}}{\mathrm{d}t}\ln{S(u)} \mathrm{d}u &amp;= \int_{0}^{t} h(u) \mathrm{d}u\\
+&amp; \Rightarrow
+&amp; - [\ln S(t) - \ln S(0)] &amp;= \int_{0}^{t} h(u) \mathrm{d}u\\
+&amp; \Rightarrow
+&amp; - [\ln S(t) - \ln(1)] &amp;= \int_{0}^{t} h(u) \mathrm{d}u\\
+&amp; \Rightarrow
+&amp; \ln S(t) &amp;= - \int_{0}^{t} h(u) \mathrm{d}u\\
+&amp; \Rightarrow
+&amp; S(t) &amp;= \exp \left( -\int_{0}^{t} h(u) \mathrm{d}u \right)
+\end{aligned}
+\]</span></p>
+</div>
+</section></section>
+<section>
+<section id="non-parametric-models-in-survival-analysis" class="title-slide slide level1 center">
+<h1>5. Non-Parametric Models in Survival Analysis</h1>
+
 </section>
-<section id="kaplan-meier-curve" class="slide level2">
-<h2>Kaplan Meier Curve</h2>
+<section id="non-parametric-models-in-survival-analysis-1" class="slide level2">
+<h2>5. Non-Parametric Models in Survival Analysis</h2>
+<ul>
+<li class="fragment"><p>Descriptive statistics about about survival time, such as average survival time, are not helpful as they do not account for censoring.</p></li>
+<li class="fragment"><p>Non-parametric models help us estimate survival functions without assuming what kind of a distribution the data follows.</p></li>
+</ul>
+</section></section>
+<section>
+<section id="the-kaplan-meier-estimator" class="title-slide slide level1 center">
+<h1>5.1. The Kaplan Meier Estimator</h1>
+
+</section>
+<section id="kaplan-meier-km-estimator" class="slide level2">
+<h2>5.1. Kaplan Meier (KM) Estimator</h2>
+<ul>
+<li class="fragment">Estimates the survival function.</li>
+</ul>
+<div class="fragment">
+<p><span class="math display">\[
+\begin{aligned}
+\widehat{S}(t_k)
+&amp;= \prod_{j = 1}^{k} \widehat{\mathbb{P}}(T &gt; t_j | T &gt; t_{j-1})\\
+&amp;= \prod_{j = 1}^{k} \left(\frac{r_j - q_j}{r_j}\right)
+\end{aligned}
+\]</span></p>
+</div>
+<div class="fragment">
+<p>where <span class="math inline">\(r_j\)</span> is the number of individuals at risk of failure at <span class="math inline">\(t_j\)</span>, and <span class="math inline">\(q_j\)</span> is the number of individuals who fail at <span class="math inline">\(t_j\)</span>.</p>
+</div>
+</section>
+<section id="risk-set" class="slide level2 scrollable">
+<h2>5.1.1. Risk Set</h2>
+<ul>
+<li class="fragment"><p>Let <span class="math inline">\(R(t)\)</span> bet the set of subjects which have not been censored/failed till time <span class="math inline">\(t\)</span>, It is called the <em>risk set</em>, as it is the set of subjects at risk of failure at that time.</p></li>
+<li class="fragment"><p><span class="math inline">\(r_t = |R(t)|\)</span></p></li>
+</ul>
+</section>
+<section id="derivation-of-km-estimator" class="slide level2 scrollable smaller">
+<h2>5.1.2. Derivation of KM Estimator</h2>
+<div class="fragment">
+<p><span class="math display">\[
+\widehat{S}(t) = \widehat{\mathbb{P}}(T &gt; t_k)
+\]</span></p>
+<ul>
+<li class="fragment"><p>Using the law of total probability, <span class="math display">\[
+\begin{aligned}
+\widehat{S}(t_k)
+&amp;= \widehat{\mathbb{P}}(T &gt; t_k | T &gt; t_{k-1})\widehat{\mathbb{P}}(T &gt; t_{k-1}) \\
+&amp; \qquad + \widehat{\mathbb{P}}(T &gt; t_k | T \leq t_{k-1})\widehat{\mathbb{P}}(T \leq t_{k-1}) \\
+&amp;= \widehat{\mathbb{P}}(T &gt; t_k | T &gt; t_{k-1})\widehat{\mathbb{P}}(T &gt; t_{k-1}) + 0\\
+&amp;= \widehat{\mathbb{P}}(T &gt; t_k | T &gt; t_{k-1})\widehat{S}(t_{k-1})
+\end{aligned}
+\]</span></p></li>
+<li class="fragment"><p>The recursive expression above can be expanded into: <span class="math display">\[
+\begin{aligned}
+\widehat{S}(t_k)
+&amp;= \widehat{\mathbb{P}}(T &gt; t_k | T &gt; t_{k-1})\widehat{\mathbb{P}}(T &gt; t_{k-1} | T &gt; t_{k-2}) \ldots \widehat{\mathbb{P}}(T &gt; t_1 | T &gt; 0) \widehat{S}(0) \\
+\end{aligned}
+\]</span></p></li>
+<li class="fragment"><p>We know that <span class="math inline">\(S(0) = 1\)</span></p></li>
+<li class="fragment"><p>Hence the above expression can be written as an indexed product. <span class="math display">\[
+\begin{aligned}
+\widehat{S}(t_k)
+&amp;= \prod_{j = 1}^{k} \widehat{\mathbb{P}}(T &gt; t_j | T &gt; t_{j-1})\\
+&amp;= \prod_{j = 1}^{k} \frac{\widehat{\mathbb{P}}(T &gt; t_j,  T &gt; t_{j - 1})}{\widehat{\mathbb{P}}(T &gt; t_{j-1})}\\
+&amp;= \prod_{j = 1}^{k} \frac{\widehat{\mathbb{P}}(T &gt; t_j)}{\widehat{\mathbb{P}}(T &gt; t_{j-1})}\\
+&amp;= \prod_{j = 1}^{k} \left(\frac{r_j - q_j}{r_j}\right)
+\end{aligned}
+\]</span></p></li>
+</ul>
+</div>
+</section>
+<section id="variance-of-km-estimator" class="slide level2">
+<h2>5.1.3. Variance of KM Estimator</h2>
+<ul>
+<li class="fragment">Given by the expression <span class="math display">\[
+\widehat{\text{Var}}[\widehat{S}(t)] \cong [\widehat{S}(t)]^2 \left[\sum_{j = 1}^t \frac{q_j}{r_j(r_j - d_j)}\right]
+\]</span></li>
+</ul>
+</section>
+<section id="the-delta-method" class="slide level2 scrollable smaller">
+<h2>5.1.3.1 The Delta Method</h2>
+<ul>
+<li class="fragment"><p>Used in deriving the variance of KM Estimator</p></li>
+<li class="fragment"><p>Let <span class="math inline">\(X\)</span> be a random variable and <span class="math inline">\(f(X)\)</span> be a smooth (i.e.&nbsp;infinitely differentiable) function.</p></li>
+<li class="fragment"><p>Taking the first two terms of the Taylor series expansion of <span class="math inline">\(f(X)\)</span> around <span class="math inline">\(\mu_X\)</span>, <span class="math display">\[
+\begin{align}
+&amp;&amp; f(X) &amp;\cong f(\mu_X) + (X - \mu_X) f'(\mu_X)\\
+&amp; \Rightarrow
+&amp; \text{Var}[f(x)] &amp;\cong \text{Var} [f(\mu_X) + (X - \mu_X) f'(\mu_X)]\\
+&amp;&amp;&amp; = \text{Var} [(X - \mu_X) f'(\mu_X)] \\
+&amp;&amp;&amp; = [f'(\mu_X)]^2 \text{Var}[X - \mu_X]\\
+&amp;&amp;&amp; = [f'(\mu_X)]^2 \text{Var}[X]\\
+&amp;&amp;&amp; = \sigma_X^2[f'(\mu_X)]^2\\
+\end{align}
+\]</span></p></li>
+<li class="fragment"><p>Take <span class="math inline">\(f(X) = \ln(X)\)</span> <span class="math display">\[
+\text{Var}[\ln(X)] \cong \sigma_X^2 \frac{1}{\mu_X^2}
+\]</span></p></li>
+<li class="fragment"><p>Take <span class="math inline">\(f(X) = \exp(X)\)</span> <span class="math display">\[
+\text{Var}[\exp(X)] \cong \sigma_X^2 [\exp(\mu_X)]^2
+\]</span></p></li>
+</ul>
+</section>
+<section id="derivation-of-variance-of-km-estimator" class="slide level2 scrollable smaller">
+<h2>5.1.3.2. Derivation of Variance of KM Estimator</h2>
+<ul>
+<li class="fragment"><p>Take <span class="math inline">\(ln\)</span> of the KM Estimator <span class="math display">\[
+\begin{aligned}
+&amp;&amp;
+\widehat{S}(t)
+&amp;= \prod_{j = 1}^{t} \left(\frac{r_j - q_j}{r_j}\right)\\
+&amp; \Rightarrow
+&amp; \ln(S(t)) &amp;= \sum_{j = 1}^t \left(\frac{r_j - q_j}{r_j}\right)\\
+\end{aligned}
+\]</span></p></li>
+<li class="fragment"><p>Let <span class="math inline">\(\widehat{p}_j = \frac{r_j - q_j}{r_j}\)</span> <span class="math display">\[
+\ln(S(t)) = \sum_{j = 1}^t p_t
+\]</span></p></li>
+<li class="fragment"><p>Consider observations in the risk set at time <span class="math inline">\(j\)</span> to independent Bernoulli observations with constant probability <span class="math inline">\(p_j\)</span>. Hence, <span class="math display">\[
+\mu_X = \widehat{p}_j\\
+\sigma^2_X = \frac{\widehat{p}_j (1 - \widehat{p}_j)}{r_j}
+\]</span></p></li>
+<li class="fragment"><p>From the pervious slide, <span class="math display">\[
+\begin{aligned}
+\widehat{\text{Var}}[\ln(\widehat{p})] &amp;\cong \frac{1}{\mu_X^2} \sigma_X^2\\
+&amp;= \frac{1}{\widehat{p}_j^2} \frac{\widehat{p}_j (1 - \widehat{p}_j)}{r_j}\\
+&amp;= \frac{q_j}{r_j(r_j - d_j)}
+\end{aligned}
+\]</span></p></li>
+<li class="fragment"><p>Assume that observations at each time are independent. Hence, <span class="math display">\[
+\begin{align}
+\widehat{\text{Var}}[\ln(\widehat{S}(t))] &amp;= \sum_{j = 1}^t \widehat{\text{Var}}[\ln(\widehat{p_i})]\\
+&amp;= \sum_{j = 1}^t \frac{q_j}{r_j(r_j - d_j)}
+\end{align}
+\]</span></p></li>
+<li class="fragment"><p>Let <span class="math inline">\(Y = \ln[\widehat{S}(t)]\)</span>. <span class="math inline">\(\sigma_Y^2\)</span> is given by the estimator above. Approximate <span class="math inline">\(\mu_Y\)</span> by <span class="math inline">\(\ln[\widehat{S}(t)]\)</span>. From the previous slide, <span class="math display">\[
+\begin{align}
+\text{Var}[\exp(Y)] &amp;\cong[\exp(\mu_Y)]^2 \sigma_Y^2 \\
+&amp;\cong \exp(\ln[\widehat{S}(t)]) \left[\sum_{j = 1}^t \frac{q_j}{r_j(r_j - d_j)}\right]\\
+&amp;= [\widehat{S}(t)]^2 \left[\sum_{j = 1}^t \frac{q_j}{r_j(r_j - d_j)}\right]
+\end{align}
+\]</span></p></li>
+<li class="fragment"><p>We can use this below, <span class="math display">\[
+\begin{align}
+&amp;&amp; \widehat{S}(t) &amp;= \exp\{\ln[\widehat{S}(t)]\}\\
+&amp;&amp;&amp; = \exp(Y)\\
+&amp; \Rightarrow
+&amp; \widehat{\text{Var}}[\widehat{S}(t)] &amp;= \widehat{\text{Var}}[\exp(Y)]\\
+&amp;&amp;&amp; = [\widehat{S}(t)]^2 \left[\sum_{j = 1}^t \frac{q_j}{r_j(r_j - d_j)}\right]
+\end{align}
+\]</span></p></li>
+</ul>
+</section>
+<section id="section" class="slide level2">
+<h2>5.1.5.</h2>
+</section>
+<section id="km-curve" class="slide level2">
+<h2>5.1.5. KM Curve</h2>
 
 <img data-src="images/km_plot_james.png" class="r-stretch quarto-figure-center"><p class="caption">Illustration of KM Curve (James et. al., 2021, p.&nbsp;466)</p></section>
+<section id="uncovered-topics" class="slide level2">
+<h2>5.2 Uncovered Topics</h2>
+<ul>
+<li>Confidence Interval of KM Estimator &lt;!– Se pg 41 - 55 Provide overview not details. Expland on only log-log&gt;</li>
+<li>Statistical tests</li>
+<li>The Nelson Aarlen Estimator (For cumulative hazard)</li>
+</ul>
+</section></section>
+<section>
+<section id="semi---parametric-models-for-survival-analysis" class="title-slide slide level1 center">
+<h1>6. Semi - Parametric Models for Survival Analysis</h1>
+
+</section>
 <section id="the-cox-proportional-hazard-ph-model" class="slide level2">
-<h2>The Cox Proportional Hazard (PH) Model</h2>
+<h2>6.1. The Cox Proportional Hazard (PH) Model</h2>
 <ul>
 <li class="fragment"><p>If we intend to obtain the survivor or hazard function while controlling for a set of covariates, we use the Cox PH Model,</p></li>
 <li class="fragment"><p>It is a semi-parametric model, which assumes the hazard function to take a following form: <span class="math display">\[
-h(t|\mathbf{X_i}) = h_0(t) \exp (\boldsymbol{\beta}^T \mathbf{X_i})
-\]</span> where <span class="math inline">\(h_0 \geq 0\)</span> is an unspecified baseling hazard function, and <span class="math inline">\(\mathbf{X_i}\)</span> is vector of covariates for observation <span class="math inline">\(i\)</span>.</p></li>
+h(t|\mathbf{X_i}) = h_0(t) \exp (\boldsymbol{\beta}^\mathsf{T} \mathbf{X_i})
+\]</span> where <span class="math inline">\(h_0 \geq 0\)</span> is an unspecified baseling hazard function, and <span class="math inline">\(\mathbf{X_i}\)</span> is vector of time-independent covariates for observation <span class="math inline">\(i\)</span>.</p></li>
 </ul>
 </section>
 <section id="why-is-cox-ph-semi-parametric" class="slide level2">
-<h2>Why is Cox PH Semi-Parametric?</h2>
+<h2>6.2 Why is Cox PH Semi-Parametric?</h2>
 <ul>
 <li class="fragment"><p><strong>The PH Assumption:</strong> The model makes some assumptions about the functional form for the hazard function.</p></li>
 <li class="fragment"><p><strong>Unspecified Baseline:</strong> However, the baseline function (<span class="math inline">\(h_0\)</span>) is unspecified.</p></li>
@@ -301,104 +541,1954 @@ h(t|\mathbf{X_i}) = h_0(t) \exp (\boldsymbol{\beta}^T \mathbf{X_i})
 </ul>
 </section>
 <section id="hazard-ratio" class="slide level2">
-<h2>Hazard Ratio</h2>
+<h2>6.3 Hazard Ratio</h2>
 <ul>
-<li class="fragment"><p>Take two vectors <span class="math inline">\(\mathbf{X_i}\)</span> and <span class="math inline">\(\mathbf{X_j}\)</span> of same dimension.</p></li>
+<li class="fragment"><p>Take two vectors of covariates <span class="math inline">\(\mathbf{X_i}\)</span> and <span class="math inline">\(\mathbf{X_j}\)</span>.</p></li>
 <li class="fragment"><p>The Hazard Ratio is given by: <span class="math display">\[
 \begin{align}
 \widehat{HR} &amp;= \frac{\widehat{h}(t, \mathbf{X_i})}{\widehat{h}(t, \mathbf{X_j})}\\
-&amp;= \frac{h_0(t) \exp (\boldsymbol{\beta}^T \mathbf{X_i})}{h_0(t) \exp (\boldsymbol{\beta}^T \mathbf{X_j})} \\
-&amp;= \exp (\boldsymbol{\beta}^T(\mathbf{X_i} - \mathbf{X_j}))
+&amp;= \frac{h_0(t) \exp (\boldsymbol{\beta}^\mathsf{T} \mathbf{X_i})}{h_0(t) \exp (\boldsymbol{\beta}^\mathsf{T} \mathbf{X_j})} \\
+&amp;= \exp (\boldsymbol{\beta}^\mathsf{T} (\mathbf{X_i} - \mathbf{X_j}))
 \end{align}
 \]</span></p></li>
 <li class="fragment"><p>A result of the PH assumption is that the HR stays constant over time.</p></li>
 </ul>
 </section>
-<section id="cox-likelihood" class="slide level2">
-<h2>Cox Likelihood</h2>
+<section id="survival-function-from-cox-ph-model" class="slide level2">
+<h2>6.4. Survival Function from Cox PH Model</h2>
+<div class="fragment">
+<p><span class="math display">\[
+\widehat{S}(t) = S_0(t)^{\exp(\boldsymbol{\beta}^\mathsf{T} \mathbf{X})}
+\]</span> where <span class="math inline">\(S_0(t) = \exp(-H_0(t))\)</span> is the baseline survival function</p>
+</div>
+</section>
+<section id="derivation-of-survival-function-from-cox-ph-model" class="slide level2 scrollable smaller">
+<h2>6.4.1 Derivation of Survival Function from Cox PH Model</h2>
+<div class="fragment">
+<p><span class="math display">\[
+\begin{align}
+\widehat{S}(t) &amp;= \exp\left(- \int_{0}^{t} h(u, \mathbf{X}) \mathrm{d}u\right)\\
+&amp;= \exp\left(- \int_{0}^{t} h_0(u)\exp(\boldsymbol{\beta}^\mathsf{T} \mathbf{X}) \mathrm{d}u \right)\\
+&amp;= \exp\left(-\exp(\boldsymbol{\beta}^\mathsf{T} \mathbf{X}) \int_{0}^{t} h_0(u) \mathrm{d}u \right)\\
+&amp;= \exp\left(-\exp(\boldsymbol{\beta}^\mathsf{T} \mathbf{X}) H_0(t) \right)\\
+&amp;= \exp(-H_0(t) \times \exp(\boldsymbol{\beta}^\mathsf{T} \mathbf{X}))\\
+&amp;= \exp(-H_0(t))^{\exp(\boldsymbol{\beta}^\mathsf{T} \mathbf{X})}\\
+&amp;= S_0(t)^{\exp(\boldsymbol{\beta}^\mathsf{T} \mathbf{X})}
+\end{align}
+\]</span></p>
+</div>
+</section>
+<section id="cox-likelihood-without-ties" class="slide level2 smaller scrollable">
+<h2>6.5.1 Cox Likelihood without Ties</h2>
 <ul>
 <li class="fragment"><p>Given we are leaving <span class="math inline">\(h_0\)</span> unspecified, we maximize only the partial likelihood of Cox PH.</p></li>
-<li class="fragment"><p>Assume there are no ties in in time of failure.</p></li>
-<li class="fragment"><p>The partial likelihood is given by: <span class="math display">\[
-PL(\boldsymbol{\beta}) = \prod_{i:\delta_i = 1} \frac{\exp(\boldsymbol{\beta}^T \mathbf{X}_i)}{\sum_{i^\prime: T_{i^\prime} \geq T_i} \exp(\boldsymbol{\beta}^T \mathbf{X}_{i^\prime})}
+<li class="fragment"><p>For simplicity, assume there are no ties in in time of failure.</p></li>
+<li class="fragment"><p>Take an uncensored observation <span class="math inline">\(i\)</span> with failure time <span class="math inline">\(t_i\)</span>.</p></li>
+<li class="fragment"><p>The hazard function for the <span class="math inline">\(i^\text{th}\)</span> observation at time <span class="math inline">\(t_i\)</span> is <span class="math inline">\(h(t_i|\mathbf{X}_i) =  h_0(t_i) \exp (\boldsymbol{\beta} \mathbf{X}_i)\)</span>.</p></li>
+<li class="fragment"><p>The total hazard for at time <span class="math inline">\(t_i\)</span> for the at risk population is <span class="math inline">\(\sum_{i^\prime: t_{i^\prime} \geq t_i} h_0(t_i) \exp(\boldsymbol{\beta}^\mathsf{T} \mathbf{X}_{i^\prime})\)</span></p></li>
+<li class="fragment"><p>Thus, the probability that observation <span class="math inline">\(i\)</span> is the one to fail at observation <span class="math inline">\(t_i\)</span> is <span class="math inline">\(\frac{h_0(t_i) \exp(\boldsymbol{\beta}^\mathsf{T} \mathbf{X}_i)}{h_0(t_i) \sum_{i^\prime: T_{i^\prime} \geq t_i} \exp(\boldsymbol{\beta}^\mathsf{T}\mathbf{X}_{i^\prime})} = \frac{\exp(\boldsymbol{\beta}^\mathsf{T}\mathbf{X}_i)}{\sum_{i^\prime: T_{i^\prime} \geq t_i} \exp(\boldsymbol{\beta}^\mathsf{T}\mathbf{X}_{i^\prime})}\)</span></p></li>
+<li class="fragment"><p>We get the partial likelihood by taking a product of these probabilities over all uncensored observations. <span class="math display">\[
+l_p(\boldsymbol{\beta}) = \prod_{i:\delta_i = 1} \frac{\exp(\boldsymbol{\beta}^\mathsf{T}\mathbf{X}_i)}{\sum_{i^\prime: T_{i^\prime} \geq t_i} \exp(\boldsymbol{\beta}^\mathsf{T}\mathbf{X}_{i^\prime})}
 \]</span></p></li>
 </ul>
 </section>
-<section id="cox-likelihoodcontd." class="slide level2 smaller">
-<h2>Cox Likelihood(contd.)</h2>
+<section id="cox-likelihood-with-ties" class="slide level2 smaller scrollable">
+<h2>6.5.2 Cox Likelihood with Ties</h2>
 <ul>
-<li class="fragment"><p>If we relax the “no ties” assumption there are two estimators we can use.</p></li>
-<li class="fragment"><p><strong>Breslow Estimator:</strong> <span class="math display">\[
+<li class="fragment"><p>Assume we have <span class="math inline">\(r\)</span> distinct failure times with <span class="math inline">\(d_l\)</span> failures at the <span class="math inline">\(l^\text{th}\)</span> distinct time. <span class="math inline">\(t^*_{11} = t^*_{12} = \cdots = t^*_{1d_1} &lt; t^*_{21} = t^*_{22} = \cdots = t^*_{2d_2} &lt; \cdots \\ \hspace{18em} &lt; t^*_{r1} = t^*_{r2} = \cdots = t^*_{rd_r}\)</span></p></li>
+<li class="fragment"><p>Let <span class="math inline">\(\mathbf{X}^*_{lj}\)</span> be the vector of covariates for the observation that fails at time <span class="math inline">\(t^*_{lj}\)</span>. Let <span class="math inline">\(\mathbf{X}^*_{l} = \sum_{j=1}^{d_l}{\mathbf{X}^*_{lj}}\)</span>.</p></li>
+<li class="fragment"><p>Suppose we knew <span class="math inline">\(t^*_{l1} &lt; t^*_{l2} &lt; \dots &lt; t^*_{ld_l}\)</span>. Let <span class="math inline">\(B(t_{lj})\)</span> be the set of individuals failing at <span class="math inline">\(t^*_{l1}, t^*_{l2}, \dots, t^*_{ld_l}\)</span></p></li>
+<li class="fragment"><p>In this case the Cox Likelihood would be: <span class="math display">\[
 \begin{align}
-PL(\boldsymbol{\beta})
+l_p(\boldsymbol{\beta})
 &amp;=
-\prod_{l=1}^r \frac{\exp(\boldsymbol{\beta}^T \mathbf{X}^*_l)}{ \left[ \sum_{l^\prime: T_{l^\prime j} \geq T_{lj}} \exp(\boldsymbol{\beta}^T \mathbf{X}^*_{l^\prime j}) \right] ^{d_l}}
+\prod_{l=1}^r\prod_{j=1}^{d_l}\frac{\exp(\boldsymbol{\beta}^\mathsf{T}\mathbf{X}^*_{lj})}{\sum_{i:i \in R(t^*_{l1}) \setminus B(t^*_{l(j-1))})} \exp(\boldsymbol{\beta}^\mathsf{T}\mathbf{X}_i)}
+\\&amp;=
+\prod_{l=1}^r\frac{\prod_{j=1}^{d_l}{\exp(\boldsymbol{\beta}^\mathsf{T}\mathbf{X}^*_{lj})}}{\prod_{j=1}^{d_l} \left[ \sum_{i:i \in R(t^*_{l1}) \setminus B(t^*_{l(j-1)})} \exp(\boldsymbol{\beta}^\mathsf{T}\mathbf{X}_i)\right]}
+\\&amp;=
+\prod_{l=1}^r{\frac{\exp(\boldsymbol{\beta}^\mathsf{T}\mathbf{X}^*_l)}{\prod_{j=1}^{d_l} \left[ \sum_{i: i \in R(t^*_{l1})} \exp(\boldsymbol{\beta}^\mathsf{T}\mathbf{X}^*_i) - \sum_{i: i \in B(t^*_{l(j-1)})} \exp(\boldsymbol{\beta}^\mathsf{T}\mathbf{X}_i) \right]} }
 \end{align}
 \]</span></p></li>
-<li class="fragment"><p><strong>Efron Correction:</strong> <span class="math display">\[
+<li class="fragment"><p>However, we don’t know <span class="math inline">\(t^*_{l1} &lt; t^*_{l2} &lt; \dots &lt; t^*_{ld_l}\)</span> due to ties. Hence, we cannot estimate <span class="math inline">\(\sum_{i:i \in B(t^*_{l(j-1)})} \exp(\boldsymbol{\beta}^\mathsf{T}\mathbf{X}^*_i)\)</span>.</p></li>
+<li class="fragment"><p>We shall consider two ways of approximating the likelihood.</p></li>
+<li class="fragment"><p>However, <em>hazard ratios</em> can be only obtained between two individuals in the same strata.</p></li>
+<li class="fragment"><p><strong>Breslow Correction:</strong> Ignore the sum. Hence, the Cox likelihood becomes: <span class="math display">\[
 \begin{align}
-PL(\boldsymbol{\beta})
+l_p(\boldsymbol{\beta})
 &amp;=
-\prod_{l=1}^r{\frac{\exp(\boldsymbol{\beta}^T \mathbf{X}^*_l)}{\prod_{j=1}^{d_l} \left[ \sum_{l^\prime: T_{l^\prime j} \geq T_{lj}} \exp(\boldsymbol{\beta}^T \mathbf{X}^*_{l^\prime j}) - (j -1) \frac{1}{d_l} \sum_{k=1}^{d_l}  \exp(\boldsymbol{\beta}^T \mathbf{X}_{lk}) \right]} }
+\prod_{l=1}^r \frac{\exp(\boldsymbol{\beta}^\mathsf{T}\mathbf{X}^*_l)}{ \left[ \sum_{i: i \in R(t^*_{l1})} \exp(\boldsymbol{\beta}^\mathsf{T}\mathbf{X}_i) \right]^{d_l}}
+\end{align}
+\]</span></p></li>
+<li class="fragment"><p><strong>Efron Correction:</strong> Replace the sum by <span class="math inline">\(j-1\)</span> times the average. <span class="math display">\[
+\sum_{i: i \in B(t^*_{l(j-1)})} \exp(\boldsymbol{\beta}^\mathsf{T}\mathbf{X}_i) \approx (j -1) \frac{1}{d_l} \sum_{k=1}^{d_l}  \exp(\boldsymbol{\beta}^\mathsf{T}\mathbf{X}^*_{lk})
+\]</span> Hence, the Cox likelihood becomes: <span class="math display">\[
+\begin{align}
+l_p(\boldsymbol{\beta})
+=
+\prod_{l=1}^r{\frac{\exp(\boldsymbol{\beta}^\mathsf{T}\mathbf{X}^*_l)}{\prod_{j=1}^{d_l} \left[ \sum_{i: i \in R(t^*_{l1})} \exp(\boldsymbol{\beta}^\mathsf{T}\mathbf{X}^*_{l^\prime j}) - (j -1) \frac{1}{d_l} \sum_{k=1}^{d_l}  \exp(\boldsymbol{\beta}^\mathsf{T}\mathbf{X}^*_{lk}) \right]} }
 \end{align}
 \]</span></p></li>
 <li class="fragment"><p>The <em>Berslow Estimator</em> is computationally simpler but more biased to underestimation compared to the <em>Effron Correction</em>.</p></li>
 </ul>
 </section>
-<section id="cox-likelihood-without-ties-derivation" class="slide level2 scrollable">
-<h2>Cox Likelihood without Ties (Derivation)</h2>
+<section id="stratified-cox-ph-model" class="slide level2">
+<h2>6.6. Stratified Cox PH Model</h2>
 <ul>
-<li class="fragment"><p>Take an uncensored observation <span class="math inline">\(i\)</span> with failure time <span class="math inline">\(T_i\)</span>.</p></li>
-<li class="fragment"><p>The hazard function for the <span class="math inline">\(i^\text{th}\)</span> observation at time <span class="math inline">\(T_i\)</span> is <span class="math inline">\(h(T_i|\mathbf{X}_i) =  h_0(T_i) \exp (\boldsymbol{\beta}^T \mathbf{X}_i)\)</span>.</p></li>
-<li class="fragment"><p>The total hazard for at time <span class="math inline">\(T_i\)</span> for the at risk population is <span class="math inline">\(\sum_{i^\prime: T_{i^\prime} \geq T_i} h_0(T_i) \exp(\boldsymbol{\beta}^T \mathbf{X}_{i^\prime})\)</span></p></li>
-<li class="fragment"><p>Thus, the probability that observation <span class="math inline">\(i\)</span> is the one to fail at observation <span class="math inline">\(T_i\)</span> is <span class="math inline">\(\frac{h_0(T_i) \exp(\boldsymbol{\beta}^T \mathbf{X}_i)}{h_0(T_i) \sum_{i^\prime: T_{i^\prime} \geq T_i} \exp(\boldsymbol{\beta}^T \mathbf{X}_{i^\prime})} = \frac{\exp(\boldsymbol{\beta}^T \mathbf{X}_i)}{\sum_{i^\prime: T_{i^\prime} \geq T_i} \exp(\boldsymbol{\beta}^T \mathbf{X}_{i^\prime})}\)</span></p></li>
-<li class="fragment"><p>We get the partial likelihood by taking a product of these probabilities over all uncensored observations. <span class="math display">\[
-PL(\boldsymbol{\beta}) = \prod_{i:\delta_i = 1} \frac{\exp(\boldsymbol{\beta}^T \mathbf{X}_i)}{\sum_{i^\prime: T_{i^\prime} \geq T_i} \exp(\boldsymbol{\beta}^T \mathbf{X}_{i^\prime})}
+<li class="fragment">In cases where the data violates the PH assumption, but it holds in different strata of the data, we can use a stratified Cox PH Model</li>
+</ul>
+<div class="fragment">
+<p><span class="math display">\[
+h_s(t|\mathbf{X_i}) = h_{s0}(t) \exp (\boldsymbol{\beta}^\mathsf{T} \mathbf{X_i})
+\]</span> where the subscript <span class="math inline">\(s\)</span> represents different strata</p>
+<ul>
+<li class="fragment">This allows for each strata to have a different baseline hazard function.</li>
+</ul>
+</div>
+</section>
+<section id="cox-ph-models-with-time-dependence" class="slide level2">
+<h2>6.7. Cox PH Models with Time Dependence</h2>
+<ul>
+<li class="fragment"><p>When there covariates that vary with time, we can take the covariates as a function of time. <span class="math display">\[
+h(t|\mathbf{X_i(t)}) = h_{s}(t) \exp (\boldsymbol{\beta}^\mathsf{T} \mathbf{X_i(t)})
+\]</span></p></li>
+<li class="fragment"><p>We can also model the change in effects of fixed covariates with time. <span class="math display">\[
+h(t|\mathbf{X_i}) = h_{s}(t) \exp (\boldsymbol{\beta(t)}^\mathsf{T} \mathbf{X_i})
+\]</span> This can be estimated using a linear additive model.</p></li>
+</ul>
+</section>
+<section id="cox-ph-models-with-time-dependence-contd." class="slide level2">
+<h2>6.7. Cox PH Models with Time Dependence (contd.)</h2>
+<ul>
+<li class="fragment">The both scenarios can also be combined. <span class="math display">\[
+h(t|\mathbf{X_i(t)}) = h_{s}(t) \exp (\boldsymbol{\beta(t)}^\mathsf{T} \mathbf{X_i(t)})
+\]</span></li>
+</ul>
+</section>
+<section id="uncovered-topics-1" class="slide level2">
+<h2>6.8. Uncovered Topics</h2>
+<ul>
+<li>Testing if the PH assumption holds</li>
+<li>Estimating the survival function in Cox PH Model<!-- Clear doubts in pg 88 (pg 99 of pdf) --></li>
+<li>Variance &amp; confidence interval of estimates</li>
+<li>Statistical tests</li>
+<li>Goodness of fit measures</li>
+<li>Linear additive model</li>
+</ul>
+</section></section>
+<section>
+<section id="competing-risks-models" class="title-slide slide level1 center">
+<h1>7. Competing Risks Models</h1>
+
+</section>
+<section id="competing-risks-models-1" class="slide level2">
+<h2>7.1 Competing Risks Models</h2>
+<ul>
+<li class="fragment"><p>Competing Risk Models allow for there to be risks of different kinds.</p></li>
+<li class="fragment"><p>Let <span class="math inline">\(\delta = c\)</span> whre <span class="math inline">\(c=0\)</span> denotes censoring and <span class="math inline">\(c = 1, \dots, C\)</span> different kinds of failures.</p></li>
+<li class="fragment"><p>We will assume each failure type as mutually exclusive. Under this framework, if we want allow for the possibility of multiple failures, we consider each combination as a usique failure type.</p></li>
+<li class="fragment"><p>We will also assume no recurrence.</p></li>
+</ul>
+</section>
+<section id="cause-specific-functions" class="slide level2">
+<h2>7.2 Cause Specific Functions</h2>
+<ul>
+<li class="fragment"><p>Cause specific hazard function sum up to the cumuative hazrd at a point of time. <span class="math display">\[
+h(t) = \sum_{c=1}^C h_c(t)
+\]</span></p></li>
+<li class="fragment"><p>Cause specific cumulative hazard <span class="math display">\[
+H_c(t) = \int_{0}^{t} h_c(t) \mathrm{d}u
 \]</span></p></li>
 </ul>
 </section>
-<section id="cox-likelihood-with-ties-derivation" class="slide level2 smaller scrollable">
-<h2>Cox Likelihood with Ties (Derivation)</h2>
+<section id="cause-specific-functions-contd." class="slide level2">
+<h2>7.2 Cause Specific Functions (contd.)</h2>
 <ul>
-<li class="fragment"><p>Assume we have <span class="math inline">\(r\)</span> distinct failure times with <span class="math inline">\(d_l\)</span> deaths at the <span class="math inline">\(l^\text{th}\)</span> distinct time. <span class="math inline">\(T^*_{11} = T^*_{12} = \cdots = T^*_{1d_1} &lt; T^*_{21} = T^*_{22} = \cdots = T^*_{2d_2} &lt; \cdots \\ \hspace{18em} &lt; T^*_{r1} = T^*_{r2} = \cdots = T^*_{rd_r}\)</span></p></li>
-<li class="fragment"><p>Let <span class="math inline">\(\mathbf{X}^*_{lj}\)</span> be the vector of covariates for the observation that fails at time <span class="math inline">\(T^*_{lj}\)</span>. Let <span class="math inline">\(\mathbf{X}^*_{l} = \sum_{j=1}^{d_l}{\mathbf{X}^*_{lj}}\)</span>.</p></li>
-<li class="fragment"><p>Suppose we knew <span class="math inline">\(T^*_{l1} &lt; T^*_{l2} &lt; \cdots &lt; T^*_{ld_l}\)</span>.</p></li>
-<li class="fragment"><p>In this case the Cox Likelihood would be: <span class="math display">\[
-\begin{align}
-PL(\boldsymbol{\beta})
-&amp;=
-\prod_{l=1}^r\prod_{j=1}^{d_l}\frac{\exp(\boldsymbol{\beta}^T \mathbf{X}^*_{lj})}{\sum_{l^\prime, j^\prime: T_{l^\prime j^\prime} \geq T_{lj}} \exp(\boldsymbol{\beta}^T \mathbf{X}^*_{l^\prime j^\prime})}
-\\&amp;=
-\prod_{l=1}^r\frac{\prod_{j=1}^{d_l}{\exp(\boldsymbol{\beta}^T \mathbf{X}^*_{lj})}}{\prod_{j=1}^{d_l} \left[ \sum_{l^\prime, j^\prime: T_{l^\prime j^\prime} \geq T_{lj}} \exp(\boldsymbol{\beta}^T \mathbf{X}^*_{l^\prime j^\prime})\right] }
-\\&amp;=
-\prod_{l=1}^r{\frac{\exp(\boldsymbol{\beta}^T \mathbf{X}^*_l)}{\prod_{j=1}^{d_l} \left[ \sum_{l^\prime: T_{l^\prime j} \geq T_{lj}} \exp(\boldsymbol{\beta}^T \mathbf{X}^*_{l^\prime j}) - \sum_{j^{\prime\prime}: T_{lj^{\prime\prime}} &lt; T_{lj}} \exp(\boldsymbol{\beta}^T \mathbf{X}^*_{lj^{\prime\prime}}) \right]} }
-\end{align}
+<li class="fragment"><p>Overall hazard <span class="math display">\[
+H(t) = \sum_{j=1}^k H_c(t)
 \]</span></p></li>
-<li class="fragment"><p>However, we don’t know <span class="math inline">\(T^*_{l1} &lt; T^*_{l2} &lt; \cdots &lt; T^*_{ld_l}\)</span> due to ties. Hence, we cannot estimate <span class="math inline">\(\sum_{j^{\prime\prime}: T_{lj^{\prime\prime}} &lt; T_{lj}} \exp(\boldsymbol{\beta}^T \mathbf{X}^*_{lj^{\prime\prime}})\)</span>.</p></li>
-<li class="fragment"><p>We shall consider two ways of approximating the likelihood.</p></li>
-<li class="fragment"><p><strong>Breslow Estimator:</strong> Ignore the sum. Hence, the Cox likelihood becomes: <span class="math display">\[
-\begin{align}
-PL(\boldsymbol{\beta})
-&amp;=
-\prod_{l=1}^r \frac{\exp(\boldsymbol{\beta}^T \mathbf{X}^*_l)}{ \left[ \sum_{l^\prime: T_{l^\prime j} \geq T_{lj}} \exp(\boldsymbol{\beta}^T \mathbf{X}^*_{l^\prime j}) \right]^{d_l}}
-\end{align}
+<li class="fragment"><p>Survival Function <span class="math display">\[
+S(t) = e^{-H(t)}
 \]</span></p></li>
-<li class="fragment"><p><strong>Efron Correction:</strong> Replace the sum by <span class="math inline">\(j-1\)</span> times the average. <span class="math display">\[
-\sum_{j^{\prime\prime}: T_{lj^{\prime\prime}} &lt; T_{lj}} \exp(\boldsymbol{\beta}^T \mathbf{X}_{lj^{\prime\prime}}) \approx (j -1) \frac{1}{d_l} \sum_{k=1}^{d_l}  \exp(\boldsymbol{\beta}^T \mathbf{X}_{lk})
-\]</span> Hence, the Cox likelihood becomes: <span class="math display">\[
+</ul>
+</section>
+<section id="cumulative-incidence-function-cif" class="slide level2">
+<h2>7.3 Cumulative Incidence Function (CIF)</h2>
+<ul>
+<li class="fragment"><p>The CIF provides the marginal probability of failure occuring in the presence of competing failures.</p></li>
+<li class="fragment"><p>The CIF is given by <span class="math display">\[
 \begin{align}
-PL(\boldsymbol{\beta})
-=
-\prod_{l=1}^r{\frac{\exp(\boldsymbol{\beta}^T \mathbf{X}^*_l)}{\prod_{j=1}^{d_l} \left[ \sum_{l^\prime: T_{l^\prime j} \geq T_{lj}} \exp(\boldsymbol{\beta}^T \mathbf{X}^*_{l^\prime j}) - (j -1) \frac{1}{d_l} \sum_{k=1}^{d_l}  \exp(\boldsymbol{\beta}^T \mathbf{X}_{lk}) \right]} }
+F_c(t) &amp;= \mathbb{P}(T \leq t, \delta = c)\\
+&amp;= \int_{0}^{t} h_c(u)S(u) \mathrm{d}u
 \end{align}
 \]</span></p></li>
 </ul>
+</section>
+<section id="cif-contd." class="slide level2">
+<h2>CIF (contd.)</h2>
+<ul>
+<li class="fragment"><p>From this, we can obtain the total distribution function <span class="math display">\[
+F(t) = \sum_{c=1}^CF_c(t)
+\]</span></p></li>
+<li class="fragment"><p>It can also be defined as <span class="math display">\[
+F(t) = 1 - S(t)
+\]</span></p></li>
+</ul>
+</section>
+<section id="estimating-cif" class="slide level2">
+<h2>7.4 Estimating CIF</h2>
+<ul>
+<li class="fragment"><p>For ordered failure times <span class="math inline">\(t_j\)</span>, we estimate the hazard for failure type <span class="math inline">\(c\)</span> as <span class="math display">\[
+\hat{h}(t_j, c) = \frac{q_{cj}}{r_j}
+\]</span> where <span class="math inline">\(q_cj\)</span> is the number of failured of type <span class="math inline">\(c\)</span> at <span class="math inline">\(t_j\)</span>, and <span class="math inline">\(r_j\)</span> is the population at risk in the time.</p></li>
+<li class="fragment"><p>From this, the CIF can be estimated as <span class="math display">\[
+F(t_j, c) = \sum_{j \prime = 1}^j\hat{h}_c(t_{j\prime})\hat{S}(T_{j\prime-1})
+\]</span></p></li>
+</ul>
+</section>
+<section id="fine-grey-model" class="slide level2">
+<h2>7.5 Fine-Grey Model</h2>
+<ul>
+<li class="fragment"><p>We can estimate competing riks with covariates with <em>subdistribution hazards</em>, using the method provided in Fine &amp; Grey (1988).</p></li>
+<li class="fragment"><p>The risk set for individual <span class="math inline">\(i\)</span> facing failure type <span class="math inline">\(c\)</span> is defined as <span class="math display">\[
+R_i = {j: (T_j \geq T_i) \cup (T_j \leq T_i \cap \delta_i \neq c)}
+\]</span></p></li>
+<li class="fragment"><p>The subdistribution hazard function for the same is defined as <span class="math display">\[
+h_c(t)
+=
+\lim_{\Delta t \to 0}
+\frac{\mathbb{P}\left(t &lt; T_c \leq t + \Delta t\mid T_i &gt; t \cup (T_{c^\prime} \leq t \cap c^\prime \neq c)\right)
+}{
+\Delta t
+}
+\]</span></p></li>
+</ul>
+</section>
+<section id="fine-grey-model-contd." class="slide level2">
+<h2>7.5 Fine-Grey Model (contd.)</h2>
+<ul>
+<li class="fragment"><p>Similar to a Cox PH model, we can obtain <em>subdistribution hazard ratios (SHR)</em> from the Fine-Grey Model</p></li>
+<li class="fragment"><p>These can also be used to estimate the CIF. The mathematical details of the same have not been covered here.</p></li>
+</ul>
+</section>
+<section id="lunn-mcneil-model" class="slide level2">
+<h2>7.6 Lunn-McNeil Model</h2>
+<ul>
+<li class="fragment"><p>In the previous methods, we estimate a separate models for each risk.</p></li>
+<li class="fragment"><p>The Lunn-McNeil method allows to use a single model.</p></li>
+<li class="fragment"><p>It requires duplication of data and modifed version of the stratified Cox PH model.</p></li>
+</ul>
+</section>
+<section id="data-duplication" class="slide level2 smaller scrollable">
+<h2>7.6.1 Data Duplication</h2>
+<ul>
+<li class="fragment">Consider the following illustration of survival data unemployed inidividuals:</li>
+</ul>
+<div class="fragment">
+<div class="cell">
+<div class="cell-output-display">
+<div id="dexaksszqg" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#dexaksszqg table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#dexaksszqg thead, #dexaksszqg tbody, #dexaksszqg tfoot, #dexaksszqg tr, #dexaksszqg td, #dexaksszqg th {
+  border-style: none;
+}
+
+#dexaksszqg p {
+  margin: 0;
+  padding: 0;
+}
+
+#dexaksszqg .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#dexaksszqg .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#dexaksszqg .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#dexaksszqg .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#dexaksszqg .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#dexaksszqg .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#dexaksszqg .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#dexaksszqg .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#dexaksszqg .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#dexaksszqg .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#dexaksszqg .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#dexaksszqg .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#dexaksszqg .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#dexaksszqg .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#dexaksszqg .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#dexaksszqg .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#dexaksszqg .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#dexaksszqg .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#dexaksszqg .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#dexaksszqg .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#dexaksszqg .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#dexaksszqg .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#dexaksszqg .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#dexaksszqg .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#dexaksszqg .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#dexaksszqg .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#dexaksszqg .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#dexaksszqg .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#dexaksszqg .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#dexaksszqg .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#dexaksszqg .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#dexaksszqg .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#dexaksszqg .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#dexaksszqg .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#dexaksszqg .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#dexaksszqg .gt_left {
+  text-align: left;
+}
+
+#dexaksszqg .gt_center {
+  text-align: center;
+}
+
+#dexaksszqg .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#dexaksszqg .gt_font_normal {
+  font-weight: normal;
+}
+
+#dexaksszqg .gt_font_bold {
+  font-weight: bold;
+}
+
+#dexaksszqg .gt_font_italic {
+  font-style: italic;
+}
+
+#dexaksszqg .gt_super {
+  font-size: 65%;
+}
+
+#dexaksszqg .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#dexaksszqg .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#dexaksszqg .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#dexaksszqg .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#dexaksszqg .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#dexaksszqg .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#dexaksszqg .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#dexaksszqg .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#dexaksszqg div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+
+<table class="gt_table caption-top" data-quarto-bootstrap="false">
+<thead>
+<tr class="gt_col_headings header">
+<th id="id" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" style="font-weight: bold" scope="col">id</th>
+<th id="time" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" style="font-weight: bold" scope="col">time</th>
+<th id="status" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" style="font-weight: bold" scope="col">status</th>
+<th id="covariates" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" style="font-weight: bold" scope="col">covariates</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_right" headers="id">101</td>
+<td class="gt_row gt_right" headers="time">13</td>
+<td class="gt_row gt_left" headers="status">censored</td>
+<td class="gt_row gt_left" headers="covariates">X<sub>101</sub></td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_right" headers="id">102</td>
+<td class="gt_row gt_right" headers="time">2</td>
+<td class="gt_row gt_left" headers="status">employed</td>
+<td class="gt_row gt_left" headers="covariates">X<sub>102</sub></td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_right" headers="id">103</td>
+<td class="gt_row gt_right" headers="time">9</td>
+<td class="gt_row gt_left" headers="status">discouraged</td>
+<td class="gt_row gt_left" headers="covariates">X<sub>103</sub></td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_right" headers="id">104</td>
+<td class="gt_row gt_right" headers="time">6</td>
+<td class="gt_row gt_left" headers="status">olf</td>
+<td class="gt_row gt_left" headers="covariates">X<sub>104</sub></td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<ul>
+<li class="fragment">We duplicate this as follows:</li>
+</ul>
+</div>
+<div class="fragment">
+<div class="cell">
+<div class="cell-output-display">
+<div id="prdjtstukc" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#prdjtstukc table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#prdjtstukc thead, #prdjtstukc tbody, #prdjtstukc tfoot, #prdjtstukc tr, #prdjtstukc td, #prdjtstukc th {
+  border-style: none;
+}
+
+#prdjtstukc p {
+  margin: 0;
+  padding: 0;
+}
+
+#prdjtstukc .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#prdjtstukc .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#prdjtstukc .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#prdjtstukc .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#prdjtstukc .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#prdjtstukc .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#prdjtstukc .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#prdjtstukc .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#prdjtstukc .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#prdjtstukc .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#prdjtstukc .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#prdjtstukc .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#prdjtstukc .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#prdjtstukc .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#prdjtstukc .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#prdjtstukc .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#prdjtstukc .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#prdjtstukc .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#prdjtstukc .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#prdjtstukc .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#prdjtstukc .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#prdjtstukc .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#prdjtstukc .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#prdjtstukc .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#prdjtstukc .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#prdjtstukc .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#prdjtstukc .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#prdjtstukc .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#prdjtstukc .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#prdjtstukc .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#prdjtstukc .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#prdjtstukc .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#prdjtstukc .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#prdjtstukc .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#prdjtstukc .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#prdjtstukc .gt_left {
+  text-align: left;
+}
+
+#prdjtstukc .gt_center {
+  text-align: center;
+}
+
+#prdjtstukc .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#prdjtstukc .gt_font_normal {
+  font-weight: normal;
+}
+
+#prdjtstukc .gt_font_bold {
+  font-weight: bold;
+}
+
+#prdjtstukc .gt_font_italic {
+  font-style: italic;
+}
+
+#prdjtstukc .gt_super {
+  font-size: 65%;
+}
+
+#prdjtstukc .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#prdjtstukc .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#prdjtstukc .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#prdjtstukc .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#prdjtstukc .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#prdjtstukc .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#prdjtstukc .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#prdjtstukc .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#prdjtstukc div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+
+<table class="gt_table caption-top" style="table-layout:fixed;width:100%;" data-quarto-bootstrap="false">
+<colgroup>
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+</colgroup>
+<thead>
+<tr class="gt_col_headings header">
+<th id="id" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" style="font-weight: bold" scope="col">id</th>
+<th id="time" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" style="font-weight: bold" scope="col">time</th>
+<th id="status" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" style="font-weight: bold" scope="col">status</th>
+<th id="employed" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" style="font-weight: bold" scope="col">employed</th>
+<th id="discouraged" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" style="font-weight: bold" scope="col">discouraged</th>
+<th id="olf" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" style="font-weight: bold" scope="col">olf</th>
+<th id="covariates" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" style="font-weight: bold" scope="col">covariates</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_right" headers="id">101</td>
+<td class="gt_row gt_right" headers="time">13</td>
+<td class="gt_row gt_right" headers="status">0</td>
+<td class="gt_row gt_right" headers="employed">1</td>
+<td class="gt_row gt_right" headers="discouraged">0</td>
+<td class="gt_row gt_right" headers="olf">0</td>
+<td class="gt_row gt_left" headers="covariates">X<sub>101</sub></td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_right" headers="id">101</td>
+<td class="gt_row gt_right" headers="time">13</td>
+<td class="gt_row gt_right" headers="status">0</td>
+<td class="gt_row gt_right" headers="employed">0</td>
+<td class="gt_row gt_right" headers="discouraged">1</td>
+<td class="gt_row gt_right" headers="olf">0</td>
+<td class="gt_row gt_left" headers="covariates">X<sub>101</sub></td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_right" headers="id">101</td>
+<td class="gt_row gt_right" headers="time">13</td>
+<td class="gt_row gt_right" headers="status">0</td>
+<td class="gt_row gt_right" headers="employed">0</td>
+<td class="gt_row gt_right" headers="discouraged">0</td>
+<td class="gt_row gt_right" headers="olf">1</td>
+<td class="gt_row gt_left" headers="covariates">X<sub>101</sub></td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_right" headers="id">102</td>
+<td class="gt_row gt_right" headers="time">2</td>
+<td class="gt_row gt_right" headers="status">1</td>
+<td class="gt_row gt_right" headers="employed">1</td>
+<td class="gt_row gt_right" headers="discouraged">0</td>
+<td class="gt_row gt_right" headers="olf">0</td>
+<td class="gt_row gt_left" headers="covariates">X<sub>102</sub></td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_right" headers="id">102</td>
+<td class="gt_row gt_right" headers="time">2</td>
+<td class="gt_row gt_right" headers="status">0</td>
+<td class="gt_row gt_right" headers="employed">0</td>
+<td class="gt_row gt_right" headers="discouraged">1</td>
+<td class="gt_row gt_right" headers="olf">0</td>
+<td class="gt_row gt_left" headers="covariates">X<sub>102</sub></td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_right" headers="id">102</td>
+<td class="gt_row gt_right" headers="time">2</td>
+<td class="gt_row gt_right" headers="status">0</td>
+<td class="gt_row gt_right" headers="employed">0</td>
+<td class="gt_row gt_right" headers="discouraged">0</td>
+<td class="gt_row gt_right" headers="olf">1</td>
+<td class="gt_row gt_left" headers="covariates">X<sub>102</sub></td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_right" headers="id">103</td>
+<td class="gt_row gt_right" headers="time">9</td>
+<td class="gt_row gt_right" headers="status">0</td>
+<td class="gt_row gt_right" headers="employed">1</td>
+<td class="gt_row gt_right" headers="discouraged">0</td>
+<td class="gt_row gt_right" headers="olf">0</td>
+<td class="gt_row gt_left" headers="covariates">X<sub>103</sub></td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_right" headers="id">103</td>
+<td class="gt_row gt_right" headers="time">9</td>
+<td class="gt_row gt_right" headers="status">1</td>
+<td class="gt_row gt_right" headers="employed">0</td>
+<td class="gt_row gt_right" headers="discouraged">1</td>
+<td class="gt_row gt_right" headers="olf">0</td>
+<td class="gt_row gt_left" headers="covariates">X<sub>103</sub></td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_right" headers="id">103</td>
+<td class="gt_row gt_right" headers="time">9</td>
+<td class="gt_row gt_right" headers="status">0</td>
+<td class="gt_row gt_right" headers="employed">0</td>
+<td class="gt_row gt_right" headers="discouraged">0</td>
+<td class="gt_row gt_right" headers="olf">1</td>
+<td class="gt_row gt_left" headers="covariates">X<sub>103</sub></td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_right" headers="id">104</td>
+<td class="gt_row gt_right" headers="time">6</td>
+<td class="gt_row gt_right" headers="status">0</td>
+<td class="gt_row gt_right" headers="employed">1</td>
+<td class="gt_row gt_right" headers="discouraged">0</td>
+<td class="gt_row gt_right" headers="olf">0</td>
+<td class="gt_row gt_left" headers="covariates">X<sub>104</sub></td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_right" headers="id">104</td>
+<td class="gt_row gt_right" headers="time">6</td>
+<td class="gt_row gt_right" headers="status">0</td>
+<td class="gt_row gt_right" headers="employed">0</td>
+<td class="gt_row gt_right" headers="discouraged">1</td>
+<td class="gt_row gt_right" headers="olf">0</td>
+<td class="gt_row gt_left" headers="covariates">X<sub>104</sub></td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_right" headers="id">104</td>
+<td class="gt_row gt_right" headers="time">6</td>
+<td class="gt_row gt_right" headers="status">1</td>
+<td class="gt_row gt_right" headers="employed">0</td>
+<td class="gt_row gt_right" headers="discouraged">0</td>
+<td class="gt_row gt_right" headers="olf">1</td>
+<td class="gt_row gt_left" headers="covariates">X<sub>104</sub></td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<ul>
+<li class="fragment">In general form, this will be:</li>
+</ul>
+</div>
+<div class="fragment">
+<div class="cell">
+<div class="cell-output-display">
+<div id="hhzfkmspyr" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#hhzfkmspyr table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#hhzfkmspyr thead, #hhzfkmspyr tbody, #hhzfkmspyr tfoot, #hhzfkmspyr tr, #hhzfkmspyr td, #hhzfkmspyr th {
+  border-style: none;
+}
+
+#hhzfkmspyr p {
+  margin: 0;
+  padding: 0;
+}
+
+#hhzfkmspyr .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#hhzfkmspyr .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#hhzfkmspyr .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#hhzfkmspyr .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#hhzfkmspyr .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#hhzfkmspyr .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#hhzfkmspyr .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#hhzfkmspyr .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#hhzfkmspyr .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#hhzfkmspyr .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#hhzfkmspyr .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#hhzfkmspyr .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#hhzfkmspyr .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#hhzfkmspyr .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#hhzfkmspyr .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#hhzfkmspyr .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#hhzfkmspyr .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#hhzfkmspyr .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#hhzfkmspyr .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#hhzfkmspyr .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#hhzfkmspyr .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#hhzfkmspyr .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#hhzfkmspyr .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#hhzfkmspyr .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#hhzfkmspyr .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#hhzfkmspyr .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#hhzfkmspyr .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#hhzfkmspyr .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#hhzfkmspyr .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#hhzfkmspyr .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#hhzfkmspyr .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#hhzfkmspyr .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#hhzfkmspyr .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#hhzfkmspyr .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#hhzfkmspyr .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#hhzfkmspyr .gt_left {
+  text-align: left;
+}
+
+#hhzfkmspyr .gt_center {
+  text-align: center;
+}
+
+#hhzfkmspyr .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#hhzfkmspyr .gt_font_normal {
+  font-weight: normal;
+}
+
+#hhzfkmspyr .gt_font_bold {
+  font-weight: bold;
+}
+
+#hhzfkmspyr .gt_font_italic {
+  font-style: italic;
+}
+
+#hhzfkmspyr .gt_super {
+  font-size: 65%;
+}
+
+#hhzfkmspyr .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#hhzfkmspyr .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#hhzfkmspyr .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#hhzfkmspyr .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#hhzfkmspyr .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#hhzfkmspyr .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#hhzfkmspyr .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#hhzfkmspyr .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#hhzfkmspyr div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+
+<table class="gt_table caption-top" style="table-layout:fixed;width:100%;" data-quarto-bootstrap="false">
+<colgroup>
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+</colgroup>
+<thead>
+<tr class="gt_col_headings header">
+<th id="id" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" style="font-weight: bold" scope="col">id</th>
+<th id="time" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" style="font-weight: bold" scope="col">time</th>
+<th id="status" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" style="font-weight: bold" scope="col">status</th>
+<th id="D1" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" style="font-weight: bold" scope="col">D<sub>1</sub></th>
+<th id="D2" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" style="font-weight: bold" scope="col">D<sub>2</sub></th>
+<th id="D3" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" style="font-weight: bold" scope="col">D<sub>3</sub></th>
+<th id="covariates" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" style="font-weight: bold" scope="col">covariates</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_right" headers="id">101</td>
+<td class="gt_row gt_right" headers="time">13</td>
+<td class="gt_row gt_right" headers="status">0</td>
+<td class="gt_row gt_right" headers="D1">1</td>
+<td class="gt_row gt_right" headers="D2">0</td>
+<td class="gt_row gt_right" headers="D3">0</td>
+<td class="gt_row gt_left" headers="covariates">X<sub>101</sub></td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_right" headers="id">101</td>
+<td class="gt_row gt_right" headers="time">13</td>
+<td class="gt_row gt_right" headers="status">0</td>
+<td class="gt_row gt_right" headers="D1">0</td>
+<td class="gt_row gt_right" headers="D2">1</td>
+<td class="gt_row gt_right" headers="D3">0</td>
+<td class="gt_row gt_left" headers="covariates">X<sub>101</sub></td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_right" headers="id">101</td>
+<td class="gt_row gt_right" headers="time">13</td>
+<td class="gt_row gt_right" headers="status">0</td>
+<td class="gt_row gt_right" headers="D1">0</td>
+<td class="gt_row gt_right" headers="D2">0</td>
+<td class="gt_row gt_right" headers="D3">1</td>
+<td class="gt_row gt_left" headers="covariates">X<sub>101</sub></td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_right" headers="id">102</td>
+<td class="gt_row gt_right" headers="time">2</td>
+<td class="gt_row gt_right" headers="status">1</td>
+<td class="gt_row gt_right" headers="D1">1</td>
+<td class="gt_row gt_right" headers="D2">0</td>
+<td class="gt_row gt_right" headers="D3">0</td>
+<td class="gt_row gt_left" headers="covariates">X<sub>102</sub></td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_right" headers="id">102</td>
+<td class="gt_row gt_right" headers="time">2</td>
+<td class="gt_row gt_right" headers="status">0</td>
+<td class="gt_row gt_right" headers="D1">0</td>
+<td class="gt_row gt_right" headers="D2">1</td>
+<td class="gt_row gt_right" headers="D3">0</td>
+<td class="gt_row gt_left" headers="covariates">X<sub>102</sub></td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_right" headers="id">102</td>
+<td class="gt_row gt_right" headers="time">2</td>
+<td class="gt_row gt_right" headers="status">0</td>
+<td class="gt_row gt_right" headers="D1">0</td>
+<td class="gt_row gt_right" headers="D2">0</td>
+<td class="gt_row gt_right" headers="D3">1</td>
+<td class="gt_row gt_left" headers="covariates">X<sub>102</sub></td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_right" headers="id">103</td>
+<td class="gt_row gt_right" headers="time">9</td>
+<td class="gt_row gt_right" headers="status">0</td>
+<td class="gt_row gt_right" headers="D1">1</td>
+<td class="gt_row gt_right" headers="D2">0</td>
+<td class="gt_row gt_right" headers="D3">0</td>
+<td class="gt_row gt_left" headers="covariates">X<sub>103</sub></td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_right" headers="id">103</td>
+<td class="gt_row gt_right" headers="time">9</td>
+<td class="gt_row gt_right" headers="status">1</td>
+<td class="gt_row gt_right" headers="D1">0</td>
+<td class="gt_row gt_right" headers="D2">1</td>
+<td class="gt_row gt_right" headers="D3">0</td>
+<td class="gt_row gt_left" headers="covariates">X<sub>103</sub></td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_right" headers="id">103</td>
+<td class="gt_row gt_right" headers="time">9</td>
+<td class="gt_row gt_right" headers="status">0</td>
+<td class="gt_row gt_right" headers="D1">0</td>
+<td class="gt_row gt_right" headers="D2">0</td>
+<td class="gt_row gt_right" headers="D3">1</td>
+<td class="gt_row gt_left" headers="covariates">X<sub>103</sub></td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_right" headers="id">104</td>
+<td class="gt_row gt_right" headers="time">6</td>
+<td class="gt_row gt_right" headers="status">0</td>
+<td class="gt_row gt_right" headers="D1">1</td>
+<td class="gt_row gt_right" headers="D2">0</td>
+<td class="gt_row gt_right" headers="D3">0</td>
+<td class="gt_row gt_left" headers="covariates">X<sub>104</sub></td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_right" headers="id">104</td>
+<td class="gt_row gt_right" headers="time">6</td>
+<td class="gt_row gt_right" headers="status">0</td>
+<td class="gt_row gt_right" headers="D1">0</td>
+<td class="gt_row gt_right" headers="D2">1</td>
+<td class="gt_row gt_right" headers="D3">0</td>
+<td class="gt_row gt_left" headers="covariates">X<sub>104</sub></td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_right" headers="id">104</td>
+<td class="gt_row gt_right" headers="time">6</td>
+<td class="gt_row gt_right" headers="status">1</td>
+<td class="gt_row gt_right" headers="D1">0</td>
+<td class="gt_row gt_right" headers="D2">0</td>
+<td class="gt_row gt_right" headers="D3">1</td>
+<td class="gt_row gt_left" headers="covariates">X<sub>104</sub></td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="functional-form" class="slide level2 scrollable">
+<h2>7.6.2 Functional Form</h2>
+<p><span class="math display">\[
+\begin{align}
+h_c(t|\mathbf{X}) &amp;= h_{c0}(t) \exp (\beta_1 X_1 + \beta_2X_2 + \dots + \beta_pX_p + \\
+&amp;\delta_{21}D_2X_1 + \delta_{22}D_2X_2 + \dots + \delta_{2p}D_2X_p + \\
+&amp; \qquad \qquad \qquad \qquad \qquad \  \vdots \\
+&amp;\delta_{C1}D_CX_1 + \delta_{C2}D_CX_2 + \dots + \delta_{Cp}D_CX_p)
+\end{align}
+\]</span> where <span class="math inline">\(c = 1, \dots, C\)</span> denotes the type of failure. <span class="math inline">\(D_2, \dots, D_C\)</span> are dummies representing each failure type except the baseline one.</p>
+<ul>
+<li class="fragment"><p>The linear function for observation with failure type <span class="math inline">\(c=1\)</span> reduces to <span class="math inline">\(\beta_1X_1 + \dots + \beta_pX_p\)</span></p></li>
+<li class="fragment"><p>The linear function for observation with failure type <span class="math inline">\(c\neq1\)</span> reduces to <span class="math inline">\((\beta_1 + \delta_{1c})X_1 + \dots + (\beta_p + \delta_{pc})X_p\)</span></p></li>
+</ul>
+</section></section>
+<section>
+<section id="parametric-models" class="title-slide slide level1 center">
+<h1>Parametric Models</h1>
+
 </section>
 <section id="weibull-model" class="slide level2">
 <h2>Weibull Model</h2>
 <ul>
 <li class="fragment"><p>This a parametric distribution</p></li>
-<li class="fragment"><p>The hazard function takes the following form: <span class="math inline">\(h(t, \mathbf{X}) = \lambda(t, \mathbf{X}) p t^{p-1}\)</span> <br> where <span class="math inline">\(\lambda(t, \mathbf{X}) = \exp(\beta_0 + \boldsymbol{\beta}^T\mathbf{X}) &gt; 0\)</span> and <span class="math inline">\(p&gt;0\)</span></p></li>
+<li class="fragment"><p>The hazard function takes the following form: <span class="math inline">\(h(t, \mathbf{X}) = \lambda(t, \mathbf{X}) p t^{p-1}\)</span> <br> where <span class="math inline">\(\lambda(t, \mathbf{X}) = \exp(\beta_0 + \boldsymbol{\beta}^\mathsf{T}\mathbf{X}) &gt; 0\)</span> and <span class="math inline">\(p&gt;0\)</span></p></li>
 <li class="fragment"><p>Here, <span class="math inline">\(\lambda\)</span> is called the <em>scale parameter</em> and <span class="math inline">\(p\)</span> is called the shape parameter.</p></li>
 <li class="fragment"><p><a href="https://sesen.ai/distribution-explorer/weibull">Simulation of Weibull Distribution</a></p></li>
 </ul>
@@ -417,8 +2507,8 @@ PL(\boldsymbol{\beta})
 <li class="fragment"><p>Take two different observation <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span> with covariates <span class="math inline">\(\mathbf{X}_i\)</span> and <span class="math inline">\(\mathbf{X}_j\)</span> respectively.</p></li>
 <li class="fragment"><p>The <em>hazard ratio</em> is given by: <span class="math display">\[\begin{align}
 \widehat{HR} &amp;= \frac{\widehat{h}(t, \mathbf{X_i})}{\widehat{h}(t, \mathbf{X_j})}\\
-&amp;= \frac{\exp (\beta_0 + \boldsymbol{\beta}^T \mathbf{X_i}) p t^{p-1}} {\exp (\beta_0 + \boldsymbol{\beta}^T \mathbf{X_j}) p t^{p-1}} \\
-&amp;= \exp (\boldsymbol{\beta}^T(\mathbf{X_i} - \mathbf{X_j}))
+&amp;= \frac{\exp (\beta_0 + \boldsymbol{\beta}^\mathsf{T}\mathbf{X_i}) p t^{p-1}} {\exp (\beta_0 + \boldsymbol{\beta}^\mathsf{T}\mathbf{X_j}) p t^{p-1}} \\
+&amp;= \exp (\boldsymbol{\beta}^\mathsf{T}(\mathbf{X_i} - \mathbf{X_j}))
 \end{align}\]</span></p></li>
 </ul>
 </section>
@@ -442,18 +2532,18 @@ h(t, \mathbf{X}) &amp;= \lambda(t, \mathbf{X}) p t^{p-1}\\
 <li class="fragment"><p>Take <span class="math inline">\(t\)</span> to the LHS: <span class="math display">\[\begin{align}
 t &amp;= [- \ln S(t, \mathbf{X})]^{\frac{1}{p}} \times \frac{1}{\lambda(t, \mathbf{X}) ^ {\frac{1}{p}}}
 \end{align}\]</span></p></li>
-<li class="fragment"><p>Reparametrize <span class="math inline">\(\frac{1}{\lambda(t, \mathbf{X}) ^ \frac{1}{p}} = \exp(\alpha_0 + \boldsymbol{\alpha}^T \mathbf{X})\)</span></p></li>
-<li class="fragment"><p>Now, <span class="math inline">\(t = [- \ln (S(t, \mathbf{X}))]^{\frac{1}{p}} \times \exp(\alpha_0 + \boldsymbol{\alpha}^T \mathbf{X})\)</span></p></li>
+<li class="fragment"><p>Reparametrize <span class="math inline">\(\frac{1}{\lambda(t, \mathbf{X}) ^ \frac{1}{p}} = \exp(\alpha_0 + \boldsymbol{\alpha}^\mathsf{T}\mathbf{X})\)</span></p></li>
+<li class="fragment"><p>Now, <span class="math inline">\(t = [- \ln (S(t, \mathbf{X}))]^{\frac{1}{p}} \times \exp(\alpha_0 + \boldsymbol{\alpha}^\mathsf{T}\mathbf{X})\)</span></p></li>
 <li class="fragment"><p>Let <span class="math inline">\(S(t, \mathbf{X_j}) = q\)</span> <br> By AFT, <span class="math inline">\(S(\lambda t, \mathbf{X_i}) = q\)</span></p></li>
 <li class="fragment"><p>Using the above definition of t, <span class="math display">\[\begin{align}
 &amp;&amp;
 \lambda &amp;= \frac{\lambda t}{t}\\
 &amp;&amp;&amp;=
-\frac{[- \ln (S(\lambda t, \mathbf{X_i}))]^{\frac{1}{p}} \times \exp(\alpha_0 + \boldsymbol{\alpha}^T \mathbf{X_j})} {[- \ln (S(\lambda t, \mathbf{X_j}))]^{\frac{1}{p}} \times \exp(\alpha_0 + \boldsymbol{\alpha}^T \mathbf{X_i})}\\
+\frac{[- \ln (S(\lambda t, \mathbf{X_i}))]^{\frac{1}{p}} \times \exp(\alpha_0 + \boldsymbol{\alpha}^\mathsf{T}\mathbf{X_j})} {[- \ln (S(\lambda t, \mathbf{X_j}))]^{\frac{1}{p}} \times \exp(\alpha_0 + \boldsymbol{\alpha}^\mathsf{T}\mathbf{X_i})}\\
 &amp;&amp;&amp;=
-\frac{[- \ln (q)]^{\frac{1}{p}} \times \exp(\alpha_0 + \boldsymbol{\alpha}^T \mathbf{X_i})} {[- \ln (q)]^{\frac{1}{p}} \times \exp(\alpha_0 + \boldsymbol{\alpha}^T \mathbf{X_j})}\\
+\frac{[- \ln (q)]^{\frac{1}{p}} \times \exp(\alpha_0 + \boldsymbol{\alpha}^\mathsf{T}\mathbf{X_i})} {[- \ln (q)]^{\frac{1}{p}} \times \exp(\alpha_0 + \boldsymbol{\alpha}^\mathsf{T}\mathbf{X_j})}\\
 &amp; \Rightarrow &amp;
-\lambda &amp;= \exp(\boldsymbol{\alpha}^T (\mathbf{X_i} - \mathbf{X_j}))
+\lambda &amp;= \exp(\boldsymbol{\alpha}^\mathsf{T}(\mathbf{X_i} - \mathbf{X_j}))
 \end{align}\]</span></p></li>
 </ul>
 </section>
@@ -464,18 +2554,18 @@ t &amp;= [- \ln S(t, \mathbf{X})]^{\frac{1}{p}} \times \frac{1}{\lambda(t, \math
 <li class="fragment"><p>We can also derive a relationship between the coefficients.</p></li>
 <li class="fragment"><p>Under AFT, <span class="math display">\[\begin{align}
 &amp;&amp;
-\frac{1}{\lambda ^ \frac{1}{p}} &amp;= \exp(\alpha_0 + \boldsymbol{\alpha}^T \mathbf{X}) \\
+\frac{1}{\lambda ^ \frac{1}{p}} &amp;= \exp(\alpha_0 + \boldsymbol{\alpha}^\mathsf{T}\mathbf{X}) \\
 &amp;\Rightarrow&amp;
 (1-p)\ln(\lambda)
-&amp;= - (\alpha_0 + \boldsymbol{\alpha}^T \mathbf{X}) \\
+&amp;= - (\alpha_0 + \boldsymbol{\alpha}^\mathsf{T}\mathbf{X}) \\
 &amp;\Rightarrow&amp;
-\ln(\lambda) &amp;= -p (\alpha_0 + \boldsymbol{\alpha}^T \mathbf{X})
+\ln(\lambda) &amp;= -p (\alpha_0 + \boldsymbol{\alpha}^\mathsf{T}\mathbf{X})
 \end{align}\]</span></p></li>
 <li class="fragment"><p>Under PH <span class="math display">\[\begin{align}
 &amp;&amp;
-\lambda &amp;= \exp (\beta_0 + \boldsymbol{\beta}^T \mathbf{X})\\
+\lambda &amp;= \exp (\beta_0 + \boldsymbol{\beta}^\mathsf{T}\mathbf{X})\\
 &amp; \Rightarrow &amp;
-\ln(\lambda) &amp;= \beta_0 + \boldsymbol{\beta}^T \mathbf{X}
+\ln(\lambda) &amp;= \beta_0 + \boldsymbol{\beta}^\mathsf{T}\mathbf{X}
 \end{align}\]</span></p></li>
 <li class="fragment"><p>Hence, <span class="math inline">\(\beta_0 = - \alpha_0\)</span> and <span class="math inline">\(\beta = - \alpha\)</span></p></li>
 </ul>
@@ -484,12 +2574,14 @@ t &amp;= [- \ln S(t, \mathbf{X})]^{\frac{1}{p}} \times \frac{1}{\lambda(t, \math
 <h2>References</h2>
 <ul>
 <li><p><em>Breslow vs Efron tie handling in Cox proportional hazards.</em> (2026). MetricGate. <a href="https://metricgate.com/blogs/breslow-vs-efron-tie-handling-cox/" class="uri">https://metricgate.com/blogs/breslow-vs-efron-tie-handling-cox/</a></p></li>
+<li><p>Fine, J. P., &amp; Gray, R. J. (1999). <em>A Proportional Hazards Model for the Subdistribution of a Competing Risk.</em> Journal of the American Statistical Association, 94(446), 496–509. <a href="https://doi.org/10.2307/2670170" class="uri">https://doi.org/10.2307/2670170</a></p></li>
+<li><p>Hosmer, D. W., Lemeshow, S., &amp; May, S. (2011). <em>Applied survival analysis: Regression modeling of time to event data</em> (2nd ed). John Wiley &amp; Sons.</p></li>
 <li><p>James, G., Witten, D., Hastie, T., &amp; Tibshirani, R. (2021). <em>An introduction to statistical learning: With applications in R</em> (2nd ed). Springer. <a href="https://www.statlearning.com/" class="uri">https://www.statlearning.com/</a></p></li>
 <li><p>Kleinbaum, D. G., &amp; Klein, M. (2005). <em>Survival analysis: A self-learning text</em> (2nd ed). Springer.</p></li>
 <li><p>Waagepetersen, R. (2024, Semptember 29). <em>Cox’s proportional hazards model and Cox’s partial likelihood.</em> Aalborg University. <a href="https://people.math.aau.dk/~rw/Undervisning/DurationAnalysis/Slides/lektion3.pdf" class="uri">https://people.math.aau.dk/~rw/Undervisning/DurationAnalysis/Slides/lektion3.pdf</a></p></li>
 </ul>
 
-</section>
+</section></section>
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <div class="footer footer-default">
@@ -705,6 +2797,82 @@ t &amp;= [- \ln S(t, \mathbf{X})]^{\frac{1}{p}} \times \frac{1}{\lambda(t, \math
         ]
       });
     </script>
+    
+
+    <script>
+
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+
+      // slide changes (different for each slide format).
+
+      (function () {
+
+        // dispatch for htmlwidgets
+
+        function fireSlideEnter() {
+
+          const event = window.document.createEvent("Event");
+
+          event.initEvent("slideenter", true, true);
+
+          window.document.dispatchEvent(event);
+
+        }
+
+    
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+
+          fireSlideEnter();
+
+    
+
+          // dispatch for shiny
+
+          if (window.jQuery) {
+
+            if (previousSlide) {
+
+              window.jQuery(previousSlide).trigger("hidden");
+
+            }
+
+            if (currentSlide) {
+
+              window.jQuery(currentSlide).trigger("shown");
+
+            }
+
+          }
+
+        }
+
+    
+
+        // hookup for slidy
+
+        if (window.w3c_slidy) {
+
+          window.w3c_slidy.add_observer(function (slide_num) {
+
+            // slide_num starts at position 1
+
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+
+          });
+
+        }
+
+    
+
+      })();
+
+    </script>
+
+    
+
     <script id="quarto-html-after-body" type="application/javascript">
       window.document.addEventListener("DOMContentLoaded", function (event) {
         const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")

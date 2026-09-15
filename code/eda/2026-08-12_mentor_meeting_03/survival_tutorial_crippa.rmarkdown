@@ -1,0 +1,77 @@
+---
+title: "Survival Analysis Tutorial"
+format: html
+---
+
+[Link to tutorial](https://rpubs.com/alecri/258589)
+
+## Prerequisites
+
+```{r load_libs}
+if (!require(pacman)) install.packages("pacman")
+pacman::p_load(tidyverse, plotly, shiny, scales, patchwork, DiagrammeR,
+               survival, KMsurv, flexsurv, eha, ctqr, cmprsk, mstate, ggsurvfit, survminer, 
+               Epi, epitools, gnm, splines)
+```
+
+```{r set_theme}
+theme_set(theme_classic() + theme(legend.position = "bottom"))
+```
+
+## Data
+
+```{r data}
+orca <- read.table("http://www.stats4life.se/data/oralca.txt", stringsAsFactors = TRUE)
+head(orca)
+glimpse(orca)
+summary(orca)
+table(orca$event)
+```
+
+## Survival Data
+
+```{r death}
+orca |> 
+    mutate(all = event != "Alive") -> orca
+table(orca$all)
+```
+
+Defining a `Surv` object needs a $(y, \delta)$ pair
+```{r surv_obj}
+su_obj <- Surv(orca$time, orca$all)
+str(su_obj)
+```
+
+## Estimating Survival Function
+
+### Non Parametric
+
+#### KM Estimator
+
+```{r km}
+fit_km <- survfit(Surv(time, all) ~ 1, data = orca)
+print(fit_km)
+```
+
+Tidy data
+
+```{r km_tidy}
+tidy(fit_km) |> View()
+```
+
+Visualize
+
+```{r hm_viz}
+ggsurvfit(fit_km) +
+    add_censor_mark()+
+      add_confidence_interval() +
+  add_risktable() +
+  labs(x = "Time (years)")
+```
+
+CIF & Cumulative Hazard
+
+```{r km_cif_ch}
+ggsurvfit(fit_km, type = "risk")
+ggsurvfit(fit_km, type = "cumhaz")
+```

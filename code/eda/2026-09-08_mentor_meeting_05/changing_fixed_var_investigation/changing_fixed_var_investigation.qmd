@@ -1,0 +1,473 @@
+---
+title: "Investigating changing Caste/Religion/Location in CMIE-CPHS"
+author: "Jyotiraditya pradhan"
+date: last-modified # Automatically updates the date
+format:
+    html
+---
+
+## Setup
+
+```{r setup}
+rm(list = ls())
+if (!require("pacman")) {
+  install.packages("pacman")
+}
+pacman::p_load(here, tidyverse, janitor, gt, DT, scales)
+source("code/utilities.R")
+```
+
+## Data Loading
+
+```{r data_loading}
+#| eval: false
+monthly_panel_pre_covid <- read_csv(
+  here(
+    "data",
+    "eda",
+    "2026-08-28_lab_presentation_01",
+    "monthly_panel_pre_covid.csv"
+  )
+)
+
+monthly_panel_post_covid <- read_csv(
+  here(
+    "data",
+    "eda",
+    "2026-08-28_lab_presentation_01",
+    "monthly_panel_post_covid.csv"
+  )
+)
+```
+
+## Obtaining Duplicates
+
+The fixed columns along with `id` include `state`, `district`, `caste_category` and `religion`.
+
+We will trim both datasets to these columns, and merge them in long format.
+
+```{r data_long}
+#| eval: false
+monthly_panel_pre_covid |>
+  pivot_longer(
+    cols = matches("_\\d{4}_\\d{2}$"),
+    names_to = c(".value", "month_id"),
+    names_pattern = "^(.*)_(\\d{4}_\\d{2})$"
+  ) |>
+  filter(!is.na(month_slot)) |> # remove observation when not part of sample
+  select(
+    id,
+    state,
+    district,
+    caste_category,
+    religion,
+    month_id
+  ) |>
+  add_row(
+    monthly_panel_post_covid |>
+      pivot_longer(
+        cols = matches("_\\d{4}_\\d{2}$"),
+        names_to = c(".value", "month_id"),
+        names_pattern = "^(.*)_(\\d{4}_\\d{2})$"
+      ) |>
+      filter(!is.na(month_slot)) |>
+      select(
+        id,
+        state,
+        district,
+        caste_category,
+        religion,
+        month_id
+      )
+  ) -> merged_trimmed_data
+```
+
+We shall next obtain the duplicates.
+
+```{r obtain_duplicates}
+#| eval: false
+merged_trimmed_data |>
+  group_by(id, state, district, caste_category, religion) |>
+  mutate(
+    month_id_pasted = paste(month_id, collapse = ", ")
+  ) |>
+  slice_head(n = 1) |>
+  ungroup() |>
+  filter(n() > 1, .by = id) -> duplicates
+```
+
+```{r write_duplicates}
+#| eval: false
+write_csv(
+  duplicates,
+  here(
+    "data",
+    "eda",
+    "2026-09-08_mentor_meeting_05",
+    "duplicates.csv"
+  )
+)
+
+write_csv(
+  merged_trimmed_data,
+  here(
+    "data",
+    "eda",
+    "2026-09-08_mentor_meeting_05",
+    "merged_trimmed_data.csv"
+  )
+)
+```
+
+Most of the above code is not executed for speedy rendering. Instead, we read the modified data
+```{r read_duplicates}
+duplicates <- read_csv(here(
+  "data",
+  "eda",
+  "2026-09-08_mentor_meeting_05",
+  "duplicates.csv"
+))
+
+merged_trimmed_data <- read_csv(here(
+  "data",
+  "eda",
+  "2026-09-08_mentor_meeting_05",
+  "merged_trimmed_data.csv"
+))
+```
+
+Total number of duplicates:
+```{r nrow_duplicates}
+duplicates |>
+  distinct(id) |>
+  nrow() -> num_duplicates
+
+num_duplicates
+```
+
+Total sample size: 
+```{r nrow_sample}
+merged_trimmed_data |>
+  distinct(id) |>
+  nrow() -> num_sample
+
+num_sample
+```
+
+Share of duplicates:
+```{r share_duplicates}
+num_duplicates / num_sample
+```
+
+## Testing
+
+We will check if the stated results match with raw data, in order to rule out errors due to bugs in code used to create the panel.
+
+We define a function first.
+
+```{r func_check_raw}
+#| code-fold: true
+#| code-summary: "Click to see the code defining the function"
+check_raw <- function(id_arg, month_id_arg) {
+  duplicates |>
+    filter(id == id_arg, month_id == month_id_arg) |>
+    select(-month_id_pasted) |>
+    mutate(source = "Panel", .before = 1) -> panel_row
+
+  read_csv(
+    here(
+      "data",
+      "cmie",
+      "cmie_income_raw",
+      "member",
+      cphs_monthid_to_income_filename(month_id_arg, "member")
+    ),
+    show_col_types = FALSE
+  ) |>
+    clean_names() |>
+    mutate(id = paste0(hh_id, "_", mem_id)) |>
+    filter(id == id_arg) |>
+    select(id, state, district, caste_category, religion) |>
+    mutate(source = "Raw", .before = 1) -> raw_row
+
+  panel_row |>
+    add_row(raw_row) %>%
+    return()
+}
+```
+
+We shall check 3 random cases now.
+
+```{r random_check_sample}
+#| results: asis
+#| message: false
+for (id_curr in sample(duplicates$id, 3)) {
+  # !!!!!INCREASE LATER
+  for (month_id_curr in filter(duplicates, id == id_curr)$month_id) {
+    check_raw(id_curr, month_id_curr) |>
+      gt() |>
+      as_raw_html() |>
+      cat()
+    cat("\n\n")
+  }
+}
+```
+
+## State Change
+
+Duplicates due to state change:
+```{r state_change}
+duplicates |>
+  distinct(id, state) |>
+  filter(n() > 1, .by = id) |>
+  nrow()
+```
+
+None found.
+
+## District Change
+
+Number and fraction of duplicates due to district change:
+
+```{r nrow_duplicates_dist}
+duplicates |>
+  distinct(id, district) |>
+  filter(n() > 1, .by = id) |>
+  distinct(id) |>
+  nrow() -> num_duplicates_dist
+
+num_duplicates_dist
+num_duplicates_dist / num_duplicates
+```
+
+Specifying the changes:
+
+```{r dist_change}
+duplicates |>
+  distinct(id, district) |>
+  filter(n() > 1, .by = id) |>
+  group_by(id) |>
+  mutate(col_name = row_number()) |>
+  ungroup() |>
+  pivot_wider(
+    names_from = col_name,
+    values_from = district,
+    names_prefix = "dist_name_"
+  ) |>
+  distinct(dist_name_1, dist_name_2) |>
+  gt() |>
+  cols_label(dist_name_1 = "District Name 1", dist_name_2 = "District Name 2")
+```
+
+All the above are due to renaming of districts.
+
+## Religion Change
+
+Number and fraction  of duplicates due to religion change:
+```{r nrow_duplicates_relig}
+duplicates |>
+  distinct(id, religion) |>
+  filter(n() > 1, .by = id) |>
+  distinct(id) |>
+  nrow() -> num_duplicates_relig
+
+num_duplicates_relig
+num_duplicates_relig / num_duplicates
+```
+
+We define a function get a $2 \times 2$ matrix.
+```{r count_matrix_function}
+#| code-fold: true
+#| code-summary: "Click to see the code to define the function"
+
+get_count_matrix <- function(df, col_name, num_sample) {
+  df |>
+    rename(current_col = !!sym(col_name)) |>
+    select(id, current_col) -> df_temp # Rename and select current column with id
+
+  df_temp |>
+    distinct(current_col) |>
+    pull() -> distinct_classes # All Distinct classes
+
+  class_ids <- list() # Empty list to store count
+
+  # Obtain count:
+  for (class_curr in distinct_classes) {
+    class_ids[[class_curr]] <- df_temp |>
+      filter(current_col == class_curr) |>
+      distinct(id) |>
+      pull(id)
+  }
+
+  expand_grid(distinct_classes, distinct_classes) |>
+    rowwise() |>
+    mutate(
+      n = length(intersect(
+        class_ids[[distinct_classes...1]],
+        class_ids[[distinct_classes...2]]
+      ))
+    ) |>
+    ungroup() |>
+    mutate(percentage = glue("{round((n/num_sample) * 100, 3)} %")) |>
+    mutate(across(n, comma)) |>
+    mutate(n = glue("{percentage} <br> ({n})")) |>
+    select(-percentage) |>
+    pivot_wider(names_from = distinct_classes...2, values_from = n) |>
+    rename(Class = distinct_classes...1) %>%
+
+    {
+      color_cols <- grep("_color$", names(.), value = TRUE)
+      value_cols <- sub("_color$", "", color_cols)
+
+      datatable(
+        .,
+        escape = FALSE,
+        rownames = FALSE,
+        extensions = c("FixedHeader", "FixedColumns"),
+
+        options = list(
+          pageLength = 20,
+          scrollX = TRUE,
+          autoWidth = TRUE,
+          fixedHeader = TRUE,
+          fixedColumns = list(leftColumns = 1),
+          searching = TRUE, # Disables the global search/filter box
+          paging = FALSE, # Disables pagination (shows all rows at once)
+          ordering = TRUE, # Disables column sorting click interactions
+          info = TRUE, # Disables the "Showing 1 to N of N entries" text
+
+          columnDefs = list(
+            list(
+              visible = FALSE,
+              targets = which(names(.) %in% color_cols) - 1
+            )
+          )
+        ),
+
+        callback = JS(
+          "
+        table.on('mouseenter', 'tbody td', function() {
+
+          var idx = table.cell(this).index();
+
+          if (!idx) return;
+
+          // Remove old hover highlighting
+          $(table.cells().nodes()).removeClass(
+            'row-hover col-hover active-cell'
+          );
+
+          $(table.columns().header()).removeClass('col-hover');
+
+          // Highlight entire row
+          $(table.row(idx.row).nodes())
+            .find('td')
+            .addClass('row-hover');
+
+          // Highlight entire column
+          $(table.column(idx.column).nodes())
+            .addClass('col-hover');
+
+          // Highlight column header
+          $(table.column(idx.column).header())
+            .addClass('col-hover');
+
+          // Stronger highlight for actual hovered cell
+          $(this).addClass('active-cell');
+        });
+
+
+        table.on('mouseleave', 'tbody', function() {
+
+          $(table.cells().nodes()).removeClass(
+            'row-hover col-hover active-cell'
+          );
+
+          $(table.columns().header()).removeClass('col-hover');
+        });
+      "
+        )
+      ) %>%
+
+        formatStyle(
+          columns = 1,
+          fontWeight = "bold"
+        ) %>%
+
+        formatStyle(
+          columns = value_cols,
+          valueColumns = color_cols,
+          backgroundColor = JS("value")
+        ) %>%
+
+        htmlwidgets::prependContent(
+          htmltools::tags$style(
+            htmltools::HTML(
+              "
+
+            /* Remove DataTables zebra/default row backgrounds */
+            table.dataTable tbody tr,
+            table.dataTable tbody tr.odd,
+            table.dataTable tbody tr.even {
+              background-color: transparent !important;
+            }
+
+
+            /* Hovered row */
+            table.dataTable td.row-hover {
+              box-shadow:
+                inset 0 0 0 9999px rgba(128,128,128,0.12) !important;
+            }
+
+
+            /* Hovered column */
+            table.dataTable td.col-hover {
+              box-shadow:
+                inset 0 0 0 9999px rgba(128,128,128,0.12) !important;
+            }
+
+
+            /* Intersection / actual hovered cell */
+            table.dataTable td.active-cell {
+              box-shadow:
+                inset 0 0 0 9999px rgba(128,128,128,0.25) !important;
+            }
+
+
+            /* Column heading */
+            table.dataTable th.col-hover {
+              box-shadow:
+                inset 0 0 0 9999px rgba(128,128,128,0.20) !important;
+            }
+
+          "
+            )
+          )
+        )
+    }
+}
+```
+
+Obtaining the count matrix for religion:
+```{r religion_matrix}
+get_count_matrix(merged_trimmed_data, "religion", num_sample)
+```
+
+## Caste 
+
+Number and fraction of duplicates due to caste change:
+```{r nrow_duplicates_caste}
+duplicates |>
+  distinct(id, caste_category) |>
+  filter(n() > 1, .by = id) |>
+  distinct(id) |>
+  nrow() -> num_duplicates_caste
+
+num_duplicates_caste
+num_duplicates_caste / num_duplicates
+```
+
+Obtaining the count matrix for caste:
+```{r caste_matrix}
+get_count_matrix(merged_trimmed_data, "caste_category", num_sample)
+```
