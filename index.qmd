@@ -1,9 +1,9 @@
 ---
-title: "Modelling Labour Market Transitions in India <br>(UG Thesis)"
+title: "Unemployment Exit in India <br>(UG Thesis)"
 format: 
     html:
         embed-resources: true
-toc: true
+toc: false # Change later if too long
 ---
 
 ## EDA
@@ -14,14 +14,22 @@ toc: true
 
 3.  [Panel Continuity Matrices](code/eda/2026-06-08_mentor_meeting_02/panel_continuity_matrices.html)
 
-## Transition Matrices
+## Descriptives
 
-1. [EUO Transition Matrices (Basic)](code/eda/2026-06-08_mentor_meeting_02/euo_transitions_basic.html)
+1. [EUO Transition Matrices & Time Series (Male Urban+Rural Sample)](code/eda/2026-08-17_mentor_meeting_04/euo_transitions/euo_transitions.html)
+   
+2. [EUDO Transition Matrices & Time Series (Male Urban+Rural Sample)](code/eda/2026-08-17_mentor_meeting_04/eudo_transitions/eudo_transitions.html)
 
-## Slides/Docs
+## Slides
 
 1. [CMIE CPHS: Survey Design & Weighting](slides/2026-06-12_cmie_cphs/)
 
 2. [Survival Analysis](slides/2026-06-20_survival_analysis/)
+ 
+3. [Thesis Progress Presentation (September, 2026)](slides/2026-08-29_thesis_progress/)
 
-3. [Regressions for Transition Probabilities](docs/2026-06-23_transition_regression/)
+## Docs
+
+1. [Regressions for Transition Probabilities](docs/2026-06-23_transition_regression/)
+   
+2. [Investigating changing Caste/Religion/Location in CMIE-CPHS](docs/2026-09-08_changing_fixed_var_investigation/)

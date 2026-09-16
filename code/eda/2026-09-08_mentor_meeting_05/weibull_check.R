@@ -38,6 +38,7 @@ models_write_location <- here(
 
 
 # Fit Model --------------------------------------------------------------
+# !! DO NOT RUN THIS SECTION UNLESS NECESSARY
 
 weibull_fit <- flexsurvreg(
   Surv(start, stop, event) ~ age_yrs +
@@ -52,11 +53,13 @@ weibull_fit <- flexsurvreg(
 )
 write_rds(weibull_fit, here(models_write_location, "weibull_fit.RDS"))
 
-
-# Summary and Diagnostics ------------------------------------------------
+# Summary ----------------------------------------------------------------
 
 weibull_fit <- read_rds(here(models_write_location, "weibull_fit.RDS"))
 weibull_fit
+
+
+# Diagnostics ------------------------------------------------------------
 
 WeibullDiag(
   Surv(start, stop, event) ~ caste_category,

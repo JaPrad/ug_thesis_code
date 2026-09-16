@@ -1,9 +1,10 @@
 ---
 title: "Investigating changing Caste/Religion/Location in CMIE-CPHS"
-author: "Jyotiraditya pradhan"
-date: last-modified # Automatically updates the date
+author: "Jyotiraditya Pradhan"
+date: September 16, 2026
 format:
     html
+toc: true
 ---
 
 ## Setup
@@ -159,7 +160,7 @@ Share of duplicates:
 num_duplicates / num_sample
 ```
 
-## Testing
+## Testing Data Wrangling Errors
 
 We will check if the stated results match with raw data, in order to rule out errors due to bugs in code used to create the panel.
 
@@ -453,7 +454,7 @@ Obtaining the count matrix for religion:
 get_count_matrix(merged_trimmed_data, "religion", num_sample)
 ```
 
-## Caste 
+## Caste Change
 
 Number and fraction of duplicates due to caste change:
 ```{r nrow_duplicates_caste}
