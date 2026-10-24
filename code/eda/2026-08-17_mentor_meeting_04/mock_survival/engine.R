@@ -112,7 +112,7 @@ for (wave in 26:37) {
     mutate(delta = 0) -> current_censored
 
   survival_data |>
-    filter(id %in% censored_ids) |> #past censored IDs
+    filter(id %in% censored_ids) |> # past censored IDs
     add_row(current_alive) |>
     add_row(current_failed) |>
     add_row(current_censored) -> survival_data
@@ -198,7 +198,7 @@ cox_model <- coxph(Surv(T, delta) ~ religion + caste, data = survival_data)
 summary(cox_model)
 cox.zph(cox_model)
 
-# Sandobox ---------------------------------------------------------------
+# Sandbox ---------------------------------------------------------------
 
 # for (wave in 26:27) {
 #   #CHANGE FUN

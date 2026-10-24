@@ -153,6 +153,17 @@ write_csv(
 )
 
 
+## Shortcut Read ----------------------------------------------------------
+
+combined_data <- read_csv(
+  here(
+    "data",
+    "eda",
+    "2026-08-28_lab_presentation_01",
+    "counting_process_data_combined.csv"
+  )
+)
+
 # KM Estimator -----------------------------------------------------------
 
 ## General ----------------------------------------------------------------
@@ -250,8 +261,9 @@ stargazer(cox_main, type = "html", coef = list(hr), se = list(se_hr))
 ## Diagnostics ------------------------------------------------------------
 
 cox_main_zph <- cox.zph(cox_main)
-write_rds(cox_main_zph, here(write_location, "cox_main_zph.rds"))
+plot(cox_main_zph)
 
+write_rds(cox_main_zph, here(write_location, "cox_main_zph.rds"))
 
 ## Stratify with State ----------------------------------------------------
 
@@ -266,4 +278,5 @@ cox_strata <- coxph(
     strata(state),
   data = combined_data
 )
+
 cox.zph(cox_strata)

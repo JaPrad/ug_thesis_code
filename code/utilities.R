@@ -77,7 +77,8 @@ cphs_classify_caste <- function(cphs_data) {
       caste_category = case_when(
         caste_category == "Upper Caste" ~ "uc",
         caste_category %in% c("OBC", "Intermediate Caste") ~ "obc_ic",
-        caste_category %in% c("SC", "ST") ~ "sc_st",
+        caste_category == "SC" ~ "sc",
+        caste_category == "ST" ~ "st",
         .default = "not_stated"
       )
     )

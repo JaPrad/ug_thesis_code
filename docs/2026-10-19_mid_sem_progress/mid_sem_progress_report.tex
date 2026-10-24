@@ -1,0 +1,74 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{parskip} % paragraph sapcing
+
+\usepackage[style=apa, backend=biber]{biblatex} % Referencing
+\addbibresource{references_mid_sem.bib}
+
+\title{Transitioning out of Unemployment in India: Evidence from Survival Analysis \\ [1 em] \Large Mid-Semester Progress Report}
+\author{
+Jyotiraditya Pradhan \\ 
+\textbf{Mentor:} Rajendran Narayanan
+}
+\date{19 October, 2026}
+
+\begin{document}
+
+\maketitle
+
+\section{Research Question}
+
+This study focuses on two questions about unemployed males in urban India - i) How long do they stay unemployed? ii) How is this related to the kind of exit they make i.e. whether they get employed or they quit the labour force? It investigates the relationship of these with the socio-economic background of individuals.
+
+Conventional employment statistics, such as the unemployment rate, provide an aggregate snapshot of the labour market but they do not capture the transitions of individual workers over time. However, work focusing on labour market transitions in India is limited. I aim to extend this body of work using panel data and methods from survival analysis.
+
+There has been a shift in the focus of my research from the time of submission of my summer report. While I initially aimed to look at labour market transitions in general, I have decided to limit my focus to transitions out of unemployment. I have also restricted my key methodology to survival analysis. These changes narrow down the scope of work which will make it feasible for me to undertake a more in-depth analysis in the remaining time. 
+
+\section{Literature Review}
+
+Estimating unemployment duration from panel datasets often involves the problem of \textit{censoring}. Censoring here refers to the the lack of information on the complete unemployment duration of the individual, which could be due to attrition, entry into the survey after getting unemployed, or the study period ending. The presence of censoring motivates the use of survival analysis.
+
+\textcite{kannan_2025} uses \textit{OLS regression} and the non-parametric \textit{Nelson Aalen} estimator to analyse unemployment duration among males in urban India. He shows that using regression that does not account for \textit{censored} data can lead to misleading results. However, the Nelson Aalen estimator cannot control for covariates. In my work, I will do away with this tradeoff by using a \textit{log-logistic} model that controls for covariates while accounting for censoring.
+
+A common method to do this is to use the semi-parametric \textit{Cox Proportional Hazard (PH) Model}. \textcite{alemu_yismaw_2026}, \textcite{daniela_circnu_2014}, \textcite{lakuma_et_2016} and \textcite{menon_and_2025} use this approach analyse unemployment durations in different context in different countries. Specifically, 
+
+\section{Data}
+
+I am using data from the Centre for Monitoring Indian Economy’s (CMIE) \textit{Consumer Pyramid Household Survey (CPHS)}, which is a nationally representative panel survey. Specifically, I am using data from the \textit{People of India dx} and \textit{Income dx} datasets. 
+
+I shall be using data from two intervals of time: 2016-2019 and 2022-2025. 2016 is chosen as the starting point as the relevant employment indicators were only introduced at that stage in the survey. Data from 2020 and 2021 have been excluded to avoid capturing disruptions caused by the COVID-19 pandemic. 2025 is chosen as the end point because it is the latest year for which data is available. 
+
+I shall exclude female respondents from my sample, as aggregate estimates for females in the CPHS have been found to significantly differ from those in official labour surveys \parencite{abraham_shrivastava_2022}. I shall also restrict my sample to only urban India. This will make a imputation exercise mentioned in the next section more reliable.
+
+\section{Methodology}
+
+In this section, I shall first describe a data imputation exercise I undertake, followed by a overview of the survival analysis methods used for my analysis.
+
+In the CPHS, the \textit{People of India dx} dataset provides employment indicators of the individuals at a quarterly frelquency. However, \textit{Income dx} dataset provides wage incomes of individuals at a monthly frequency. I build upon a technique used by \textcite{kannan_2025} to combine these datasets to impute employment indicators at a monthly level. Individuals with a non-zero wage income are assumed to be \textit{employed} in a given month. The others are classified as \textit{unemployed}, \textit{discouraged} or \textit{out of labour force} based on their quarterly employment status. Due to the higher prevalence of delayed wages and in-kind payments in rural India, this imputation is less reliable there, which is why the sample has been restricted to urban areas.
+
+I use three key methods from survival analysis described below:
+
+\begin{enumerate}
+    \item \textbf{Kaplan-Meier Estimator:} This is a non-parametric estimator. It estimates the \textit{survival function}, which is the probability of an individual being unemployed greater than a period of time. The advantage of this method is that it makes no assumption about the underlying distribution of the data. However, its disadvantage is that it cannot control for any covariates. Hence, this method will be used for exploratory analysis.
+
+    \item \textbf{Log-Logistic Model:} This is a parametric model. It belong to a class of models called the \textit{accelerated failure time (AFT)} models, which allows it to be interpreted easily as ratio of median unemployment duration between two groups. Its advantages are that it can control for covariates and be interpreted easily. Its disadvantage is that using this method requires us to assume that the data follows a \textit{log-logistic} distribution, which might not be true.
+
+    \item \textbf{Random Survival Forests:} This is a machine learning method. It extends the method of \textit{random forests} to \textit{right-censored} survival data by using the \textit{log-rank} test statistic for its splitting rule. It allows us to obtain individualized \textit{survival functions}. Its advantage is that while it also a non-parametric model, it also factors in the covariates and provides predictions. Its disadvantage is that the model is hard to interpret and is suited for prediction rather than inference.
+    
+\end{enumerate}
+
+Using a variety of methods which make different assumptions about the data will allow me to see to what extent my findings are sensitive to the modelling choices used to arrive at them. These methods will be used under a \textit{competing risks} framework so that the different kinds of exits that individuals make from unemployment are considered.
+
+\section{Progress}
+
+
+
+\section{Advisor Feedback}
+
+states log normal interaction
+
+\section{Further Plan}
+
+\printbibliography
+
+\end{document}

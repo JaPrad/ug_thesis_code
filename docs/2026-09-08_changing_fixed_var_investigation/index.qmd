@@ -255,7 +255,19 @@ duplicates |>
     values_from = district,
     names_prefix = "dist_name_"
   ) |>
-  distinct(dist_name_1, dist_name_2) |>
+  distinct(dist_name_1, dist_name_2) -> dist_change
+
+dist_change |>
+  write_csv(
+    here(
+      "data",
+      "eda",
+      "2026-09-08_mentor_meeting_05",
+      "dist_change.csv"
+    )
+  )
+
+dist_change |>
   gt() |>
   cols_label(dist_name_1 = "District Name 1", dist_name_2 = "District Name 2")
 ```

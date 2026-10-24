@@ -2,7 +2,7 @@
 # Date: 30 August, 2026
 
 # Notes:
-# Employment status is taken as binary - employed/non-empl0yed
+# Employment status is taken as binary - employed/non-employed
 # Data is urban, male, >= 15 age
 # Data is non weighted
 # Left censored data has been ignored
