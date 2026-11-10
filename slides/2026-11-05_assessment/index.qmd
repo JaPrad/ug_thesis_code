@@ -141,11 +141,19 @@ ii) The kind of exit they make from unemployment — a) re-employment OR b) quit
 
 ## Why Study Unemployment Duration?
 
-- Aside from prolonged loss of income, there is a large body of evidence that longer unemployment duration is associated with other factors.
+. . . 
 
-- Associated with **lower re-employment probability and earnings** [@berg_ours; @cohen_et_al], and *causes* statistical **discrimination from employers**[@eriksson_rooth; @kroft_et_al; @belle_et_al].
+Longer unemployment duration is associated with:
 
-- Also associated with **increased psychological distress** [@paul_moser; @ryan_et_al] and **unhappier relationships** [@blom_harris].
+- Prolonged loss of income.
+
+-  Lower re-employment probability and earnings [@berg_ours; @cohen_et_al].
+  
+- *Causes* statistical discrimination from employers[@eriksson_rooth; @kroft_et_al; @belle_et_al].
+
+- Increased psychological distress [@paul_moser; @ryan_et_al] 
+  
+- Unhappier family relationships [@blom_harris].
 
 ## Data
 
@@ -319,9 +327,9 @@ transition_matrix |>
 
 ## Research Gap 
 
-- @kannan uses OLS regression and non-parametric survival analysis on CMIE-CPHS data. Does not control for covariates when using survival analysis.
+- @kannan uses OLS regression and survival analysis (Nelson Aalen Estimator) on CMIE-CPHS data. Does not control for covariates when using survival analysis.
   
-- @menon_nath_job_search use the Cox PH model on PLFS Urban data. However, panel length is limited to 4 visits in a year.
+- @menon_nath_job_search use the Cox PH model on PLFS Urban data. However, panel length is limited to 4 visits in one year, after which households are dropped.
   
 - Using a competing-risks framework.
   
@@ -340,13 +348,12 @@ iii) **Random Survival Forest:** Prediction + Robustness
 ## Aalen-Johansen Estimator
 
 - Let $T$ be a random variable denoting unemployment duration.
- 
-- $\text{Failure} \in \{\text{Re-Employment}, \text{Quitting}\}$
 
 - Cumulative Incidence Function
   $$
   \text{CIF}_k(t) = \mathbb{P}(T \leq t, \text{Failure} = k)
   $$
+  $k \in \{\text{Re-Employment}, \text{Quitting}\}$
 
 - The Aalen-Johansen Estimator is a non-parametric estimator of the CIF.
 
@@ -537,7 +544,7 @@ ll_re_employment |>
         ) ~ "",
       grepl("^religion", term) ~ "Religion (Baseline: Hindu)",
       grepl("^caste", term) ~ "Caste (Baseline: Upper Caste)",
-      grepl("^edu", term) ~ "Education Level *(Baseline: No Schooling)*",
+      grepl("^edu", term) ~ "Education Level (Baseline: No Schooling)",
       grepl(
         "^relation",
         term
@@ -752,7 +759,7 @@ ll_quitting |>
 
 ## Decison Trees
 
-![Partitions in Decision Trees, as illustrated in @beaulac_rosenthal](images/decision_tree_partition.webp){fig-alt="Decision Trees: Partitions" fig-align="center"}
+![Partitions in a Decision Tree, as illustrated in @beaulac_rosenthal](images/decision_tree_partition.webp){fig-alt="Decision Trees: Partitions" fig-align="center"}
 
 ## Survival Trees 
 
@@ -796,7 +803,7 @@ ll_quitting |>
 
 ## Work in Progress 
 
-- Accounting for the "kind" of job individuals hold when losing employent and at re-employment, in terms of formality and earnings.
+- Accounting for the "kind" of job individuals hold when losing employment and at re-employment, in terms of formality and earnings.
 
 - RSF can perform better with more intensive training.
 
