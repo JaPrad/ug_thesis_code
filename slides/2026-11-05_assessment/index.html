@@ -1,0 +1,2250 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="index_files/libs/clipboard/clipboard.min.js"></script>
+<script src="index_files/libs/quarto-html/tabby.min.js"></script>
+<script src="index_files/libs/quarto-html/popper.min.js"></script>
+<script src="index_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="index_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="index_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="index_files/libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.9.38">
+
+  <meta name="author" content="Jyotiraditya Pradhan   Mentor: Rajendran Narayanan">
+  <meta name="dcterms.date" content="2026-11-12">
+  <title> Transitioning out of Unemployment in India: Evidence from Survival Analysis </title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="index_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="index_files/libs/revealjs/dist/reveal.css">
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for citations */
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+      margin-bottom: 0em;
+    }
+    .hanging-indent div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }  </style>
+  <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto-2740581606dc327e82f18f789b69d8a0.css">
+  <link href="index_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="index_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="index_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="index_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+  <link href="index_files/libs/htmltools-fill-0.5.9/fill.css" rel="stylesheet">
+
+  <script src="index_files/libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+
+  <script src="index_files/libs/plotly-binding-4.12.0/plotly.js"></script>
+
+  <script src="index_files/libs/typedarray-0.1/typedarray.min.js"></script>
+
+  <script src="index_files/libs/jquery-3.5.1/jquery.min.js"></script>
+
+  <link href="index_files/libs/crosstalk-1.2.2/css/crosstalk.min.css" rel="stylesheet">
+
+  <script src="index_files/libs/crosstalk-1.2.2/js/crosstalk.min.js"></script>
+
+  <link href="index_files/libs/plotly-htmlwidgets-css-2.25.2/plotly-htmlwidgets.css" rel="stylesheet">
+
+  <script src="index_files/libs/plotly-main-2.25.2/plotly-latest.min.js"></script>
+
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" class="quarto-title-block center">
+  <h1 class="title"></h1><h3><br>
+Transitioning out of Unemployment in India: Evidence from Survival Analysis<br>
+</h3>
+
+<div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Jyotiraditya Pradhan <br> Mentor: Rajendran Narayanan 
+</div>
+        <p class="quarto-title-affiliation">
+            Azim Premji University
+          </p>
+    </div>
+</div>
+
+  <p class="date">November 12, 2026</p>
+</section>
+<section id="research-question" class="slide level2">
+<h2>Research Question</h2>
+<div class="hidden">
+
+</div>
+<style>
+/* Strike through the original word */
+.reveal .fragment.strike.visible {
+  text-decoration: line-through;
+  text-decoration-color: red;
+  opacity: 1;
+}
+
+/* Keep replacement hidden until its turn */
+.reveal .fragment.replacement {
+  opacity: 0;
+}
+
+/* Show replacement on the next click */
+.reveal .fragment.replacement.visible {
+  opacity: 1;
+}
+
+/* Shrink the tab header text and decrease padding */
+.panel-tabset .nav-tabs .nav-link {
+  font-size: 0.85rem;      /* Adjust font size as needed */
+  padding: 0.25rem 0.5rem; /* Reduces top/bottom and left/right spacing */
+}
+</style>
+<p>Among unemployed males in urban India, what is the relationship of their socio-economic characteristics with:</p>
+<ol type="i">
+<li><p>The duration of their unemployment?</p></li>
+<li><p>The kind of exit they make from unemployment — a) re-employment OR b) quitting the labour force?</p></li>
+</ol>
+</section>
+<section id="why-study-unemployment-duration" class="slide level2">
+<h2>Why Study Unemployment Duration?</h2>
+<ul>
+<li class="fragment"><p>Aside from prolonged loss of income, there is a large body of evidence that longer unemployment duration is associated with other factors.</p></li>
+<li class="fragment"><p>Associated with <strong>lower re-employment probability and earnings</strong> <span class="citation" data-cites="berg_ours cohen_et_al">(<a href="#/references" role="doc-biblioref" onclick="">Berg &amp; Ours, 1996</a>; <a href="#/references" role="doc-biblioref" onclick="">Cohen et al., 2025</a>)</span>, and <em>causes</em> statistical <strong>discrimination from employers</strong><span class="citation" data-cites="eriksson_rooth kroft_et_al belle_et_al">(<a href="#/references" role="doc-biblioref" onclick="">Eriksson &amp; Rooth, 2014</a>; <a href="#/references" role="doc-biblioref" onclick="">Kroft et al., 2013</a>; <a href="#/references" role="doc-biblioref" onclick="">Van Belle et al., 2018</a>)</span>.</p></li>
+<li class="fragment"><p>Also associated with <strong>increased psychological distress</strong> <span class="citation" data-cites="paul_moser ryan_et_al">(<a href="#/references" role="doc-biblioref" onclick="">McKee-Ryan et al., 2005</a>; <a href="#/references" role="doc-biblioref" onclick="">Paul &amp; Moser, 2009</a>)</span> and <strong>unhappier relationships</strong> <span class="citation" data-cites="blom_harris">(<a href="#/references" role="doc-biblioref" onclick="">Blom &amp; Perelli-Harris, 2021</a>)</span>.</p></li>
+</ul>
+</section>
+<section id="data" class="slide level2">
+<h2>Data</h2>
+<ul>
+<li class="fragment"><p>Centre for Monitoring Indian Economy (CMIE) - Consumer Pyramid Household Survey (CPHS).</p></li>
+<li class="fragment"><p>National-level panel dataset that interviews individuals 3 times a year, each cycle called a <em>wave</em>.</p></li>
+<li class="fragment"><p>Data from two periods: 2016-2019 and 2022-2025. <br> (8 years, 24 waves)</p></li>
+<li class="fragment"><p>Relevant employment indicators introduced in 2016. <br> Data from 2020 &amp; 2021 excluded due to COVID-induced disruptions.</p></li>
+</ul>
+</section>
+<section id="exclusions-from-sample" class="slide level2">
+<h2>Exclusions from Sample</h2>
+<ul>
+<li class="fragment"><p><strong>Females:</strong> Aggregate employment statistics on females estimated from the CPHS diverge significantly from the official PLFS estimates <span class="citation" data-cites="abraham_shrivastava">(<a href="#/references" role="doc-biblioref" onclick="">Abraham &amp; Shrivastava, 2022</a>)</span>.</p></li>
+<li class="fragment"><p><strong>Rural Areas:</strong> To improve reliability of an imputation exercise undertaken in this study.</p></li>
+</ul>
+</section>
+<section id="unemployed-rightarrow-unemployed-wave-level" class="slide level2">
+<h2>Unemployed <span class="math inline">\(\rightarrow\)</span> Unemployed <br> (Wave Level)</h2>
+<div class="cell">
+<div class="cell-output-display">
+<div class="plotly html-widget html-fill-item" id="htmlwidget-362bb2e411f9a6114f76" style="width:960px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-362bb2e411f9a6114f76">{"x":{"visdat":{"4f804f9b1295":["function () ","plotlyVisDat"]},"cur_data":"4f804f9b1295","attrs":{"4f804f9b1295":{"x":{},"y":{},"line":{"color":"red"},"marker":{"color":"red"},"text":{},"mode":"lines+markers","hovertemplate":"<b>p<\/b>: %{y} <br>%{text}<extra><\/extra>","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter"}},"layout":{"margin":{"b":120,"l":60,"t":25,"r":20},"xaxis":{"domain":[0,1],"automargin":true,"title":"Wave (Start Date)","type":"date","tickformat":"%b %Y"},"yaxis":{"domain":[0,1],"automargin":true,"title":"Transition Probability","rangemode":"tozero"},"legend":{"title":{"text":"Transition Type"}},"hovermode":"closest","showlegend":false},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false,"displayModeBar":false},"data":[{"x":["2016-01-01","2016-05-01","2016-09-01","2017-01-01","2017-05-01","2017-09-01","2018-01-01","2018-05-01","2018-09-01","2019-01-01","2019-05-01","2019-09-01",null,"2022-01-01","2022-05-01","2022-09-01","2023-01-01","2023-05-01","2023-09-01","2024-01-01","2024-05-01","2024-09-01","2025-01-01","2025-05-01","2025-09-01"],"y":[0.46629999999999999,0.36359999999999998,0.45689999999999997,0.45329999999999998,0.53000000000000003,0.51500000000000001,0.57489999999999997,0.60029999999999994,0.61619999999999997,0.65910000000000002,0.66739999999999999,0.61240000000000006,null,0.76939999999999997,0.7571,0.71930000000000005,0.69020000000000004,0.65559999999999996,0.60660000000000003,0.71619999999999995,0.7268,0.74370000000000003,0.73199999999999998,0.74870000000000003,0.747],"line":{"color":"red"},"marker":{"color":"red","line":{"color":"rgba(31,119,180,1)"}},"text":["<b>Wave:<\/b>7<br>Jan-Apr (2016)","<b>Wave:<\/b>8<br>May-Aug (2016)","<b>Wave:<\/b>9<br>Sep-Dec (2016)","<b>Wave:<\/b>10<br>Jan-Apr (2017)","<b>Wave:<\/b>11<br>May-Aug (2017)","<b>Wave:<\/b>12<br>Sep-Dec (2017)","<b>Wave:<\/b>13<br>Jan-Apr (2018)","<b>Wave:<\/b>14<br>May-Aug (2018)","<b>Wave:<\/b>15<br>Sep-Dec (2018)","<b>Wave:<\/b>16<br>Jan-Apr (2019)","<b>Wave:<\/b>17<br>May-Aug (2019)","<b>Wave:<\/b>18<br>Sep-Dec (2019)",null,"<b>Wave:<\/b>25<br>Jan-Apr (2022)","<b>Wave:<\/b>26<br>May-Aug (2022)","<b>Wave:<\/b>27<br>Sep-Dec (2022)","<b>Wave:<\/b>28<br>Jan-Apr (2023)","<b>Wave:<\/b>29<br>May-Aug (2023)","<b>Wave:<\/b>30<br>Sep-Dec (2023)","<b>Wave:<\/b>31<br>Jan-Apr (2024)","<b>Wave:<\/b>32<br>May-Aug (2024)","<b>Wave:<\/b>33<br>Sep-Dec (2024)","<b>Wave:<\/b>34<br>Jan-Apr (2025)","<b>Wave:<\/b>35<br>May-Aug (2025)","<b>Wave:<\/b>36<br>Sep-Dec (2025)"],"mode":"lines+markers","hovertemplate":["<b>p<\/b>: %{y} <br>%{text}<extra><\/extra>","<b>p<\/b>: %{y} <br>%{text}<extra><\/extra>","<b>p<\/b>: %{y} <br>%{text}<extra><\/extra>","<b>p<\/b>: %{y} <br>%{text}<extra><\/extra>","<b>p<\/b>: %{y} <br>%{text}<extra><\/extra>","<b>p<\/b>: %{y} <br>%{text}<extra><\/extra>","<b>p<\/b>: %{y} <br>%{text}<extra><\/extra>","<b>p<\/b>: %{y} <br>%{text}<extra><\/extra>","<b>p<\/b>: %{y} <br>%{text}<extra><\/extra>","<b>p<\/b>: %{y} <br>%{text}<extra><\/extra>","<b>p<\/b>: %{y} <br>%{text}<extra><\/extra>","<b>p<\/b>: %{y} <br>%{text}<extra><\/extra>",null,"<b>p<\/b>: %{y} <br>%{text}<extra><\/extra>","<b>p<\/b>: %{y} <br>%{text}<extra><\/extra>","<b>p<\/b>: %{y} <br>%{text}<extra><\/extra>","<b>p<\/b>: %{y} <br>%{text}<extra><\/extra>","<b>p<\/b>: %{y} <br>%{text}<extra><\/extra>","<b>p<\/b>: %{y} <br>%{text}<extra><\/extra>","<b>p<\/b>: %{y} <br>%{text}<extra><\/extra>","<b>p<\/b>: %{y} <br>%{text}<extra><\/extra>","<b>p<\/b>: %{y} <br>%{text}<extra><\/extra>","<b>p<\/b>: %{y} <br>%{text}<extra><\/extra>","<b>p<\/b>: %{y} <br>%{text}<extra><\/extra>","<b>p<\/b>: %{y} <br>%{text}<extra><\/extra>"],"type":"scatter","error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</section>
+<section id="unemployed-rightarrow-employed-wave-level" class="slide level2">
+<h2>Unemployed <span class="math inline">\(\rightarrow\)</span> Employed <br> (Wave Level)</h2>
+<div class="cell">
+<div class="cell-output-display">
+<div class="plotly html-widget html-fill-item" id="htmlwidget-dbd0069cf3f6eace2926" style="width:960px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-dbd0069cf3f6eace2926">{"x":{"visdat":{"4f803398782":["function () ","plotlyVisDat"]},"cur_data":"4f803398782","attrs":{"4f803398782":{"x":{},"y":{},"line":{"color":"blue"},"marker":{"color":"blue"},"text":{},"mode":"lines+markers","hovertemplate":"<b>p<\/b>: %{y} <br>%{text}<extra><\/extra>","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter"}},"layout":{"margin":{"b":120,"l":60,"t":25,"r":20},"xaxis":{"domain":[0,1],"automargin":true,"title":"Wave (Start Date)","type":"date","tickformat":"%b %Y"},"yaxis":{"domain":[0,1],"automargin":true,"title":"Transition Probability","rangemode":"tozero"},"legend":{"title":{"text":"Transition Type"}},"hovermode":"closest","showlegend":false},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false,"displayModeBar":false},"data":[{"x":["2016-01-01","2016-05-01","2016-09-01","2017-01-01","2017-05-01","2017-09-01","2018-01-01","2018-05-01","2018-09-01","2019-01-01","2019-05-01","2019-09-01",null,"2022-01-01","2022-05-01","2022-09-01","2023-01-01","2023-05-01","2023-09-01","2024-01-01","2024-05-01","2024-09-01","2025-01-01","2025-05-01","2025-09-01"],"y":[0.2079,0.2482,0.21049999999999999,0.27579999999999999,0.20219999999999999,0.25359999999999999,0.25090000000000001,0.21560000000000001,0.20649999999999999,0.18060000000000001,0.17460000000000001,0.15859999999999999,null,0.10340000000000001,0.11260000000000001,0.12670000000000001,0.13200000000000001,0.2036,0.2172,0.1419,0.1135,0.1017,0.097600000000000006,0.083599999999999994,0.082199999999999995],"line":{"color":"blue"},"marker":{"color":"blue","line":{"color":"rgba(31,119,180,1)"}},"text":["<b>Wave:<\/b>7<br>Jan-Apr (2016)","<b>Wave:<\/b>8<br>May-Aug (2016)","<b>Wave:<\/b>9<br>Sep-Dec (2016)","<b>Wave:<\/b>10<br>Jan-Apr (2017)","<b>Wave:<\/b>11<br>May-Aug (2017)","<b>Wave:<\/b>12<br>Sep-Dec (2017)","<b>Wave:<\/b>13<br>Jan-Apr (2018)","<b>Wave:<\/b>14<br>May-Aug (2018)","<b>Wave:<\/b>15<br>Sep-Dec (2018)","<b>Wave:<\/b>16<br>Jan-Apr (2019)","<b>Wave:<\/b>17<br>May-Aug (2019)","<b>Wave:<\/b>18<br>Sep-Dec (2019)",null,"<b>Wave:<\/b>25<br>Jan-Apr (2022)","<b>Wave:<\/b>26<br>May-Aug (2022)","<b>Wave:<\/b>27<br>Sep-Dec (2022)","<b>Wave:<\/b>28<br>Jan-Apr (2023)","<b>Wave:<\/b>29<br>May-Aug (2023)","<b>Wave:<\/b>30<br>Sep-Dec (2023)","<b>Wave:<\/b>31<br>Jan-Apr (2024)","<b>Wave:<\/b>32<br>May-Aug (2024)","<b>Wave:<\/b>33<br>Sep-Dec (2024)","<b>Wave:<\/b>34<br>Jan-Apr (2025)","<b>Wave:<\/b>35<br>May-Aug (2025)","<b>Wave:<\/b>36<br>Sep-Dec (2025)"],"mode":"lines+markers","hovertemplate":["<b>p<\/b>: %{y} <br>%{text}<extra><\/extra>","<b>p<\/b>: %{y} <br>%{text}<extra><\/extra>","<b>p<\/b>: %{y} <br>%{text}<extra><\/extra>","<b>p<\/b>: %{y} <br>%{text}<extra><\/extra>","<b>p<\/b>: %{y} <br>%{text}<extra><\/extra>","<b>p<\/b>: %{y} <br>%{text}<extra><\/extra>","<b>p<\/b>: %{y} <br>%{text}<extra><\/extra>","<b>p<\/b>: %{y} <br>%{text}<extra><\/extra>","<b>p<\/b>: %{y} <br>%{text}<extra><\/extra>","<b>p<\/b>: %{y} <br>%{text}<extra><\/extra>","<b>p<\/b>: %{y} <br>%{text}<extra><\/extra>","<b>p<\/b>: %{y} <br>%{text}<extra><\/extra>",null,"<b>p<\/b>: %{y} <br>%{text}<extra><\/extra>","<b>p<\/b>: %{y} <br>%{text}<extra><\/extra>","<b>p<\/b>: %{y} <br>%{text}<extra><\/extra>","<b>p<\/b>: %{y} <br>%{text}<extra><\/extra>","<b>p<\/b>: %{y} <br>%{text}<extra><\/extra>","<b>p<\/b>: %{y} <br>%{text}<extra><\/extra>","<b>p<\/b>: %{y} <br>%{text}<extra><\/extra>","<b>p<\/b>: %{y} <br>%{text}<extra><\/extra>","<b>p<\/b>: %{y} <br>%{text}<extra><\/extra>","<b>p<\/b>: %{y} <br>%{text}<extra><\/extra>","<b>p<\/b>: %{y} <br>%{text}<extra><\/extra>","<b>p<\/b>: %{y} <br>%{text}<extra><\/extra>"],"type":"scatter","error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</section>
+<section id="imputation-of-employment-status" class="slide level2">
+<h2>Imputation of Employment Status</h2>
+<ul>
+<li class="fragment"><p>In CPHS, <strong><em>employment indicators</em></strong> of an individual are available at a <em>wave-level frequency</em> (4 months).</p></li>
+<li class="fragment"><p>However, <strong><em>income from wages</em></strong> are available at a <em>monthly frequency</em>.</p></li>
+<li class="fragment"><p><span class="citation" data-cites="kannan">Kannan (<a href="#/references" role="doc-biblioref" onclick="">2025</a>)</span> uses this impute monthly employment status: <br> Income from wages <span class="math inline">\(= 0 \implies\)</span> <em>Non-Employed</em> <br> Income from wages <span class="math inline">\(&gt; 0 \implies\)</span> <em>Employed</em></p></li>
+<li class="fragment"><p>This study extends this method to differentiate between <em>unemployed</em> and <em>out-of-labour-force</em> individuals among the <em>non-employed</em>.</p></li>
+</ul>
+</section>
+<section id="imputation-illustration-1" class="slide level2">
+<h2>Imputation Illustration (1)</h2>
+
+<img data-src="images/imputation_logic/1.jpg" class="r-stretch"></section>
+<section id="imputation-illustration-2" class="slide level2">
+<h2>Imputation Illustration (2)</h2>
+
+<img data-src="images/imputation_logic/2.jpg" class="r-stretch"></section>
+<section id="imputation-illustration-3" class="slide level2">
+<h2>Imputation Illustration (3)</h2>
+
+<img data-src="images/imputation_logic/3.jpg" class="r-stretch"></section>
+<section id="imputation-illustration-4" class="slide level2">
+<h2>Imputation Illustration (4)</h2>
+
+<img data-src="images/imputation_logic/4.jpg" class="r-stretch"></section>
+<section id="imputation-illustration-5" class="slide level2">
+<h2>Imputation Illustration (5)</h2>
+
+<img data-src="images/imputation_logic/5.jpg" class="r-stretch"></section>
+<section id="imputation-illustration-6" class="slide level2">
+<h2>Imputation Illustration (6)</h2>
+
+<img data-src="images/imputation_logic/6.jpg" class="r-stretch"></section>
+<section id="imputation-illustration-7" class="slide level2">
+<h2>Imputation Illustration (7)</h2>
+
+<img data-src="images/imputation_logic/7.jpg" class="r-stretch"></section>
+<section id="imputation-illustration-8" class="slide level2">
+<h2>Imputation Illustration (8)</h2>
+
+<img data-src="images/imputation_logic/8.jpg" class="r-stretch"></section>
+<section id="imputation-illustration-9" class="slide level2">
+<h2>Imputation Illustration (9)</h2>
+
+<img data-src="images/imputation_logic/9.jpg" class="r-stretch"></section>
+<section id="imputation-illustration-10" class="slide level2">
+<h2>Imputation Illustration (10)</h2>
+
+<img data-src="images/imputation_logic/10.jpg" class="r-stretch"></section>
+<section id="imputation-illustration-11" class="slide level2">
+<h2>Imputation Illustration (11)</h2>
+
+<img data-src="images/imputation_logic/11.jpg" class="r-stretch"></section>
+<section id="imputation-illustration-12" class="slide level2">
+<h2>Imputation Illustration (12)</h2>
+
+<img data-src="images/imputation_logic/12.jpg" class="r-stretch"></section>
+<section id="imputation-illustration-13" class="slide level2">
+<h2>Imputation Illustration (13)</h2>
+
+<img data-src="images/imputation_logic/13.jpg" class="r-stretch"></section>
+<section id="imputation-illustration-14" class="slide level2">
+<h2>Imputation Illustration (14)</h2>
+
+<img data-src="images/imputation_logic/14.jpg" class="r-stretch"></section>
+<section id="survival-analysis" class="slide level2">
+<h2>Survival Analysis</h2>
+<ul>
+<li class="fragment"><p>Analysing time-to-event.</p></li>
+<li class="fragment"><p><strong>Biostatistics:</strong> How long does a patient survive after they get a disease? <br> <strong>Reliability Engineering:</strong> How long will a machine be serviceable?</p></li>
+<li class="fragment"><p><em>Survival Time</em> <span class="math inline">\(\rightarrow\)</span> Unemployment Duration</p></li>
+<li class="fragment"><p><em>Failure/Death</em> <span class="math inline">\(\rightarrow\)</span> i) Re-employment ii) Quitting the Labour Force <br> <strong><em>[Competing-risks framework]</em></strong></p></li>
+</ul>
+</section>
+<section id="censoring" class="slide level2">
+<h2>Censoring</h2>
+<ul>
+<li class="fragment"><p>The key strength of survival analysis is to account for <em>censoring</em>.</p></li>
+<li class="fragment"><p><strong>Censoring:</strong> Incomplete observation of time-to-event for some individuals due to random factors.</p></li>
+<li class="fragment"><p>Could occur due to i) attrition, and ii) the study period ending.</p></li>
+<li class="fragment"><p>Not accounting for censoring could lead to bias.</p></li>
+</ul>
+</section>
+<section id="research-gap" class="slide level2">
+<h2>Research Gap</h2>
+<ul>
+<li class="fragment"><p><span class="citation" data-cites="kannan">Kannan (<a href="#/references" role="doc-biblioref" onclick="">2025</a>)</span> uses OLS regression and non-parametric survival analysis on CMIE-CPHS data. Does not control for covariates when using survival analysis.</p></li>
+<li class="fragment"><p><span class="citation" data-cites="menon_nath_job_search">Menon &amp; Nath (<a href="#/references" role="doc-biblioref" onclick="">2025</a>)</span> use the Cox PH model on PLFS Urban data. However, panel length is limited to 4 visits in a year.</p></li>
+<li class="fragment"><p>Using a competing-risks framework.</p></li>
+<li class="fragment"><p>Using post-COVID data.</p></li>
+</ul>
+</section>
+<section id="overview-of-methodology" class="slide level2">
+<h2>Overview of Methodology</h2>
+<ol type="i">
+<li><p><strong>Aalen-Johansen Estimator:</strong> Exploratory Analysis</p></li>
+<li><p><strong>Log Logistic Model:</strong> Regression</p></li>
+<li><p><strong>Random Survival Forest:</strong> Prediction + Robustness</p></li>
+</ol>
+</section>
+<section id="aalen-johansen-estimator" class="slide level2">
+<h2>Aalen-Johansen Estimator</h2>
+<ul>
+<li class="fragment"><p>Let <span class="math inline">\(T\)</span> be a random variable denoting unemployment duration.</p></li>
+<li class="fragment"><p><span class="math inline">\(\text{Failure} \in \{\text{Re-Employment}, \text{Quitting}\}\)</span></p></li>
+<li class="fragment"><p>Cumulative Incidence Function <span class="math display">\[
+\text{CIF}_k(t) = \mathbb{P}(T \leq t, \text{Failure} = k)
+\]</span></p></li>
+<li class="fragment"><p>The Aalen-Johansen Estimator is a non-parametric estimator of the CIF.</p></li>
+</ul>
+</section>
+<section id="aalen-johansen-estimator-results" class="slide level2 smaller">
+<h2>Aalen-Johansen Estimator: Results</h2>
+<div class="panel-tabset">
+<ul id="tabset-5" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-5-1">Overall</a></li><li><a href="#tabset-5-2">Religion</a></li><li><a href="#tabset-5-3">Caste</a></li><li><a href="#tabset-5-4">Education Level</a></li><li><a href="#tabset-5-5">Relation to Head of Household</a></li></ul>
+<div class="tab-content">
+<div id="tabset-5-1">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/aj_overall-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-5-2">
+<div class="panel-tabset">
+<ul id="tabset-1" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-1-1">Re-Employment</a></li><li><a href="#tabset-1-2">Quitting</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/aj_religion_re_emp-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-1-2">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/aj_religion_quitting-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-5-3">
+<div class="panel-tabset">
+<ul id="tabset-2" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-2-1">Re-Employment</a></li><li><a href="#tabset-2-2">Quitting</a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/aj_caste_re_emp-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-2-2">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/aj_caste_quitting-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-5-4">
+<div class="panel-tabset">
+<ul id="tabset-3" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-3-1">Re-Employment</a></li><li><a href="#tabset-3-2">Quitting</a></li></ul>
+<div class="tab-content">
+<div id="tabset-3-1">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/aj_edu_re_emp-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-3-2">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/aj_edu_quitting-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-5-5">
+<div class="panel-tabset">
+<ul id="tabset-4" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-4-1">Re-Employment</a></li><li><a href="#tabset-4-2">Quitting</a></li></ul>
+<div class="tab-content">
+<div id="tabset-4-1">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/aj_relation_re_emp-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-4-2">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/aj_relation_quitting-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="log-logistic-model" class="slide level2">
+<h2>Log-Logistic Model</h2>
+<div class="fragment">
+<p><span class="math display">\[
+\ln(T) = \beta_0 + \boldsymbol{\beta}^\mathsf{T}\mathbf{X} + \sigma \epsilon
+\]</span></p>
+</div>
+<div class="fragment">
+<p>where,</p>
+<ul>
+<li><p><span class="math inline">\(\mathbf{X}\)</span> is a vector of covariates.</p></li>
+<li><p><span class="math inline">\(\sigma \in (0, \infty)\)</span> is the <em>shape</em> parameter.</p></li>
+<li><p><span class="math inline">\(\epsilon\)</span> is the error term following the standard logistic distribution.</p></li>
+</ul>
+</div>
+</section>
+<section id="log-logistic-model-interpretation" class="slide level2">
+<h2>Log-Logistic Model: Interpretation</h2>
+<ul>
+<li class="fragment"><p>Take two groups, denoted by <span class="math inline">\(x_j \in \{0, 1\}\)</span>, with corresponsing coefficient <span class="math inline">\(\beta_j\)</span>.</p></li>
+<li class="fragment"><p>Take any quantile <span class="math inline">\(q\)</span>. <span class="math display">\[\frac{\text{Unemployment Duration}_q(x_j=1)}{\text{Unemployment Duration}_q(x_j=0)} = e^{\beta_j}\]</span></p></li>
+<li class="fragment"><p>Eg: Say <span class="math inline">\(e^{\beta_j} = 2\)</span>. <span class="fragment strike">The <em>median</em></span><span class="fragment replacement">&nbsp; At <em>any quantile</em>,</span> <br> unemployment duration for individuals in group <span class="math inline">\(1\)</span> is <br> <strong><em>twice</em></strong> the unemployment duration of those in group <span class="math inline">\(0\)</span>.</p></li>
+</ul>
+</section>
+<section id="log-logistic-model-results" class="slide level2 smaller scrollable">
+<h2>Log-Logistic Model: Results</h2>
+<div class="panel-tabset">
+<ul id="tabset-6" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-6-1">Re-Employment</a></li><li><a href="#tabset-6-2">Quitting</a></li></ul>
+<div class="tab-content">
+<div id="tabset-6-1">
+<div class="cell">
+<div class="cell-output-display">
+<div id="hzdlloctwh" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#hzdlloctwh table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#hzdlloctwh thead, #hzdlloctwh tbody, #hzdlloctwh tfoot, #hzdlloctwh tr, #hzdlloctwh td, #hzdlloctwh th {
+  border-style: none;
+}
+
+#hzdlloctwh p {
+  margin: 0;
+  padding: 0;
+}
+
+#hzdlloctwh .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 21px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: 60%;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#hzdlloctwh .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#hzdlloctwh .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#hzdlloctwh .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#hzdlloctwh .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#hzdlloctwh .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#hzdlloctwh .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#hzdlloctwh .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#hzdlloctwh .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#hzdlloctwh .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#hzdlloctwh .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#hzdlloctwh .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#hzdlloctwh .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#hzdlloctwh .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#hzdlloctwh .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#hzdlloctwh .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#hzdlloctwh .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#hzdlloctwh .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#hzdlloctwh .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#hzdlloctwh .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#hzdlloctwh .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#hzdlloctwh .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#hzdlloctwh .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#hzdlloctwh .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#hzdlloctwh .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#hzdlloctwh .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#hzdlloctwh .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#hzdlloctwh .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#hzdlloctwh .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#hzdlloctwh .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#hzdlloctwh .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#hzdlloctwh .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#hzdlloctwh .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#hzdlloctwh .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#hzdlloctwh .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#hzdlloctwh .gt_left {
+  text-align: left;
+}
+
+#hzdlloctwh .gt_center {
+  text-align: center;
+}
+
+#hzdlloctwh .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#hzdlloctwh .gt_font_normal {
+  font-weight: normal;
+}
+
+#hzdlloctwh .gt_font_bold {
+  font-weight: bold;
+}
+
+#hzdlloctwh .gt_font_italic {
+  font-style: italic;
+}
+
+#hzdlloctwh .gt_super {
+  font-size: 65%;
+}
+
+#hzdlloctwh .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#hzdlloctwh .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#hzdlloctwh .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#hzdlloctwh .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#hzdlloctwh .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#hzdlloctwh .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#hzdlloctwh .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#hzdlloctwh .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#hzdlloctwh div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+
+<table class="gt_table caption-top" data-quarto-bootstrap="false">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="gt_col_headings header">
+<th id="term" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" style="font-size: 22px; font-weight: bold" scope="col">Variable</th>
+<th id="estimate" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" style="font-size: 22px; font-weight: bold" scope="col">Time Ratio</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="gt_group_heading_row odd">
+<th colspan="2" class="gt_empty_group_heading" data-quarto-table-cell-role="th" style="font-weight: bold" scope="colgroup"></th>
+</tr>
+<tr class="gt_row_group_first even">
+<td class="gt_row gt_left" headers="  term">Age</td>
+<td class="gt_row gt_right" headers="  estimate" style="color: #1E8449">0.988***</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="  term">Family Income (INR 1000)</td>
+<td class="gt_row gt_right" headers="  estimate" style="color: #FF0000">1.005***</td>
+</tr>
+<tr class="gt_group_heading_row even">
+<th colspan="2" id="Religion (Baseline: Hindu)" class="gt_group_heading" data-quarto-table-cell-role="th" style="font-weight: bold" scope="colgroup">Religion (Baseline: Hindu)</th>
+</tr>
+<tr class="gt_row_group_first odd">
+<td class="gt_row gt_left" headers="Religion (Baseline: Hindu)  term">Muslim</td>
+<td class="gt_row gt_right" headers="Religion (Baseline: Hindu)  estimate" style="color: #1E8449">0.797***</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Religion (Baseline: Hindu)  term">Other</td>
+<td class="gt_row gt_right" headers="Religion (Baseline: Hindu)  estimate" style="color: #FF0000">1.402***</td>
+</tr>
+<tr class="gt_group_heading_row odd">
+<th colspan="2" id="Caste (Baseline: Upper Caste)" class="gt_group_heading" data-quarto-table-cell-role="th" style="font-weight: bold" scope="colgroup">Caste (Baseline: Upper Caste)</th>
+</tr>
+<tr class="gt_row_group_first even">
+<td class="gt_row gt_left" headers="Caste (Baseline: Upper Caste)  term">OBC / Intermediate Caste</td>
+<td class="gt_row gt_right" headers="Caste (Baseline: Upper Caste)  estimate" style="color: #1E8449">0.805***</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Caste (Baseline: Upper Caste)  term">SC</td>
+<td class="gt_row gt_right" headers="Caste (Baseline: Upper Caste)  estimate" style="color: #1E8449">0.763***</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Caste (Baseline: Upper Caste)  term">ST</td>
+<td class="gt_row gt_right" headers="Caste (Baseline: Upper Caste)  estimate" style="color: #1E8449">0.681***</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Caste (Baseline: Upper Caste)  term">Not Stated</td>
+<td class="gt_row gt_right" headers="Caste (Baseline: Upper Caste)  estimate" style="color: #1E8449">0.995</td>
+</tr>
+<tr class="gt_group_heading_row even">
+<th colspan="2" id="Education Level *(Baseline: No Schooling)*" class="gt_group_heading" data-quarto-table-cell-role="th" style="font-weight: bold" scope="colgroup">Education Level *(Baseline: No Schooling)*</th>
+</tr>
+<tr class="gt_row_group_first odd">
+<td class="gt_row gt_left" headers="Education Level *(Baseline: No Schooling)*  term">Primary School</td>
+<td class="gt_row gt_right" headers="Education Level *(Baseline: No Schooling)*  estimate" style="color: #FF0000">1.208***</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Education Level *(Baseline: No Schooling)*  term">Middle School</td>
+<td class="gt_row gt_right" headers="Education Level *(Baseline: No Schooling)*  estimate" style="color: #FF0000">1.163***</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Education Level *(Baseline: No Schooling)*  term">High School</td>
+<td class="gt_row gt_right" headers="Education Level *(Baseline: No Schooling)*  estimate" style="color: #FF0000">1.414***</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Education Level *(Baseline: No Schooling)*  term">Vocational Education</td>
+<td class="gt_row gt_right" headers="Education Level *(Baseline: No Schooling)*  estimate" style="color: #FF0000">1.408***</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Education Level *(Baseline: No Schooling)*  term">Higher Education</td>
+<td class="gt_row gt_right" headers="Education Level *(Baseline: No Schooling)*  estimate" style="color: #FF0000">1.333***</td>
+</tr>
+<tr class="gt_group_heading_row even">
+<th colspan="2" id="Relation to Head of Household (Baseline: Self)" class="gt_group_heading" data-quarto-table-cell-role="th" style="font-weight: bold" scope="colgroup">Relation to Head of Household (Baseline: Self)</th>
+</tr>
+<tr class="gt_row_group_first odd">
+<td class="gt_row gt_left" headers="Relation to Head of Household (Baseline: Self)  term">Son</td>
+<td class="gt_row gt_right" headers="Relation to Head of Household (Baseline: Self)  estimate" style="color: #1E8449">0.967***</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Relation to Head of Household (Baseline: Self)  term">Other</td>
+<td class="gt_row gt_right" headers="Relation to Head of Household (Baseline: Self)  estimate" style="color: #FF0000">1.012</td>
+</tr>
+<tr class="gt_group_heading_row odd">
+<th colspan="2" id=" " class="gt_group_heading" data-quarto-table-cell-role="th" style="font-weight: bold" scope="colgroup"></th>
+</tr>
+<tr class="gt_row_group_first even">
+<td class="gt_row gt_left" headers="   term">Scale</td>
+<td class="gt_row gt_right" headers="   estimate">0.503***</td>
+</tr>
+</tbody><tfoot>
+<tr class="gt_sourcenotes odd">
+<td colspan="2" class="gt_sourcenote">n = 152,083</td>
+</tr>
+<tr class="gt_sourcenotes even">
+<td colspan="2" class="gt_sourcenote"><em>Note:</em>
+<ol>
+<li>*** p &lt; 0.01, ** p &lt; 0.05, * p &lt; 0.10.</li>
+<li>Estimates are exponentiated coefficients (time ratios), except the scale parameter.</li>
+<li>Observations that quit the labour force are taken to be censored. Given the assumption of non-informative censoring, this means that these observations would have had similar probabilities for re-employment had they not quit the labour force.</li>
+</ol></td>
+</tr>
+</tfoot>
+
+</table>
+
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-6-2">
+<div class="cell">
+<div class="cell-output-display">
+<div id="pacosaxyeb" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#pacosaxyeb table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#pacosaxyeb thead, #pacosaxyeb tbody, #pacosaxyeb tfoot, #pacosaxyeb tr, #pacosaxyeb td, #pacosaxyeb th {
+  border-style: none;
+}
+
+#pacosaxyeb p {
+  margin: 0;
+  padding: 0;
+}
+
+#pacosaxyeb .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 21px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: 60%;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#pacosaxyeb .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#pacosaxyeb .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#pacosaxyeb .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#pacosaxyeb .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#pacosaxyeb .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#pacosaxyeb .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#pacosaxyeb .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#pacosaxyeb .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#pacosaxyeb .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#pacosaxyeb .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#pacosaxyeb .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#pacosaxyeb .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#pacosaxyeb .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#pacosaxyeb .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#pacosaxyeb .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#pacosaxyeb .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#pacosaxyeb .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#pacosaxyeb .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#pacosaxyeb .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#pacosaxyeb .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#pacosaxyeb .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#pacosaxyeb .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#pacosaxyeb .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#pacosaxyeb .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#pacosaxyeb .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#pacosaxyeb .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#pacosaxyeb .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#pacosaxyeb .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#pacosaxyeb .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#pacosaxyeb .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#pacosaxyeb .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#pacosaxyeb .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#pacosaxyeb .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#pacosaxyeb .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#pacosaxyeb .gt_left {
+  text-align: left;
+}
+
+#pacosaxyeb .gt_center {
+  text-align: center;
+}
+
+#pacosaxyeb .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#pacosaxyeb .gt_font_normal {
+  font-weight: normal;
+}
+
+#pacosaxyeb .gt_font_bold {
+  font-weight: bold;
+}
+
+#pacosaxyeb .gt_font_italic {
+  font-style: italic;
+}
+
+#pacosaxyeb .gt_super {
+  font-size: 65%;
+}
+
+#pacosaxyeb .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#pacosaxyeb .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#pacosaxyeb .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#pacosaxyeb .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#pacosaxyeb .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#pacosaxyeb .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#pacosaxyeb .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#pacosaxyeb .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#pacosaxyeb div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+
+<table class="gt_table caption-top" data-quarto-bootstrap="false">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="gt_col_headings header">
+<th id="term" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" style="font-size: 22px; font-weight: bold" scope="col">Variable</th>
+<th id="estimate" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" style="font-size: 22px; font-weight: bold" scope="col">Time Ratio</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="gt_group_heading_row odd">
+<th colspan="2" class="gt_empty_group_heading" data-quarto-table-cell-role="th" style="font-weight: bold" scope="colgroup"></th>
+</tr>
+<tr class="gt_row_group_first even">
+<td class="gt_row gt_left" headers="  term">Age</td>
+<td class="gt_row gt_right" headers="  estimate" style="color: #1E8449">0.989***</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="  term">Family Income (INR 1000)</td>
+<td class="gt_row gt_right" headers="  estimate" style="color: #1E8449">0.986***</td>
+</tr>
+<tr class="gt_group_heading_row even">
+<th colspan="2" id="Religion (Baseline: Hindu)" class="gt_group_heading" data-quarto-table-cell-role="th" style="font-weight: bold" scope="colgroup">Religion (Baseline: Hindu)</th>
+</tr>
+<tr class="gt_row_group_first odd">
+<td class="gt_row gt_left" headers="Religion (Baseline: Hindu)  term">Muslim</td>
+<td class="gt_row gt_right" headers="Religion (Baseline: Hindu)  estimate" style="color: #1E8449">0.855***</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Religion (Baseline: Hindu)  term">Other</td>
+<td class="gt_row gt_right" headers="Religion (Baseline: Hindu)  estimate" style="color: #FF0000">1.162***</td>
+</tr>
+<tr class="gt_group_heading_row odd">
+<th colspan="2" id="Caste (Baseline: Upper Caste)" class="gt_group_heading" data-quarto-table-cell-role="th" style="font-weight: bold" scope="colgroup">Caste (Baseline: Upper Caste)</th>
+</tr>
+<tr class="gt_row_group_first even">
+<td class="gt_row gt_left" headers="Caste (Baseline: Upper Caste)  term">OBC / Intermediate Caste</td>
+<td class="gt_row gt_right" headers="Caste (Baseline: Upper Caste)  estimate" style="color: #1E8449">0.899***</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Caste (Baseline: Upper Caste)  term">SC</td>
+<td class="gt_row gt_right" headers="Caste (Baseline: Upper Caste)  estimate" style="color: #1E8449">0.802***</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Caste (Baseline: Upper Caste)  term">ST</td>
+<td class="gt_row gt_right" headers="Caste (Baseline: Upper Caste)  estimate" style="color: #1E8449">0.835***</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Caste (Baseline: Upper Caste)  term">Not Stated</td>
+<td class="gt_row gt_right" headers="Caste (Baseline: Upper Caste)  estimate" style="color: #FF0000">1.013</td>
+</tr>
+<tr class="gt_group_heading_row even">
+<th colspan="2" id="Education (Baseline: No Schooling)" class="gt_group_heading" data-quarto-table-cell-role="th" style="font-weight: bold" scope="colgroup">Education (Baseline: No Schooling)</th>
+</tr>
+<tr class="gt_row_group_first odd">
+<td class="gt_row gt_left" headers="Education (Baseline: No Schooling)  term">Primary School</td>
+<td class="gt_row gt_right" headers="Education (Baseline: No Schooling)  estimate" style="color: #FF0000">1.677***</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Education (Baseline: No Schooling)  term">Middle School</td>
+<td class="gt_row gt_right" headers="Education (Baseline: No Schooling)  estimate" style="color: #FF0000">2.026***</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Education (Baseline: No Schooling)  term">High School</td>
+<td class="gt_row gt_right" headers="Education (Baseline: No Schooling)  estimate" style="color: #FF0000">2.268***</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Education (Baseline: No Schooling)  term">Vocational Education</td>
+<td class="gt_row gt_right" headers="Education (Baseline: No Schooling)  estimate" style="color: #FF0000">2.506***</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Education (Baseline: No Schooling)  term">Higher Education</td>
+<td class="gt_row gt_right" headers="Education (Baseline: No Schooling)  estimate" style="color: #FF0000">3.007***</td>
+</tr>
+<tr class="gt_group_heading_row even">
+<th colspan="2" id="Relation to Head of Household (Baseline: Self)" class="gt_group_heading" data-quarto-table-cell-role="th" style="font-weight: bold" scope="colgroup">Relation to Head of Household (Baseline: Self)</th>
+</tr>
+<tr class="gt_row_group_first odd">
+<td class="gt_row gt_left" headers="Relation to Head of Household (Baseline: Self)  term">Son</td>
+<td class="gt_row gt_right" headers="Relation to Head of Household (Baseline: Self)  estimate" style="color: #1E8449">0.479***</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Relation to Head of Household (Baseline: Self)  term">Other</td>
+<td class="gt_row gt_right" headers="Relation to Head of Household (Baseline: Self)  estimate" style="color: #1E8449">0.451***</td>
+</tr>
+<tr class="gt_group_heading_row odd">
+<th colspan="2" id=" " class="gt_group_heading" data-quarto-table-cell-role="th" style="font-weight: bold" scope="colgroup"></th>
+</tr>
+<tr class="gt_row_group_first even">
+<td class="gt_row gt_left" headers="   term">Scale</td>
+<td class="gt_row gt_right" headers="   estimate">0.636***</td>
+</tr>
+</tbody><tfoot>
+<tr class="gt_sourcenotes odd">
+<td colspan="2" class="gt_sourcenote">n = 152,083</td>
+</tr>
+<tr class="gt_sourcenotes even">
+<td colspan="2" class="gt_sourcenote"><em>Note:</em>
+<ol>
+<li>*** p &lt; 0.01, ** p &lt; 0.05, * p &lt; 0.10.</li>
+<li>Estimates are exponentiated coefficients (time ratios), except the scale parameter.</li>
+<li>Observations that get re-employed are taken to be censored. Given the assumption of non-informative censoring, this means that these observations would have had similar probabilities for quitting the labour force had they not gotten re-employed.</li>
+</ol></td>
+</tr>
+</tfoot>
+
+</table>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="random-survival-forests-rsf" class="slide level2">
+<h2>Random Survival Forests (RSF)</h2>
+<ul>
+<li class="fragment"><p>Extends the random forests method to work on survival data.</p></li>
+<li class="fragment"><p>Non-parametric, highly flexible.</p></li>
+<li class="fragment"><p>Provides individualized CIFs.</p></li>
+</ul>
+</section>
+<section id="decison-trees" class="slide level2">
+<h2>Decison Trees</h2>
+
+<img data-src="images/decision_tree_partition.webp" alt="Decision Trees: Partitions" class="r-stretch quarto-figure-center"><p class="caption">Partitions in Decision Trees, as illustrated in <span class="citation" data-cites="beaulac_rosenthal">Beaulac &amp; Rosenthal (<a href="#/references" role="doc-biblioref" onclick="">2019</a>)</span></p></section>
+<section id="survival-trees" class="slide level2">
+<h2>Survival Trees</h2>
+<ul>
+<li class="fragment"><p><strong>Splitting Rule:</strong> Gray’s test</p></li>
+<li class="fragment"><p><strong>Outcome Variable:</strong> CIF</p></li>
+<li class="fragment"><p>Highly flexible <span class="math inline">\(\implies\)</span> <span style="color: green;">Captures non-linearities</span>, <span style="color: red;">Tends to overfit</span>.</p></li>
+<li class="fragment"><p>Solution: Grow multiple trees (a forest) and average them out.</p></li>
+</ul>
+</section>
+<section id="survival-trees-rightarrow-rsf" class="slide level2">
+<h2>Survival Trees <span class="math inline">\(\rightarrow\)</span> RSF</h2>
+<ul>
+<li class="fragment"><p><strong>Bagging</strong> aka Bootstrap Aggregation</p></li>
+<li class="fragment"><p><strong>Bootstrapping:</strong> Take <span class="math inline">\(n\)</span> bootstrap samples from the training data and grow a tree from each of them.</p></li>
+<li class="fragment"><p><strong>De-correlation:</strong> Train each tree with a random subset of covariates.</p></li>
+<li class="fragment"><p><strong>Aggregation:</strong> Obtain prediction from every tree, and average them out.</p></li>
+<li class="fragment"><p>This reduces the tendency of the model to overfit, while preserving its flexibility.</p></li>
+</ul>
+</section>
+<section id="rsf-predictions" class="slide level2 smaller">
+<h2>RSF Predictions</h2>
+<div class="panel-tabset">
+<ul id="tabset-7" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-7-1">Example 1</a></li><li><a href="#tabset-7-2">Example 2</a></li><li><a href="#tabset-7-3">Example 3</a></li></ul>
+<div class="tab-content">
+<div id="tabset-7-1">
+<p><img data-src="images/shiny_rsf/1.png"></p>
+</div>
+<div id="tabset-7-2">
+<p><img data-src="images/shiny_rsf/2.png"></p>
+</div>
+<div id="tabset-7-3">
+<p><img data-src="images/shiny_rsf/3.png"></p>
+</div>
+</div>
+</div>
+</section>
+<section id="work-in-progress" class="slide level2">
+<h2>Work in Progress</h2>
+<ul>
+<li class="fragment"><p>Accounting for the “kind” of job individuals hold when losing employent and at re-employment, in terms of formality and earnings.</p></li>
+<li class="fragment"><p>RSF can perform better with more intensive training.</p></li>
+</ul>
+</section>
+<section id="references" class="slide level2 smaller scrollable">
+<h2>References</h2>
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list">
+<div id="ref-abraham_shrivastava" class="csl-entry" role="listitem">
+Abraham, R., &amp; Shrivastava, A. (2022). How comparable are <span class="nocase">India’s</span> labour market surveys? <em>The Indian Journal of Labour Economics</em>, <em>65</em>(2), 321–346. <a href="https://doi.org/10.1007/s41027-022-00381-x">https://doi.org/10.1007/s41027-022-00381-x</a>
+</div>
+<div id="ref-beaulac_rosenthal" class="csl-entry" role="listitem">
+Beaulac, C., &amp; Rosenthal, J. S. (2019). Predicting university students’ academic success and major using random forests. <em>Research in Higher Education</em>, <em>60</em>(7), 1048–1064. <a href="https://doi.org/10.1007/s11162-019-09546-y">https://doi.org/10.1007/s11162-019-09546-y</a>
+</div>
+<div id="ref-berg_ours" class="csl-entry" role="listitem">
+Berg, G. J. van dem, &amp; Ours, J. C. van. (1996). Unemployment dynamics and duration dependence. <em>Journal of Labor Economics</em>, <em>14</em>(1). https://doi.org/<a href="https://doi.org/10.1086/209805">https://doi.org/10.1086/209805</a>
+</div>
+<div id="ref-blom_harris" class="csl-entry" role="listitem">
+Blom, N., &amp; Perelli-Harris, B. (2021). Temporal dimensions of unemployment and relationship happiness in the <span>United Kingdom</span>. <em>European Sociological Review</em>, <em>37</em>(2), 253–270. <a href="https://doi.org/10.1093/esr/jcaa044">https://doi.org/10.1093/esr/jcaa044</a>
+</div>
+<div id="ref-cohen_et_al" class="csl-entry" role="listitem">
+Cohen, J., Johnston, A. C., &amp; Lindner, A. (2025). Skill depreciation during unemployment: Evidence from panel data. <em>American Economic Journal: Applied Economics</em>, <em>17</em>(3), 208–235. <a href="https://doi.org/10.1257/app.20230195">https://doi.org/10.1257/app.20230195</a>
+</div>
+<div id="ref-eriksson_rooth" class="csl-entry" role="listitem">
+Eriksson, S., &amp; Rooth, D.-O. (2014). Do employers use unemployment as a sorting criterion when hiring? Evidence from a field experiment. <em>American Economic Review</em>, <em>104</em>(3), 1014–1039. <a href="https://doi.org/10.1257/aer.104.3.1014">https://doi.org/10.1257/aer.104.3.1014</a>
+</div>
+<div id="ref-kannan" class="csl-entry" role="listitem">
+Kannan, R. (2025). <em>Determinants of unemployment duration in <span>India</span></em> (Working Paper No. 62). Centre for Sustainable Employment, Azim Premji University. <a href="https://azimpremjiuniversity.edu.in/publications/2025/cse-working-paper-series/determinants-of-unemployment-duration-in-india">https://azimpremjiuniversity.edu.in/publications/2025/cse-working-paper-series/determinants-of-unemployment-duration-in-india</a>
+</div>
+<div id="ref-kroft_et_al" class="csl-entry" role="listitem">
+Kroft, K., Lange, F., &amp; Notowidigdo, M. J. (2013). Duration dependence and labor market conditions: Evidence from a field experiment. <em>The Quarterly Journal of Economics</em>, <em>128</em>(3), 1123–1167. <a href="https://doi.org/10.1093/qje/qjt015">https://doi.org/10.1093/qje/qjt015</a>
+</div>
+<div id="ref-ryan_et_al" class="csl-entry" role="listitem">
+McKee-Ryan, F., Song, Z., Wanberg, C. R., &amp; Kinicki, A. J. (2005). Psychological and physical well-being during unemployment: A meta-analytic study. <em>Journal of Applied Psychology</em>, <em>90</em>(1), 53–76. <a href="https://doi.org/10.1037/0021-9010.90.1.53">https://doi.org/10.1037/0021-9010.90.1.53</a>
+</div>
+<div id="ref-menon_nath_job_search" class="csl-entry" role="listitem">
+Menon, R., &amp; Nath, P. (2025). <em>And the search goes on: Job search and job-finding rates in urban <span>India</span></em> (Working Paper No. 61). Centre for Sustainable Employment, Azim Premji University. <a href="https://azimpremjiuniversity.edu.in/publications/2025/cse-working-paper-series/and-the-search-goes-on-job-search-and-job-finding-rates-in-urban-india">https://azimpremjiuniversity.edu.in/publications/2025/cse-working-paper-series/and-the-search-goes-on-job-search-and-job-finding-rates-in-urban-india</a>
+</div>
+<div id="ref-paul_moser" class="csl-entry" role="listitem">
+Paul, K. I., &amp; Moser, K. (2009). Unemployment impairs mental health: Meta-analyses. <em>Journal of Vocational Behavior</em>, <em>74</em>(3), 264–282. <a href="https://doi.org/10.1016/j.jvb.2009.01.001">https://doi.org/10.1016/j.jvb.2009.01.001</a>
+</div>
+<div id="ref-belle_et_al" class="csl-entry" role="listitem">
+Van Belle, E., Di Stasio, V., Caers, R., De Couck, M., &amp; Baert, S. (2018). Why are employers put off by long spells of unemployment? <em>European Sociological Review</em>, <em>34</em>(6), 694–710. <a href="https://doi.org/10.1093/esr/jcy039">https://doi.org/10.1093/esr/jcy039</a>
+</div>
+</div>
+</section>
+<section>
+<section id="extras" class="title-slide slide level1 center">
+<h1>Extras</h1>
+
+</section>
+<section id="unemployed-rightarrow-olf-wave-level" class="slide level2">
+<h2>Unemployed <span class="math inline">\(\rightarrow\)</span> OLF (Wave Level)</h2>
+<div class="cell">
+<div class="cell-output-display">
+<div class="plotly html-widget html-fill-item" id="htmlwidget-c47121e6545473b49ce1" style="width:960px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-c47121e6545473b49ce1">{"x":{"visdat":{"4f8019833153":["function () ","plotlyVisDat"]},"cur_data":"4f8019833153","attrs":{"4f8019833153":{"x":{},"y":{},"line":{"color":"magenta"},"marker":{"color":"magenta"},"text":{},"mode":"lines+markers","hovertemplate":"<b>p<\/b>: %{y} <br>%{text}<extra><\/extra>","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter"}},"layout":{"margin":{"b":120,"l":60,"t":25,"r":20},"xaxis":{"domain":[0,1],"automargin":true,"title":"Wave (Start Date)","type":"date","tickformat":"%b %Y"},"yaxis":{"domain":[0,1],"automargin":true,"title":"Transition Probability","rangemode":"tozero"},"legend":{"title":{"text":"Transition Type"}},"hovermode":"closest","showlegend":false},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false,"displayModeBar":false},"data":[{"x":["2016-01-01","2016-05-01","2016-09-01","2017-01-01","2017-05-01","2017-09-01","2018-01-01","2018-05-01","2018-09-01","2019-01-01","2019-05-01","2019-09-01",null,"2022-01-01","2022-05-01","2022-09-01","2023-01-01","2023-05-01","2023-09-01","2024-01-01","2024-05-01","2024-09-01","2025-01-01","2025-05-01","2025-09-01"],"y":[0.32590000000000002,0.38829999999999998,0.3327,0.27100000000000002,0.26779999999999998,0.23150000000000001,0.17430000000000001,0.18410000000000001,0.1772,0.1603,0.15809999999999999,0.22889999999999999,null,0.1273,0.1303,0.154,0.17780000000000001,0.14069999999999999,0.1762,0.1419,0.15959999999999999,0.15459999999999999,0.17030000000000001,0.16769999999999999,0.17080000000000001],"line":{"color":"magenta"},"marker":{"color":"magenta","line":{"color":"rgba(31,119,180,1)"}},"text":["<b>Wave:<\/b>7<br>Jan-Apr (2016)","<b>Wave:<\/b>8<br>May-Aug (2016)","<b>Wave:<\/b>9<br>Sep-Dec (2016)","<b>Wave:<\/b>10<br>Jan-Apr (2017)","<b>Wave:<\/b>11<br>May-Aug (2017)","<b>Wave:<\/b>12<br>Sep-Dec (2017)","<b>Wave:<\/b>13<br>Jan-Apr (2018)","<b>Wave:<\/b>14<br>May-Aug (2018)","<b>Wave:<\/b>15<br>Sep-Dec (2018)","<b>Wave:<\/b>16<br>Jan-Apr (2019)","<b>Wave:<\/b>17<br>May-Aug (2019)","<b>Wave:<\/b>18<br>Sep-Dec (2019)",null,"<b>Wave:<\/b>25<br>Jan-Apr (2022)","<b>Wave:<\/b>26<br>May-Aug (2022)","<b>Wave:<\/b>27<br>Sep-Dec (2022)","<b>Wave:<\/b>28<br>Jan-Apr (2023)","<b>Wave:<\/b>29<br>May-Aug (2023)","<b>Wave:<\/b>30<br>Sep-Dec (2023)","<b>Wave:<\/b>31<br>Jan-Apr (2024)","<b>Wave:<\/b>32<br>May-Aug (2024)","<b>Wave:<\/b>33<br>Sep-Dec (2024)","<b>Wave:<\/b>34<br>Jan-Apr (2025)","<b>Wave:<\/b>35<br>May-Aug (2025)","<b>Wave:<\/b>36<br>Sep-Dec (2025)"],"mode":"lines+markers","hovertemplate":["<b>p<\/b>: %{y} <br>%{text}<extra><\/extra>","<b>p<\/b>: %{y} <br>%{text}<extra><\/extra>","<b>p<\/b>: %{y} <br>%{text}<extra><\/extra>","<b>p<\/b>: %{y} <br>%{text}<extra><\/extra>","<b>p<\/b>: %{y} <br>%{text}<extra><\/extra>","<b>p<\/b>: %{y} <br>%{text}<extra><\/extra>","<b>p<\/b>: %{y} <br>%{text}<extra><\/extra>","<b>p<\/b>: %{y} <br>%{text}<extra><\/extra>","<b>p<\/b>: %{y} <br>%{text}<extra><\/extra>","<b>p<\/b>: %{y} <br>%{text}<extra><\/extra>","<b>p<\/b>: %{y} <br>%{text}<extra><\/extra>","<b>p<\/b>: %{y} <br>%{text}<extra><\/extra>",null,"<b>p<\/b>: %{y} <br>%{text}<extra><\/extra>","<b>p<\/b>: %{y} <br>%{text}<extra><\/extra>","<b>p<\/b>: %{y} <br>%{text}<extra><\/extra>","<b>p<\/b>: %{y} <br>%{text}<extra><\/extra>","<b>p<\/b>: %{y} <br>%{text}<extra><\/extra>","<b>p<\/b>: %{y} <br>%{text}<extra><\/extra>","<b>p<\/b>: %{y} <br>%{text}<extra><\/extra>","<b>p<\/b>: %{y} <br>%{text}<extra><\/extra>","<b>p<\/b>: %{y} <br>%{text}<extra><\/extra>","<b>p<\/b>: %{y} <br>%{text}<extra><\/extra>","<b>p<\/b>: %{y} <br>%{text}<extra><\/extra>","<b>p<\/b>: %{y} <br>%{text}<extra><\/extra>"],"type":"scatter","error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+
+</section></section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<div class="footer footer-default">
+
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="index_files/libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="index_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="index_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="index_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="index_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="index_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="index_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="index_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="index_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="index_files/libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: false,
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1050,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    
+
+    <script>
+
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+
+      // slide changes (different for each slide format).
+
+      (function () {
+
+        // dispatch for htmlwidgets
+
+        function fireSlideEnter() {
+
+          const event = window.document.createEvent("Event");
+
+          event.initEvent("slideenter", true, true);
+
+          window.document.dispatchEvent(event);
+
+        }
+
+    
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+
+          fireSlideEnter();
+
+    
+
+          // dispatch for shiny
+
+          if (window.jQuery) {
+
+            if (previousSlide) {
+
+              window.jQuery(previousSlide).trigger("hidden");
+
+            }
+
+            if (currentSlide) {
+
+              window.jQuery(currentSlide).trigger("shown");
+
+            }
+
+          }
+
+        }
+
+    
+
+        // hookup for slidy
+
+        if (window.w3c_slidy) {
+
+          window.w3c_slidy.add_observer(function (slide_num) {
+
+            // slide_num starts at position 1
+
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+
+          });
+
+        }
+
+    
+
+      })();
+
+    </script>
+
+    
+
+    <script id="quarto-html-after-body" type="application/javascript">
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
+            }
+          }
+          return false;
+        }
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "Copied!");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "Copied!");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
+          }
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
+            }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
+        }
+        const getTextToCopy = function(trigger) {
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+        }
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp('/' + window.location.host + '/');
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
+            }
+          }
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
+          }
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
+          }
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
+        }
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
+          });
+        }
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
+    
+
+</body></html>
