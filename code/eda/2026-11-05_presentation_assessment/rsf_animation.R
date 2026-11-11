@@ -16,7 +16,7 @@ write_location <- here(
 
 rsf <- readRDS(here(write_location, "competing_rsf.rds"))
 
-income_range <- seq(0, 25, 0.1)
+income_range <- seq(0, 25, 0.5)
 
 cif_tibble <- lapply(income_range, function(income) {
   income <- round(income, 1)
@@ -27,8 +27,8 @@ cif_tibble <- lapply(income_range, function(income) {
     age = 30,
     family_income_ten_thousands = income / 10,
     religion = "hindu",
-    caste = "obc_ic",
-    edu = "middle_school",
+    caste = "upper_caste",
+    edu = "high_school",
     relation = "self"
   )
 
@@ -36,8 +36,8 @@ cif_tibble <- lapply(income_range, function(income) {
     age = 30,
     family_income_ten_thousands = income / 10,
     religion = "muslim",
-    caste = "obc_ic",
-    edu = "middle_school",
+    caste = "upper_caste",
+    edu = "high_school",
     relation = "self"
   )
 
