@@ -163,7 +163,7 @@ Longer unemployment duration is associated with:
 
 - National-level panel dataset that interviews individuals 3 times a year, each cycle called a *wave*.
 
-- Data from two periods: 2016-2019 and 2022-2025. <br> (8 years, 24 waves)
+- Data from two periods: 2016-2019 and 2022-2025. <br> (8 years, 24 waves).
 
 - Relevant employment indicators introduced in 2016. <br> Data from 2020 & 2021 excluded due to COVID-induced disruptions.
 
