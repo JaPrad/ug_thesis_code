@@ -14,15 +14,12 @@ pacman::p_load(
   qs2
 )
 source("code/utilities.R")
-theme_set(theme_classic() + theme(legend.position = "bottom"))
 
 write_location <- here(
   "data",
   "eda",
-  "2026-11-05_presentation_assessment",
-  "models"
+  "2026-11-05_presentation_assessment"
 )
-
 
 # Data -------------------------------------------------------------------
 
@@ -93,6 +90,7 @@ competing_rsf <- rfsrc.anonymous(
   nodesize = 10
 )
 competing_rsf_forest <- competing_rsf$forest
+environment(competing_rsf_forest$sampsize) <- globalenv()
 saveRDS(competing_rsf_forest, here(write_location, "competing_rsf.rds"))
 
 

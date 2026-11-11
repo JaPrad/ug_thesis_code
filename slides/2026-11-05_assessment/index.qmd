@@ -5,10 +5,12 @@ institute: "Azim Premji University"
 date: "November 12, 2026"
 date-format: "long" 
 format: 
-    revealjs:
-        incremental: true
+  revealjs:
+    embed-resources: false
+    incremental: true
 filters:
   - parse-latex
+  - shinylive
 execute:
   echo: false
 bibliography: ug_thesis_presentation_assessment.bib
@@ -64,7 +66,8 @@ pacman::p_load(
   plotly,
   ggsurvfit,
   tidycmprsk,
-  gt
+  gt,
+  shinylive
 )
 
 read_location <- here("data", "eda", "2026-11-05_presentation_assessment")
@@ -787,23 +790,100 @@ ll_quitting |>
 
 ::: {.panel-tabset}
 
-## Example 1
+## Interactive
+
+```{=html}
+<iframe src="https://rfsapp.duckdns.org/" width="1000px" height="500px" style="border:none;"></iframe>
+```
+
+## Static 1
 
 ![](images/shiny_rsf/1.png)
 
-## Example 2
+## Static 2
 
 ![](images/shiny_rsf/2.png)
 
-## Example 3
+## Static 3
 
 ![](images/shiny_rsf/3.png)
 
 :::
 
+## RSF Prediction Example
+
+```{shinylive-r}
+#| standalone: true
+#| viewerHeight: 500
+
+library(shiny)
+library(ggplot2)
+library(dplyr)
+library(readr)
+
+cif_data <- read_csv("animation_cif_tibble.csv")
+
+ui <- fluidPage(
+  #titlePanel("Family Income Simulation"),
+
+  sidebarLayout(
+    sidebarPanel(
+      sliderInput(
+        inputId = "family_income",
+        label = "Family Income",
+        min = 0,
+        max = 25,
+        value = 1,
+        step = 1,
+        animate = animationOptions(
+          interval = 500,
+          loop = FALSE
+        )
+      ),
+
+      textOutput("income_value")
+    ),
+
+    mainPanel(
+      plotOutput("curve_plot")
+    )
+  )
+)
+
+server <- function(input, output, session) { 
+  # Display selected value
+  output$income_value <- renderText({
+    paste0("INR ", input$family_income, ",000")
+  })
+
+  # Plot curve
+  output$curve_plot <- renderPlot({
+    income <- input$family_income
+
+    cif_data |>
+      filter(family_income == income) |> 
+      ggplot(aes(
+        x = time,
+        y = cif,
+        colour = Religion
+      )) +
+      geom_line() +
+      ylab("P(Re-Employment)") +
+      coord_cartesian(ylim = c(0, 0.8)) +
+      theme_linedraw()
+  })
+}
+
+shinyApp(ui = ui, server = server)
+
+## file: animation_cif_tibble.csv
+{{< include data/animation_cif_tibble.csv >}}
+```
+
+
 ## Work in Progress 
 
-- Accounting for the "kind" of job individuals hold when losing employment and at re-employment, in terms of formality and earnings.
+- Accounting for the kinds of jobs individuals hold when losing employment and at re-employment, in terms of formality and earnings.
 
 - RSF can perform better with more intensive training.
 
