@@ -1,5 +1,5 @@
 ---
-title: "<h3>Exiting Unemployment in India: A Competing Risks Analysis</h3>"
+title: "<h3>Exiting Unemployment in India: A Competing Risk Analysis</h3>"
 author: "Jyotiraditya Pradhan <br> Mentor: Rajendran Narayanan"
 institute: "Azim Premji University"
 date: "November 12, 2026"
@@ -172,6 +172,8 @@ Longer unemployment duration is associated with:
 - **Females:** Aggregate employment statistics on females estimated from the CPHS diverge significantly from the official PLFS estimates [@abraham_shrivastava].
 
 - **Rural Areas:** To improve reliability of an imputation exercise undertaken in this study.
+  
+- **Age:** Restricted to 15-65.
 
 ## Unemployed $\rightarrow$ Unemployed <br> (Wave Level)
 
@@ -315,7 +317,7 @@ transition_matrix |>
 
 - *Survival Time* $\rightarrow$ Unemployment Duration
 
-- *Failure/Death* $\rightarrow$ i) Re-employment ii) Quitting the Labour Force <br> **[Competing risks framework]**
+- *Failure/Death* $\rightarrow$ i) Re-employment ii) Quitting the Labour Force <br> **[Competing risk framework]**
 
 ## Censoring
 
@@ -508,20 +510,20 @@ where,
 $$
 x_j = 
 \begin{cases}
-    1 & \text{if } \text{Like Coldplay} \\
-    0  & \text{if } \text{Don't like Coldplay}
+    1 & \text{if } \text{Like Taylor Swift} \\
+    0  & \text{if } \text{Don't like Taylor Swift}
 \end{cases}
 $$
 
 . . .
 
 $$
-    \frac{\text{Unemployment Duration}_q(\text{Like Coldplay})}{\text{Unemployment Duration}_q (\text{Don't like Coldplay})} = e^{\beta_j}
+    \frac{\text{Unemployment Duration}_q(\text{Like Taylor Swift})}{\text{Unemployment Duration}_q (\text{Don't like Taylor Swift})} = e^{\beta_j}
 $$
 
 . . .
 
-Say $e^{\beta_j} = 2$. [The *median*]{.fragment .strike}[ &nbsp; At *any quantile*, ]{.fragment .replacement} <br> unemployment duration for individuals who *like Coldplay* is <br> ***twice*** that of individuals who *don't like Coldplay*.
+Say $e^{\beta_j} = 2$. [The *median*]{.fragment .strike}[ &nbsp; At *any quantile*, ]{.fragment .replacement} <br> unemployment duration for individuals who *like Taylor Swift* is <br> ***twice*** that of individuals who *don't like Taylor Swift*.
 
 ## Log-Logistic Model: Results{.smaller .scrollable}
 :::{.nonincremental}
@@ -777,7 +779,7 @@ ll_quitting |>
   
 - **Outcome Variable:** CIF
   
-- Highly flexible $\implies$ [Captures non-linearities]{style="color: green;"}, [Tends to overfit]{style="color: red;"}.
+- **Highly flexible** $\implies$ [Captures non-linearities]{style="color: green;"}, [Tends to overfit]{style="color: red;"}.
   
 - **Solution:** Grow multiple trees (a forest) and average them out.
 
